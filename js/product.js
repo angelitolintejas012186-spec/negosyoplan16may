@@ -5,20 +5,21 @@ const PRODUCTS = [
         id: 1,
         name: 'Starter Bundle',
         price: 1900,
+        tier: 'starter',
         image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         description: 'The perfect starting point for new entrepreneurs. This bundle gives you a practical business plan template, financial projection model, and a complete market analysis guide — everything you need to confidently launch your first venture.',
         rating: 4.5,
         reviews: 120,
         features: [
-            { icon: 'fas fa-file-alt', text: 'Business plan template (30+ pages)' },
-            { icon: 'fas fa-chart-line', text: 'Financial projection spreadsheet (12 months)' },
-            { icon: 'fas fa-search', text: 'Market analysis and competitor guide' },
-            { icon: 'fas fa-tasks', text: 'Launch checklist and milestone tracker' },
-            { icon: 'fas fa-lightbulb', text: 'Business idea validation framework (SWOT)' }
+            { icon: 'fas fa-file-alt',    text: 'Business plan template (30+ pages)' },
+            { icon: 'fas fa-chart-line',  text: 'Financial projection spreadsheet (12 months)' },
+            { icon: 'fas fa-search',      text: 'Market analysis and competitor guide' },
+            { icon: 'fas fa-tasks',       text: 'Launch checklist and milestone tracker' },
+            { icon: 'fas fa-lightbulb',   text: 'SWOT, FIFO & risk analysis frameworks' }
         ],
         methodology: [
             { step: 'Diagnose', desc: 'Identify your market, audience, and competition.' },
-            { step: 'Design', desc: 'Plan your business model, pricing, and structure.' },
+            { step: 'Design',   desc: 'Plan your business model, pricing, and structure.' },
             { step: 'Validate', desc: 'Test your idea before committing full capital.' }
         ]
     },
@@ -26,74 +27,327 @@ const PRODUCTS = [
         id: 2,
         name: 'Founder Bundle',
         price: 2600,
+        tier: 'founder',
         image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         description: 'Built for serious entrepreneurs ready to scale. The Founder Bundle includes complete strategy, marketing automation, investor pitch materials, and operational frameworks designed for businesses in growth mode.',
         rating: 5.0,
         reviews: 85,
         features: [
-            { icon: 'fas fa-bullseye', text: 'Advanced business model canvas' },
-            { icon: 'fas fa-ad', text: 'Full marketing and social media strategy' },
-            { icon: 'fas fa-handshake', text: 'Investor pitch deck framework' },
-            { icon: 'fas fa-cogs', text: 'Operational SOP and process templates' },
-            { icon: 'fas fa-users', text: 'Team structure and hiring guide' },
-            { icon: 'fas fa-trophy', text: 'Revenue growth and KPI tracking tools' }
+            { icon: 'fas fa-bullseye',    text: 'Advanced business model canvas' },
+            { icon: 'fas fa-ad',          text: 'Full marketing and social media strategy' },
+            { icon: 'fas fa-handshake',   text: 'Investor pitch deck framework' },
+            { icon: 'fas fa-cogs',        text: 'Operational SOP and process templates' },
+            { icon: 'fas fa-users',       text: 'Team structure and hiring guide' },
+            { icon: 'fas fa-trophy',      text: 'Revenue growth and KPI tracking tools' }
         ],
         methodology: [
             { step: 'Diagnose', desc: 'Deep-dive market and competitive intelligence.' },
-            { step: 'Design', desc: 'Build scalable systems and revenue models.' },
-            { step: 'Launch', desc: 'Go-to-market playbook and customer acquisition.' },
-            { step: 'Scale', desc: 'Systemize operations for repeatable growth.' }
+            { step: 'Design',   desc: 'Build scalable systems and revenue models.' },
+            { step: 'Launch',   desc: 'Go-to-market playbook and customer acquisition.' },
+            { step: 'Scale',    desc: 'Systemize operations for repeatable growth.' }
         ]
     },
     {
         id: 3,
         name: 'Complete Set Bundle',
         price: 3500,
+        tier: 'complete',
         image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         description: 'The most comprehensive business planning kit available. The Complete Set includes every resource from both Starter and Founder bundles, plus exclusive growth playbooks, revenue models, and a full business launch system.',
         rating: 4.8,
         reviews: 200,
         features: [
-            { icon: 'fas fa-layer-group', text: 'All Starter and Founder bundle resources' },
-            { icon: 'fas fa-rocket', text: 'Complete business launch system' },
-            { icon: 'fas fa-chart-bar', text: 'Revenue projection and growth model' },
-            { icon: 'fas fa-map', text: 'Market penetration and scaling playbook' },
-            { icon: 'fas fa-balance-scale', text: 'Legal and compliance checklist' },
-            { icon: 'fas fa-star', text: 'Brand positioning and identity framework' },
-            { icon: 'fas fa-phone', text: 'Customer service and retention system' }
+            { icon: 'fas fa-layer-group',   text: 'All Starter and Founder bundle resources' },
+            { icon: 'fas fa-rocket',        text: 'Complete business launch system' },
+            { icon: 'fas fa-chart-bar',     text: '3-year revenue projection and growth model' },
+            { icon: 'fas fa-map',           text: 'Market penetration and scaling playbook' },
+            { icon: 'fas fa-balance-scale', text: 'Legal, compliance, and risk register' },
+            { icon: 'fas fa-star',          text: 'Brand identity and retention system' }
         ],
         methodology: [
             { step: 'Diagnose', desc: 'Full market, financial, and competitive analysis.' },
-            { step: 'Design', desc: 'Build a complete, scalable business architecture.' },
+            { step: 'Design',   desc: 'Build a complete, scalable business architecture.' },
             { step: 'Validate', desc: 'Proof-of-concept and demand testing framework.' },
-            { step: 'Launch', desc: 'Coordinated go-to-market execution plan.' },
-            { step: 'Scale', desc: 'Revenue scaling and team growth systems.' }
+            { step: 'Launch',   desc: 'Coordinated go-to-market execution plan.' },
+            { step: 'Scale',    desc: 'Revenue scaling and team growth systems.' }
         ]
     },
     {
         id: 4,
         name: 'Custom Bundle',
         price: 4600,
+        tier: 'custom',
         image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        description: 'A fully personalized business blueprint built specifically for your industry, city, and capital level. After submitting your request, our team creates a custom planning document tailored to your exact situation.',
+        description: 'A fully personalized business blueprint built specifically for your industry, city, and capital level. All 8 management frameworks are customized to your exact business type, including your selected suppliers and location strategy.',
         rating: 4.9,
         reviews: 65,
         features: [
-            { icon: 'fas fa-user-cog', text: 'Personalized industry-specific roadmap' },
-            { icon: 'fas fa-map-marker-alt', text: 'Location-aware market research (your city)' },
+            { icon: 'fas fa-user-cog',        text: 'Personalized industry-specific roadmap' },
+            { icon: 'fas fa-map-marker-alt',  text: 'Location-aware market research (your city)' },
             { icon: 'fas fa-money-bill-wave', text: 'Custom financial model for your budget' },
-            { icon: 'fas fa-paint-brush', text: 'Brand identity and positioning guide' },
-            { icon: 'fas fa-comments', text: 'One-on-one consultation via WhatsApp' },
-            { icon: 'fas fa-sync', text: 'One free revision within 30 days' }
+            { icon: 'fas fa-paint-brush',     text: 'Brand identity and positioning guide' },
+            { icon: 'fas fa-comments',        text: 'One-on-one consultation via WhatsApp' },
+            { icon: 'fas fa-sync',            text: 'One free revision within 30 days' }
         ],
         methodology: [
-            { step: 'Design', desc: 'Fully tailored business model for your context.' },
+            { step: 'Design',   desc: 'Fully tailored business model for your context.' },
             { step: 'Validate', desc: 'Custom demand validation for your market.' },
-            { step: 'Launch', desc: 'Step-by-step launch plan for your timeline.' },
-            { step: 'Scale', desc: 'Growth blueprint aligned to your goals.' }
+            { step: 'Launch',   desc: 'Step-by-step launch plan for your timeline.' },
+            { step: 'Scale',    desc: 'Growth blueprint aligned to your goals.' }
         ]
     }
 ];
+
+const FRAMEWORK_DATA = {
+    starter: [
+        {
+            icon: 'fas fa-cogs',      bg: '#E8420A', title: 'Management System',
+            badge: 'Foundation',
+            items: [
+                'Daily operations checklist (printable)',
+                'Staff roles & responsibilities chart',
+                'Opening & closing procedures guide',
+                'Simple KPI tracking sheet (sales, customers)'
+            ]
+        },
+        {
+            icon: 'fas fa-th-large',  bg: '#6366F1', title: 'SWOT Analysis',
+            badge: 'Essential',
+            items: [
+                '4-quadrant SWOT analysis template',
+                'Industry-specific SWOT examples',
+                'Action steps derived from SWOT findings',
+                'Quarterly SWOT review schedule'
+            ]
+        },
+        {
+            icon: 'fas fa-boxes',     bg: '#F5A500', title: 'FIFO Inventory System',
+            badge: 'Essential',
+            items: [
+                'First-In First-Out principle & implementation',
+                'Printable stock tracking worksheet',
+                'Reorder point calculator',
+                'Expiry date management log'
+            ]
+        },
+        {
+            icon: 'fas fa-shield-alt', bg: '#EF4444', title: 'Risk Analysis',
+            badge: 'Foundation',
+            items: [
+                '3×3 probability-impact risk matrix',
+                'Top 10 startup risks identified',
+                'Risk mitigation action cards per risk',
+                'Emergency response checklist'
+            ]
+        },
+        {
+            icon: 'fas fa-chart-line', bg: '#10B981', title: 'Financial Analysis',
+            badge: 'Foundation',
+            items: [
+                'Startup capital allocation worksheet',
+                'Monthly income & expense tracker',
+                'Break-even analysis with formula',
+                '6-month sales projection template'
+            ]
+        },
+        {
+            icon: 'fas fa-chess',      bg: '#0F1F3D', title: 'Business Strategy',
+            badge: 'Essential',
+            items: [
+                'Value proposition statement builder',
+                'Target market definition worksheet',
+                'Pricing strategy guide (3 models)',
+                'Competitive advantage roadmap'
+            ]
+        },
+        {
+            icon: 'fas fa-bullhorn',   bg: '#D97706', title: 'Traditional Marketing',
+            badge: 'Essential',
+            items: [
+                'Tarpaulin & signage design specifications',
+                'Flyer/leaflet distribution plan',
+                'Word-of-mouth referral system',
+                'Grand opening event checklist'
+            ]
+        },
+        {
+            icon: 'fas fa-hashtag',    bg: '#3B82F6', title: 'Digital Marketing',
+            badge: 'Essential',
+            items: [
+                'Facebook Business page setup guide',
+                'Weekly social media content schedule',
+                'WhatsApp Business configuration',
+                'Google Maps / Google My Business listing'
+            ]
+        }
+    ],
+    founder: [
+        {
+            icon: 'fas fa-cogs',      bg: '#E8420A', title: 'Management System',
+            badge: 'Advanced',
+            items: [
+                'SOP library for 5 core business processes',
+                'Staff performance dashboard & KPIs',
+                'Vendor scorecard & supplier evaluation',
+                'Monthly management review framework'
+            ]
+        },
+        {
+            icon: 'fas fa-th-large',  bg: '#6366F1', title: 'SWOT + PESTEL Analysis',
+            badge: 'Advanced',
+            items: [
+                'SWOT combined with PESTEL environment scan',
+                'Competitor benchmarking matrix (5 players)',
+                'Strategic priority roadmap (12 months)',
+                'Competitive positioning & gap analysis'
+            ]
+        },
+        {
+            icon: 'fas fa-boxes',     bg: '#F5A500', title: 'FIFO + Inventory Control',
+            badge: 'Advanced',
+            items: [
+                'ABC inventory classification system',
+                'Inventory turnover ratio analysis',
+                'Just-In-Time (JIT) ordering model',
+                'Dead stock identification & clearance plan'
+            ]
+        },
+        {
+            icon: 'fas fa-shield-alt', bg: '#EF4444', title: 'Risk Management',
+            badge: 'Advanced',
+            items: [
+                '5×5 comprehensive risk register template',
+                'Business continuity plan (BCP)',
+                'Insurance requirements checklist',
+                'Legal & regulatory compliance framework'
+            ]
+        },
+        {
+            icon: 'fas fa-chart-line', bg: '#10B981', title: 'Financial Analysis',
+            badge: 'Advanced',
+            items: [
+                '12-month P&L projection model',
+                'Cash flow statement template',
+                'Balance sheet + equity calculator',
+                'Unit economics: CAC, LTV, gross margin'
+            ]
+        },
+        {
+            icon: 'fas fa-chess',      bg: '#0F1F3D', title: 'Business Strategy',
+            badge: 'Advanced',
+            items: [
+                'Porter\'s Five Forces competitive analysis',
+                'ANSOFF growth matrix strategy',
+                'Investor pitch deck framework (10 slides)',
+                'Revenue diversification strategy map'
+            ]
+        },
+        {
+            icon: 'fas fa-bullhorn',   bg: '#D97706', title: 'Traditional Marketing',
+            badge: 'Advanced',
+            items: [
+                'Multi-channel traditional marketing calendar',
+                'Print advertising copywriting guide',
+                'Community events & sponsorship playbook',
+                'Media relations & PR basics'
+            ]
+        },
+        {
+            icon: 'fas fa-hashtag',    bg: '#3B82F6', title: 'Digital Marketing',
+            badge: 'Advanced',
+            items: [
+                'Meta (Facebook & Instagram) Ads playbook',
+                'TikTok Business content & viral strategy',
+                'Email & SMS marketing automation setup',
+                'Local SEO & Google Ads fundamentals'
+            ]
+        }
+    ],
+    complete: [
+        {
+            icon: 'fas fa-cogs',      bg: '#E8420A', title: 'Management System',
+            badge: 'Pro',
+            items: [
+                'Full Business Operating System (BOS)',
+                'Department-level SOP documentation',
+                'Quality control & internal audit framework',
+                'Business scalability assessment tool'
+            ]
+        },
+        {
+            icon: 'fas fa-th-large',  bg: '#6366F1', title: 'SWOT + Strategic Planning',
+            badge: 'Pro',
+            items: [
+                'Annual strategic planning cycle guide',
+                'Blue Ocean Strategy opportunities map',
+                'Multi-segment SWOT portfolio matrix',
+                'Board-ready strategic summary report'
+            ]
+        },
+        {
+            icon: 'fas fa-boxes',     bg: '#F5A500', title: 'FIFO + Inventory Optimization',
+            badge: 'Pro',
+            items: [
+                'Multi-location inventory control system',
+                'POS integration & automation guide',
+                'Shrinkage prevention & loss reduction plan',
+                'Demand forecasting & stock optimization'
+            ]
+        },
+        {
+            icon: 'fas fa-shield-alt', bg: '#EF4444', title: 'Enterprise Risk Management',
+            badge: 'Pro',
+            items: [
+                'Enterprise risk management (ERM) plan',
+                'Scenario planning: best, base, worst case',
+                'Complete insurance & legal compliance guide',
+                'Crisis communication & recovery plan'
+            ]
+        },
+        {
+            icon: 'fas fa-chart-line', bg: '#10B981', title: 'Financial Analysis',
+            badge: 'Pro',
+            items: [
+                '3-year financial projections (P&L, CF, BS)',
+                'Business valuation methods guide',
+                'ROI & payback period calculator',
+                'Investor-ready financial presentation package'
+            ]
+        },
+        {
+            icon: 'fas fa-chess',      bg: '#0F1F3D', title: 'Business Strategy',
+            badge: 'Pro',
+            items: [
+                'Franchise & replication model blueprint',
+                'Market expansion playbook (multi-city/region)',
+                'Partnership & joint venture framework',
+                'Exit strategy & business succession planning'
+            ]
+        },
+        {
+            icon: 'fas fa-bullhorn',   bg: '#D97706', title: 'Traditional Marketing',
+            badge: 'Pro',
+            items: [
+                'Brand identity & visual standards system',
+                'Integrated marketing communications plan',
+                'Trade show, exhibition & events strategy',
+                'Customer retention & premium loyalty programs'
+            ]
+        },
+        {
+            icon: 'fas fa-hashtag',    bg: '#3B82F6', title: 'Digital Marketing',
+            badge: 'Pro',
+            items: [
+                'Full-funnel digital marketing strategy',
+                'Influencer & affiliate marketing guide',
+                'Marketing automation & CRM setup',
+                'Analytics dashboard & ROI reporting system'
+            ]
+        }
+    ]
+};
+
+FRAMEWORK_DATA.custom = FRAMEWORK_DATA.complete;
 
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -165,6 +419,8 @@ function loadProductDetails(productId) {
         `).join('');
     }
 
+    renderFrameworks(product);
+
     const relatedList = document.getElementById('related-products');
     if (relatedList) {
         const related = PRODUCTS.filter(p => p.id !== product.id).slice(0, 3);
@@ -183,4 +439,34 @@ function loadProductDetails(productId) {
             </article>
         `).join('');
     }
+}
+
+function renderFrameworks(product) {
+    const container = document.getElementById('frameworks-list');
+    if (!container) return;
+
+    const frameworks = FRAMEWORK_DATA[product.tier] || FRAMEWORK_DATA.starter;
+
+    const badgeColors = { Foundation: '#E8420A', Essential: '#F5A500', Advanced: '#6366F1', Pro: '#0F1F3D' };
+
+    container.innerHTML = `
+        <div class="framework-grid">
+            ${frameworks.map(fw => `
+                <div class="framework-card">
+                    <div class="framework-card-header">
+                        <div class="framework-icon" style="background:${fw.bg}20;color:${fw.bg};">
+                            <i class="${fw.icon}"></i>
+                        </div>
+                        <div>
+                            <h4>${fw.title}</h4>
+                            <span class="framework-badge" style="background:${badgeColors[fw.badge] || '#E8420A'}22;color:${badgeColors[fw.badge] || '#E8420A'};">${fw.badge}</span>
+                        </div>
+                    </div>
+                    <ul>
+                        ${fw.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
