@@ -31,15 +31,24 @@ function loadOrderSummary() {
     if (emptyState) emptyState.style.display = 'none';
     if (form) form.style.display = 'grid';
 
-    orderItems.innerHTML = cart.map(item => `
+    orderItems.innerHTML = cart.map(item => {
+        const c = item.customization;
+        const customLine = c
+            ? `<p style="font-size:0.76rem;color:var(--orange);margin-top:0.2rem;font-weight:600;">
+                   <i class="fas fa-store" style="margin-right:0.25rem;"></i>${c.businessTypeLabel || c.businessType}
+                   ${c.location && c.location.city ? ' · ' + c.location.city : ''}
+               </p>`
+            : '';
+        return `
         <div class="order-confirm-row">
             <div>
                 <strong style="font-size:0.88rem;color:var(--navy);">${item.name}</strong>
                 <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.15rem;">Qty: ${item.quantity}</p>
+                ${customLine}
             </div>
             <strong style="color:var(--orange);font-size:0.88rem;white-space:nowrap;">${window.NegosyoPlan.formatPrice(item.price * item.quantity)}</strong>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
 
     const total = window.Cart ? window.Cart.calculateTotal(cart) : cart.reduce((s, i) => s + i.price * i.quantity, 0);
     if (totalAmount) totalAmount.textContent = window.NegosyoPlan.formatPrice(total);

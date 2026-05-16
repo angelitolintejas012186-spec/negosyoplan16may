@@ -49,25 +49,39 @@ function saveCart(cart) {
 }
 
 function addToCart(productId) {
+    if (window.BusinessForm) {
+        window.BusinessForm.show(productId);
+        return;
+    }
+    addToCartDirect(productId, null);
+}
+
+function addToCartDirect(productId, customization) {
     const cart = loadCart();
     const existing = cart.find(item => item.id === productId);
     const product = products.find(item => item.id === productId);
 
     if (existing) {
         existing.quantity += 1;
+        if (customization) existing.customization = customization;
     } else if (product) {
-        cart.push({
+        const item = {
             id: product.id,
             name: product.name,
             image: product.image,
             price: product.price,
             quantity: 1
-        });
+        };
+        if (customization) item.customization = customization;
+        cart.push(item);
     }
 
     saveCart(cart);
     if (window.NegosyoPlan && window.NegosyoPlan.showToast && product) {
-        window.NegosyoPlan.showToast(product.name + ' added to cart!', 'success');
+        const msg = customization
+            ? product.name + ' added! Plan: ' + customization.businessTypeLabel
+            : product.name + ' added to cart!';
+        window.NegosyoPlan.showToast(msg, 'success');
     }
 }
 
@@ -108,12 +122,22 @@ function renderCart() {
         return;
     }
 
-    container.innerHTML = cart.map(item => `
+    container.innerHTML = cart.map(item => {
+        const c = item.customization;
+        const customHTML = c ? `
+            <div class="cart-customization">
+                <div><i class="fas fa-store" style="color:var(--orange);margin-right:0.3rem;"></i><strong>${c.businessTypeLabel || c.businessType}</strong></div>
+                ${c.location && c.location.city ? `<div style="margin-top:0.2rem;"><i class="fas fa-map-marker-alt" style="color:var(--amber);margin-right:0.3rem;"></i>${[c.location.city, c.location.region, c.location.country].filter(Boolean).join(', ')}</div>` : ''}
+                ${c.capital ? `<div style="margin-top:0.2rem;"><i class="fas fa-money-bill-wave" style="color:var(--amber);margin-right:0.3rem;"></i>Capital: PHP ${Number(c.capital).toLocaleString()}</div>` : ''}
+                ${c.suppliers && c.suppliers.length ? `<div style="margin-top:0.2rem;"><i class="fas fa-truck" style="color:var(--amber);margin-right:0.3rem;"></i>${c.suppliers.length} supplier${c.suppliers.length > 1 ? 's' : ''} selected</div>` : ''}
+            </div>` : '';
+        return `
         <div class="cart-item">
             <img src="${item.image}" alt="${item.name}" loading="lazy">
-            <div>
+            <div style="flex:1;">
                 <h3>${item.name}</h3>
                 <p>${window.NegosyoPlan.formatPrice(item.price)}</p>
+                ${customHTML}
                 <div class="quantity-controls">
                     <button type="button" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
                     <span>${item.quantity}</span>
@@ -122,8 +146,8 @@ function renderCart() {
                 <p class="item-total">Total: ${window.NegosyoPlan.formatPrice(item.price * item.quantity)}</p>
             </div>
             <button type="button" class="button secondary" onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
 
     const total = window.NegosyoPlan.formatPrice(calculateTotal(cart));
     if (subtotal) subtotal.textContent = total;
@@ -146,12 +170,18 @@ document.addEventListener('DOMContentLoaded', function() {
     initCartControls();
 });
 
+function getProduct(productId) {
+    return products.find(p => p.id === productId) || null;
+}
+
 window.Cart = {
     loadCart,
     saveCart,
     addToCart,
+    addToCartDirect,
     removeFromCart,
     updateQuantity,
     calculateTotal,
-    renderCart
+    renderCart,
+    getProduct
 };
