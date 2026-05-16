@@ -1,23 +1,205 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="logoTitle logoDesc">
-  <title id="logoTitle">Negosyo Plan Logo</title>
-  <desc id="logoDesc">Golden bar logo with blueprint scroll, rolled paper, and teal accent for Negosyo Plan.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="lt ld">
+  <title id="lt">Negosyo Plan Logo</title>
+  <desc id="ld">3D gold hexagonal emblem with dual growth arrows and gear for Negosyo Plan.</desc>
   <defs>
-    <linearGradient id="orangeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFD46C"/>
-      <stop offset="100%" stop-color="#FF9951"/>
+    <!-- Primary multi-stop metallic gold -->
+    <linearGradient id="gm" x1="5%" y1="0%" x2="95%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFBE0"/>
+      <stop offset="10%"  stop-color="#F9D468"/>
+      <stop offset="24%"  stop-color="#BF7B08"/>
+      <stop offset="42%"  stop-color="#E8A018"/>
+      <stop offset="60%"  stop-color="#F9D468"/>
+      <stop offset="78%"  stop-color="#8C5602"/>
+      <stop offset="100%" stop-color="#4C2E00"/>
     </linearGradient>
-    <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FFF4D1" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#FFE48F" stop-opacity="0"/>
+    <!-- Bright highlight gold -->
+    <linearGradient id="gh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="20%"  stop-color="#FFF3B0"/>
+      <stop offset="55%"  stop-color="#EDB820"/>
+      <stop offset="100%" stop-color="#A46A08"/>
     </linearGradient>
+    <!-- Dark bronze for gear ring/teeth -->
+    <linearGradient id="gd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#C87A08"/>
+      <stop offset="50%"  stop-color="#7C4A00"/>
+      <stop offset="100%" stop-color="#3C2000"/>
+    </linearGradient>
+    <!-- Hex ring multi-stop -->
+    <linearGradient id="ghr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFF3A8"/>
+      <stop offset="18%"  stop-color="#E2A210"/>
+      <stop offset="36%"  stop-color="#BA7C08"/>
+      <stop offset="54%"  stop-color="#F2C232"/>
+      <stop offset="72%"  stop-color="#9C6206"/>
+      <stop offset="88%"  stop-color="#E2A210"/>
+      <stop offset="100%" stop-color="#6C4000"/>
+    </linearGradient>
+    <!-- Dark warm inner bg -->
+    <radialGradient id="gbg" cx="36%" cy="26%" r="72%">
+      <stop offset="0%"   stop-color="#321900"/>
+      <stop offset="100%" stop-color="#0A0500"/>
+    </radialGradient>
+    <!-- Ambient gold glow overlay on inner face -->
+    <radialGradient id="gg" cx="40%" cy="30%" r="64%">
+      <stop offset="0%"   stop-color="#FFE87A" stop-opacity="0.45"/>
+      <stop offset="70%"  stop-color="#E09A18" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#E09A18" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Hub specular -->
+    <radialGradient id="ghub" cx="35%" cy="30%" r="65%">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="45%"  stop-color="#FFF0A8"/>
+      <stop offset="100%" stop-color="#C8880C"/>
+    </radialGradient>
+    <!-- Drop shadow -->
+    <filter id="fsd" x="-28%" y="-28%" width="156%" height="156%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#000000" flood-opacity="0.72"/>
+    </filter>
+    <!-- Bevel highlight (top-left light edge) -->
+    <filter id="fbv" x="-12%" y="-12%" width="124%" height="124%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="b"/>
+      <feOffset dx="-1.5" dy="-1.5" in="b" result="ob"/>
+      <feFlood flood-color="#FFF9D0" flood-opacity="0.55" result="w"/>
+      <feComposite in="w" in2="ob" operator="in" result="h"/>
+      <feMerge>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="h"/>
+      </feMerge>
+    </filter>
+    <!-- Soft ambient glow around each element -->
+    <filter id="fgl" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1.2 0.4 0 0 0  0.7 1.0 0 0 0  0 0.1 0 0 0  0 0 0 0.65 0" result="ab"/>
+      <feMerge>
+        <feMergeNode in="ab"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Metallic scratch texture -->
+    <filter id="ftex" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.08 0.9" numOctaves="3" seed="5" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="gn"/>
+      <feBlend in="SourceGraphic" in2="gn" mode="soft-light" result="t"/>
+      <feComposite in="t" in2="SourceGraphic" operator="in"/>
+    </filter>
   </defs>
-  <rect x="14" y="14" width="132" height="132" rx="32" fill="#FFF4E5"/>
-  <path d="M36 106c0 14.9 12.1 27 27 27h34c14.9 0 27-12.1 27-27V66c0-14.9-12.1-27-27-27H63c-14.9 0-27 12.1-27 27v40Z" fill="url(#orangeGlow)"/>
-  <path d="M43 62h74c3.9 0 7 3.1 7 7v42c0 3.9-3.1 7-7 7H43c-3.9 0-7-3.1-7-7V69c0-3.9 3.1-7 7-7Z" fill="#FFF8EB" stroke="#FF9951" stroke-width="3"/>
-  <path d="M50 82h60M50 96h60M50 110h40" stroke="#A5E2E1" stroke-width="4" stroke-linecap="round"/>
-  <path d="M49 72l8-8 8 8" fill="none" stroke="#FF9951" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M94 58l18-12" stroke="#A5E2E1" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="116" cy="42" r="12" fill="#A5E2E1" opacity="0.95"/>
-  <path d="M106 40l6 6 10-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-  <path d="M36 106c0-9.4 7.6-17 17-17h4c9.4 0 17 7.6 17 17v3H36v-3Z" fill="url(#goldShine)" opacity="0.85"/>
+
+  <!-- ── CAST SHADOW ── -->
+  <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"
+           fill="#1A0900" opacity="0.42" transform="translate(5,8)"/>
+
+  <!-- ── OUTER HEX RING (metallic gold border with 3D illusion) ── -->
+  <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"
+           fill="url(#ghr)" filter="url(#fsd)"/>
+
+  <!-- Top-face bevel: bright face lit from above -->
+  <polygon points="100,10 178,55 162,64 100,26 38,64 22,55"
+           fill="#FFF9B8" opacity="0.48"/>
+  <!-- Right-face shadow edge for 3D depth -->
+  <polygon points="178,55 178,145 162,136 162,64"
+           fill="#3C1E00" opacity="0.35"/>
+  <!-- Bottom-face shadow -->
+  <polygon points="178,145 100,190 100,174 162,136"
+           fill="#2C1200" opacity="0.42"/>
+
+  <!-- ── INNER DARK BACKGROUND ── -->
+  <polygon points="100,26 162,64 162,136 100,174 38,136 38,64"
+           fill="url(#gbg)"/>
+  <!-- Ambient warm glow on inner surface -->
+  <polygon points="100,26 162,64 162,136 100,174 38,136 38,64"
+           fill="url(#gg)"/>
+  <!-- Inner top-left lit edge -->
+  <polygon points="100,26 162,64 156,70 100,32 44,70 38,64"
+           fill="#FFF8A0" opacity="0.14"/>
+
+  <!-- ── UPWARD ARROW (vertical) ── -->
+  <!-- Shaft -->
+  <rect x="92" y="65" width="16" height="83" rx="3.5"
+        fill="url(#gm)" filter="url(#fbv)"/>
+  <!-- Shaft left highlight ribbon -->
+  <rect x="92" y="65" width="5" height="83" rx="2.5"
+        fill="#FFFDE8" opacity="0.22"/>
+  <!-- Shaft right shadow ribbon -->
+  <rect x="103" y="65" width="5" height="83" rx="2.5"
+        fill="#3C1E00" opacity="0.18"/>
+  <!-- Arrowhead triangle -->
+  <polygon points="100,30 128,68 72,68"
+           fill="url(#gh)" filter="url(#fbv)"/>
+  <!-- Arrowhead left bright face (bevel illusion) -->
+  <polygon points="100,30 72,68 80,68 100,38"
+           fill="#FFFCE8" opacity="0.32"/>
+  <!-- Arrowhead right shadow face -->
+  <polygon points="100,30 128,68 120,68 100,38"
+           fill="#3C1E00" opacity="0.22"/>
+
+  <!-- ── DIAGONAL ARROW (upper-right, ~40° from vertical) ── -->
+  <!-- Both arrows share base at gear center (100,148) and diverge upward -->
+  <!-- Shaft parallelogram from (100,148) toward (163,65) -->
+  <polygon points="93,143 107,153 170,70 156,60"
+           fill="url(#gm)" filter="url(#fbv)"/>
+  <!-- Shaft left highlight strip -->
+  <polygon points="93,143 97,141 160,58 156,60"
+           fill="#FFFDE8" opacity="0.22"/>
+  <!-- Shaft right shadow strip -->
+  <polygon points="103,151 107,153 170,70 166,68"
+           fill="#3C1E00" opacity="0.18"/>
+  <!-- Arrowhead -->
+  <polygon points="156,60 180,46 170,72"
+           fill="url(#gh)" filter="url(#fbv)"/>
+  <!-- Head left face bevel -->
+  <polygon points="156,60 164,57 180,46"
+           fill="#FFFCE8" opacity="0.32"/>
+  <!-- Head right face shadow -->
+  <polygon points="164,57 180,46 170,72 166,71"
+           fill="#3C1E00" opacity="0.22"/>
+
+  <!-- ── GEAR WHEEL at (100,148) ── -->
+  <g transform="translate(100,148)">
+    <!-- 8 gear teeth (4 cardinal + 4 at 45°) -->
+    <g fill="url(#gd)" filter="url(#fbv)">
+      <!-- Cardinal -->
+      <rect x="-5.5" y="-27" width="11" height="9.5" rx="2.5"/>
+      <rect x="-5.5" y="17.5" width="11" height="9.5" rx="2.5"/>
+      <rect x="-27"  y="-5.5" width="9.5" height="11" rx="2.5"/>
+      <rect x="17.5" y="-5.5" width="9.5" height="11" rx="2.5"/>
+      <!-- Diagonal (45°) -->
+      <rect x="-5.5" y="-27" width="11" height="9.5" rx="2.5" transform="rotate(45)"/>
+      <rect x="-5.5" y="17.5" width="11" height="9.5" rx="2.5" transform="rotate(45)"/>
+      <rect x="-27"  y="-5.5" width="9.5" height="11" rx="2.5" transform="rotate(45)"/>
+      <rect x="17.5" y="-5.5" width="9.5" height="11" rx="2.5" transform="rotate(45)"/>
+    </g>
+    <!-- Gear body disk -->
+    <circle r="19.5" fill="url(#gm)" filter="url(#ftex)"/>
+    <!-- Gear body highlight arc (top-left lit) -->
+    <path d="M -16,0 A 16,16 0 0,1 0,-16"
+          stroke="#FFF9D0" stroke-width="3" fill="none" opacity="0.38"/>
+    <!-- Inner dark ring -->
+    <circle r="13" fill="#180C00"/>
+    <!-- Inner ring metallic edge -->
+    <circle r="13" fill="none" stroke="url(#gd)" stroke-width="2"/>
+    <!-- 4 hub spokes -->
+    <g stroke="url(#gm)" stroke-width="2.8" stroke-linecap="round">
+      <line x1="0" y1="-12.5" x2="0"    y2="12.5"/>
+      <line x1="-12.5" y1="0"  x2="12.5" y2="0"/>
+      <line x1="-8.8"  y1="-8.8" x2="8.8"  y2="8.8"/>
+      <line x1="8.8"   y1="-8.8" x2="-8.8" y2="8.8"/>
+    </g>
+    <!-- Hub center button -->
+    <circle r="6.5" fill="url(#ghub)"/>
+    <!-- Hub specular highlight -->
+    <circle r="2.8" cx="-1.8" cy="-2" fill="#FFFFFF" opacity="0.72"/>
+  </g>
+
+  <!-- ── SURFACE REFLECTIONS / FINISHING ── -->
+  <!-- Top sparkle (light catching the top-left of the emblem) -->
+  <ellipse cx="86" cy="46" rx="15" ry="7" fill="#FFFFFF" opacity="0.15"
+           transform="rotate(-24 86 46)"/>
+  <!-- Bottom-right ambient shadow on inner face -->
+  <polygon points="162,136 100,174 106,174 162,140"
+           fill="#000000" opacity="0.12"/>
+  <!-- Hex outer ring metallic texture overlay -->
+  <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"
+           fill="none" stroke="#FFF9B0" stroke-width="0.8" opacity="0.25"/>
 </svg>

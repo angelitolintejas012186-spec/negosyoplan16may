@@ -1,7 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#FF9951"/>
-  <rect x="6" y="9" width="20" height="15" rx="3" fill="#FFF8EB" stroke="#FFD46C" stroke-width="1.5"/>
-  <path d="M9 14h14M9 18h14M9 21h9" stroke="#A5E2E1" stroke-width="1.5" stroke-linecap="round"/>
-  <circle cx="24" cy="8" r="5" fill="#A5E2E1"/>
-  <path d="M21 8l2 2 4-4" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFF0A0"/>
+      <stop offset="30%"  stop-color="#E0A010"/>
+      <stop offset="60%"  stop-color="#B87808"/>
+      <stop offset="85%"  stop-color="#F0C030"/>
+      <stop offset="100%" stop-color="#7A4800"/>
+    </linearGradient>
+    <linearGradient id="ga" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="40%"  stop-color="#FFE878"/>
+      <stop offset="100%" stop-color="#C07808"/>
+    </linearGradient>
+    <radialGradient id="gbg" cx="35%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#2A1400"/>
+      <stop offset="100%" stop-color="#080300"/>
+    </radialGradient>
+    <filter id="fs">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+  <!-- Shadow -->
+  <polygon points="16,1 28.5,8 28.5,24 16,31 3.5,24 3.5,8"
+           fill="#000" opacity="0.35" transform="translate(0.5,1)"/>
+  <!-- Outer hex ring -->
+  <polygon points="16,1 28.5,8 28.5,24 16,31 3.5,24 3.5,8"
+           fill="url(#g)" filter="url(#fs)"/>
+  <!-- Top bevel -->
+  <polygon points="16,1 28.5,8 26,10 16,4 6,10 3.5,8"
+           fill="#FFF8A0" opacity="0.5"/>
+  <!-- Inner dark bg -->
+  <polygon points="16,4 26,10 26,22 16,28 6,22 6,10"
+           fill="url(#gbg)"/>
+  <!-- Vertical arrow shaft -->
+  <rect x="14.5" y="11" width="3" height="13" rx="0.8" fill="url(#g)"/>
+  <!-- Vertical arrowhead -->
+  <polygon points="16,5.5 20.5,11.5 11.5,11.5" fill="url(#ga)"/>
+  <!-- Diagonal arrow shaft -->
+  <polygon points="14.2,23 16.5,24.5 27,14.5 24.7,13" fill="url(#g)"/>
+  <!-- Diagonal arrowhead -->
+  <polygon points="24.5,13 29,11 27.5,15.5" fill="url(#ga)"/>
+  <!-- Gear circle hint -->
+  <circle cx="16" cy="23.5" r="3.5" fill="url(#g)"/>
+  <circle cx="16" cy="23.5" r="2" fill="#180C00"/>
+  <circle cx="16" cy="23.5" r="1" fill="url(#ga)"/>
 </svg>
