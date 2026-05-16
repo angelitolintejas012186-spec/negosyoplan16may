@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Negosyo Plan</title>
+    <meta name="description" content="Browse and purchase Negosyo Plan PDF business plan bundles with instant download and AI blueprint support.">
+    <meta property="og:title" content="Shop - Negosyo Plan">
+    <meta property="og:description" content="Browse our digital business plan bundles for OFWs and entrepreneurs.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://negosyoplan.com/shop.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/cart.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="assets/images/logo.svg" alt="Negosyo Plan logo" class="site-logo"></a>
+                <h1 class="brand-name">Negosyo Plan</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="shop.html">Shop <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="shop.html">All Products</a>
+                        <a href="shop.html?category=starter">Starter Bundle</a>
+                        <a href="shop.html?category=founder">Founder Bundle</a>
+                        <a href="shop.html?category=complete">Complete Bundle</a>
+                        <a href="shop.html?category=custom">Custom Bundle</a>
+                    </div>
+                </li>
+                <li><a href="ai-generator.html">AI Generator</a></li>
+                <li class="dropdown">
+                    <a href="#">Resources <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="about.html">About Us</a>
+                        <a href="downloads.html">Free Downloads</a>
+                        <a href="account.html">My Account</a>
+                        <a href="cart.html">Shopping Cart</a>
+                    </div>
+                </li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" placeholder="Search products..." id="search-input">
+                <button type="button" id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <button class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="sidebar-close" id="sidebar-close">&times;</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="ai-generator.html">AI Generator</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li><a href="account.html">Account</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main>
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> <span>/</span> <span>Shop</span>
+        </div>
+
+        <section class="shop-hero">
+            <h2>Shop Our PDF Business Plan Bundles</h2>
+            <p>Choose from Starter, Founder, Complete Set, or Custom bundles built for OFWs and aspiring entrepreneurs.</p>
+        </section>
+
+        <section class="product-grid">
+            <article class="product-card" data-id="1">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Starter Bundle" loading="lazy">
+                    <div class="pdf-badge">Blueprint OS Certified</div>
+                </div>
+                <h3>Starter Bundle</h3>
+                <p class="price">130 AED</p>
+                <p>Perfect for beginners starting their entrepreneurial journey with financial, marketing, and planning templates.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    <span>4.5 (120 reviews)</span>
+                </div>
+                <div class="product-actions">
+                    <a href="product.html?id=1" class="button">View Details</a>
+                    <button type="button" class="button" data-id="1">Add to Cart</button>
+                </div>
+            </article>
+            <article class="product-card" data-id="2">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Founder Bundle" loading="lazy">
+                    <div class="pdf-badge">Blueprint OS Certified</div>
+                </div>
+                <h3>Founder Bundle</h3>
+                <p class="price">200 AED</p>
+                <p>Advanced business strategy, marketing, and investor-ready operational templates for founders.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <span>5.0 (85 reviews)</span>
+                </div>
+                <div class="product-actions">
+                    <a href="product.html?id=2" class="button">View Details</a>
+                    <button type="button" class="button" data-id="2">Add to Cart</button>
+                </div>
+            </article>
+            <article class="product-card" data-id="3">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Complete Set Bundle" loading="lazy">
+                    <div class="pdf-badge">Blueprint OS Certified</div>
+                </div>
+                <h3>Complete Set Bundle</h3>
+                <p class="price">250 AED</p>
+                <p>Comprehensive package with templates, guides, and systems for planning, launch, and growth.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    <span>4.8 (200 reviews)</span>
+                </div>
+                <div class="product-actions">
+                    <a href="product.html?id=3" class="button">View Details</a>
+                    <button type="button" class="button" data-id="3">Add to Cart</button>
+                </div>
+            </article>
+            <article class="product-card" data-id="4">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Custom Bundle" loading="lazy">
+                    <div class="pdf-badge">Blueprint OS Certified</div>
+                    <div class="custom-icon"><i class="fas fa-sliders-h"></i></div>
+                </div>
+                <h3>Custom Bundle</h3>
+                <p class="price">300 AED</p>
+                <p>Tailor-made planning toolkit customized to your market, operations, and growth ambition.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <span>4.9 (65 reviews)</span>
+                </div>
+                <div class="product-actions">
+                    <a href="product.html?id=4" class="button">View Details</a>
+                    <button type="button" class="button" data-id="4">Add to Cart</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="section-card">
+            <div class="section-title">
+                <h2>AI Blueprint Support</h2>
+            </div>
+            <div class="section-grid">
+                <div>
+                    <h3>DeepSeek Text Guidance</h3>
+                    <p>Receive advice tailored to your business type, budget, and execution timeline before you even purchase.</p>
+                    <a href="ai-generator.html" class="button">Use the AI Generator</a>
+                </div>
+                <div>
+                    <h3>Genspark Template Layout</h3>
+                    <p>Download structured plans with sections for executive summary, budget, timeline, and risk assessment.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Negosyo Plan</h3>
+                <p>Your Business Blueprint to Success</p>
+                <p>Downloadable plans and generator tools for real business execution.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="ai-generator.html">AI Generator</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
+                <div class="social-icons">
+                    <a href="https://facebook.com/negosyoplan" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="https://instagram.com/negosyoplan" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://twitter.com/negosyoplan" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="https://linkedin.com/company/negosyoplan" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Negosyo Plan. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+</html>

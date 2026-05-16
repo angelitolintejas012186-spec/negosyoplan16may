@@ -1,0 +1,23 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">Negosyo Plan Logo</title>
+  <desc id="logoDesc">Golden bar logo with blueprint scroll, rolled paper, and teal accent for Negosyo Plan.</desc>
+  <defs>
+    <linearGradient id="orangeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD46C"/>
+      <stop offset="100%" stop-color="#FF9951"/>
+    </linearGradient>
+    <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFF4D1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFE48F" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="14" y="14" width="132" height="132" rx="32" fill="#FFF4E5"/>
+  <path d="M36 106c0 14.9 12.1 27 27 27h34c14.9 0 27-12.1 27-27V66c0-14.9-12.1-27-27-27H63c-14.9 0-27 12.1-27 27v40Z" fill="url(#orangeGlow)"/>
+  <path d="M43 62h74c3.9 0 7 3.1 7 7v42c0 3.9-3.1 7-7 7H43c-3.9 0-7-3.1-7-7V69c0-3.9 3.1-7 7-7Z" fill="#FFF8EB" stroke="#FF9951" stroke-width="3"/>
+  <path d="M50 82h60M50 96h60M50 110h40" stroke="#A5E2E1" stroke-width="4" stroke-linecap="round"/>
+  <path d="M49 72l8-8 8 8" fill="none" stroke="#FF9951" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M94 58l18-12" stroke="#A5E2E1" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="116" cy="42" r="12" fill="#A5E2E1" opacity="0.95"/>
+  <path d="M106 40l6 6 10-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M36 106c0-9.4 7.6-17 17-17h4c9.4 0 17 7.6 17 17v3H36v-3Z" fill="url(#goldShine)" opacity="0.85"/>
+</svg>
