@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#E8420A">
     <title>Downloads - Negosyo Plan</title>
-    <meta name="description" content="Access your purchased Negosyo Plan PDF bundles with instant downloads.">
+    <meta name="description" content="Access your purchased Negosyo Plan business blueprints and free downloadable resources.">
+    <link rel="canonical" href="https://negosyoplan.com/downloads.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -18,7 +21,7 @@
         <nav>
             <div class="logo">
                 <a href="index.html"><img src="assets/images/logo.svg" alt="Negosyo Plan logo" class="site-logo"></a>
-                <h1 class="brand-name">Negosyo Plan</h1>
+                <a href="index.html"><span class="brand-name">Negosyo Plan</span></a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
@@ -38,6 +41,8 @@
                     <div class="dropdown-content">
                         <a href="about.html">About Us</a>
                         <a href="downloads.html">Free Downloads</a>
+                        <a href="faq.html">FAQ</a>
+                        <a href="contact.html">Contact</a>
                         <a href="account.html">My Account</a>
                         <a href="cart.html">Shopping Cart</a>
                     </div>
@@ -45,34 +50,32 @@
                 <li><a href="about.html">About</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" placeholder="Search products..." id="search-input">
-                <button type="button" id="search-btn"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search products..." id="search-input" aria-label="Search products">
+                <button type="button" id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
             </div>
-            <button class="hamburger" id="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="hamburger" id="hamburger-menu" aria-label="Open menu">
+                <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Menu</h3>
-            <button class="sidebar-close" id="sidebar-close">&times;</button>
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="ai-generator.html">AI Generator</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="account.html">Account</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="shop.html"><i class="fas fa-store"></i> Shop</a></li>
+            <li><a href="ai-generator.html"><i class="fas fa-robot"></i> AI Generator</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="downloads.html"><i class="fas fa-download"></i> Downloads</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
         </ul>
     </div>
-
     <div class="overlay" id="overlay"></div>
 
     <main>
@@ -80,44 +83,109 @@
             <a href="index.html">Home</a> <span>/</span> <span>Downloads</span>
         </div>
 
-        <section class="downloads">
-            <h2>Your Downloads</h2>
-            <p>Download your purchased business plan PDFs below.</p>
-            <div id="download-list"></div>
-            <div id="no-downloads" class="page-notice">
-                <p>You haven't purchased any products yet.</p>
-                <a href="shop.html" class="button">Browse Products</a>
+        <section class="page-hero">
+            <h1><i class="fas fa-download" style="color:var(--amber);margin-right:0.5rem;"></i>Downloads</h1>
+            <p>Access your purchased business blueprint bundles and free entrepreneur resources — all in one place.</p>
+        </section>
+
+        <!-- Purchased Downloads -->
+        <section class="section-card" style="margin-bottom:2rem;">
+            <div class="section-title" style="margin-bottom:1.5rem;">
+                <h2><i class="fas fa-file-pdf" style="color:var(--orange);margin-right:0.5rem;"></i>Your Purchased Downloads</h2>
+                <p class="section-subtitle">All blueprints from your completed orders are available here.</p>
+            </div>
+
+            <div id="download-list" style="display:none;"></div>
+
+            <div id="no-downloads" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:2.5rem 1rem;gap:1rem;">
+                <div style="width:72px;height:72px;border-radius:50%;background:rgba(232,66,10,0.08);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--orange);">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div>
+                    <h4 style="color:var(--navy);margin-bottom:0.4rem;">No purchases yet</h4>
+                    <p style="color:var(--text-muted);font-size:0.88rem;max-width:380px;">You haven't purchased any bundles yet. Browse our collection to find the right blueprint for your business.</p>
+                </div>
+                <a href="shop.html" class="button"><i class="fas fa-store"></i> Browse Bundles</a>
+            </div>
+        </section>
+
+        <!-- Free Resources -->
+        <section class="section-card" style="margin-bottom:2rem;">
+            <div class="section-title" style="margin-bottom:1.5rem;">
+                <h2><i class="fas fa-gift" style="color:var(--orange);margin-right:0.5rem;"></i>Free Resources</h2>
+                <p class="section-subtitle">Download these free guides to kick-start your business planning journey — no purchase required.</p>
+            </div>
+            <div id="free-downloads"></div>
+        </section>
+
+        <!-- Upsell -->
+        <section class="section-card" style="text-align:center;background:linear-gradient(135deg,var(--navy),var(--navy-mid));border:none;">
+            <h3 style="color:var(--amber);margin-bottom:0.75rem;">Want More? Unlock Premium Blueprints</h3>
+            <p style="color:rgba(255,255,255,0.75);margin-bottom:1.5rem;max-width:540px;margin-left:auto;margin-right:auto;">Get instant access to our full library of professional business plan bundles, financial models, and launch checklists for just PHP 1,900.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+                <a href="shop.html" class="button" style="background:var(--amber);color:var(--navy);"><i class="fas fa-store"></i> View All Bundles</a>
+                <a href="ai-generator.html" class="button" style="background:transparent;border:2px solid rgba(255,255,255,0.4);color:#fff;"><i class="fas fa-robot"></i> Try AI Generator</a>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Negosyo Plan</h3>
-                <p>Your Business Blueprint to Success</p>
+        <div class="footer-inner">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Negosyo Plan</h3>
+                    <p class="footer-tagline">Your Business Blueprint to Success</p>
+                    <p class="footer-desc">Helping OFWs and entrepreneurs plan smarter, faster, and with confidence.</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/negosyoplan" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/negosyoplan" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/negosyoplan" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/negosyoplan" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="shop.html?category=starter">Starter Bundle</a></li>
+                        <li><a href="shop.html?category=founder">Founder Bundle</a></li>
+                        <li><a href="shop.html?category=complete">Complete Bundle</a></li>
+                        <li><a href="shop.html?category=custom">Custom Bundle</a></li>
+                        <li><a href="ai-generator.html">AI Blueprint Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="downloads.html">Free Downloads</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact & Legal</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" target="_blank" rel="noopener">WhatsApp Support</a></li>
+                        <li><a href="mailto:support@negosyoplan.com">support@negosyoplan.com</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="ai-generator.html">AI Generator</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Negosyo Plan. All rights reserved. &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a></p>
             </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Negosyo Plan. All rights reserved.</p>
         </div>
     </footer>
 
-    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 </body>
 </html>

@@ -1,14 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Generator - Negosyo Plan</title>
-    <meta name="description" content="Generate a custom AI business blueprint using DeepSeek and Genspark technology for your PDF plan.">
-    <meta property="og:title" content="AI Generator - Negosyo Plan">
+    <meta name="theme-color" content="#FF9951">
+    <title>AI Blueprint Generator - Negosyo Plan</title>
+    <meta name="description" content="Generate a custom AI business blueprint using smart guidance. Get a tailored plan for your business in minutes.">
+    <link rel="canonical" href="https://negosyoplan.com/ai-generator.html">
+    <meta property="og:title" content="AI Blueprint Generator - Negosyo Plan">
     <meta property="og:description" content="Create a tailored business blueprint with AI-powered guidance and template output.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
     <meta property="og:url" content="https://negosyoplan.com/ai-generator.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -22,7 +24,7 @@
         <nav>
             <div class="logo">
                 <a href="index.html"><img src="assets/images/logo.svg" alt="Negosyo Plan logo" class="site-logo"></a>
-                <h1 class="brand-name">Negosyo Plan</h1>
+                <a href="index.html"><span class="brand-name">Negosyo Plan</span></a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
@@ -42,6 +44,8 @@
                     <div class="dropdown-content">
                         <a href="about.html">About Us</a>
                         <a href="downloads.html">Free Downloads</a>
+                        <a href="faq.html">FAQ</a>
+                        <a href="contact.html">Contact</a>
                         <a href="account.html">My Account</a>
                         <a href="cart.html">Shopping Cart</a>
                     </div>
@@ -49,34 +53,32 @@
                 <li><a href="about.html">About</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" placeholder="Search products..." id="search-input">
-                <button type="button" id="search-btn"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search products..." id="search-input" aria-label="Search products">
+                <button type="button" id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
             </div>
-            <button class="hamburger" id="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="hamburger" id="hamburger-menu" aria-label="Open menu">
+                <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Menu</h3>
-            <button class="sidebar-close" id="sidebar-close">&times;</button>
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="ai-generator.html">AI Generator</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="account.html">Account</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="shop.html"><i class="fas fa-store"></i> Shop</a></li>
+            <li><a href="ai-generator.html"><i class="fas fa-robot"></i> AI Generator</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="downloads.html"><i class="fas fa-download"></i> Downloads</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
         </ul>
     </div>
-
     <div class="overlay" id="overlay"></div>
 
     <main>
@@ -85,13 +87,13 @@
         </div>
 
         <section class="ai-hero">
-            <h1>AI Blueprint Generator</h1>
-            <p>Use DeepSeek for adaptive business advice and Genspark for structured blueprint output. Generate a downloadable plan in minutes.</p>
-            <a href="#generator" class="button">Start Generating</a>
+            <h1><i class="fas fa-robot" style="color:var(--orange);margin-right:0.5rem;"></i>AI Blueprint Generator</h1>
+            <p>Use intelligent AI guidance to generate a practical business blueprint with structured output. Create a downloadable plan in minutes — tailored to your business type, budget, and timeline.</p>
+            <a href="#generator" class="button" style="margin-top:1.25rem;"><i class="fas fa-play"></i> Start Generating</a>
         </section>
 
         <section class="ai-panel" id="generator">
-            <h2>Build Your Blueprint</h2>
+            <h2 style="margin-bottom:1.25rem;">Build Your Blueprint</h2>
             <form id="ai-generator-form" class="form-grid">
                 <div class="form-group">
                     <label for="blueprint-name">Blueprint Name</label>
@@ -101,83 +103,133 @@
                     <label for="business-type">Business Type</label>
                     <select id="business-type" required>
                         <option value="">Select business type</option>
-                        <option value="Food & beverage">Food & beverage</option>
-                        <option value="Retail shop">Retail shop</option>
-                        <option value="Service provider">Service provider</option>
+                        <option value="Food & beverage">Food &amp; Beverage</option>
+                        <option value="Retail shop">Retail Shop</option>
+                        <option value="Service provider">Service Provider</option>
                         <option value="E-commerce">E-commerce</option>
                         <option value="Consulting">Consulting</option>
-                        <option value="Creative studio">Creative studio</option>
+                        <option value="Creative studio">Creative Studio</option>
+                        <option value="Health & wellness">Health &amp; Wellness</option>
+                        <option value="Technology">Technology / SaaS</option>
+                        <option value="Real estate">Real Estate / Rental</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="budget">Budget (AED)</label>
-                    <input type="number" id="budget" min="50" placeholder="130" required>
+                    <label for="location">Location / Market</label>
+                    <input type="text" id="location" placeholder="e.g. Manila, Dubai, London">
+                </div>
+                <div class="form-group">
+                    <label for="budget">Starting Budget (PHP)</label>
+                    <input type="number" id="budget" min="1000" placeholder="50000" required>
                 </div>
                 <div class="form-group">
                     <label for="execution-period">Execution Period (months)</label>
-                    <input type="number" id="execution-period" min="1" max="12" placeholder="3" required>
+                    <input type="number" id="execution-period" min="1" max="24" placeholder="3" required>
                 </div>
-                <button type="submit" class="button">Generate My Business Blueprint</button>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="business-goal">Main Business Goal</label>
+                    <input type="text" id="business-goal" placeholder="e.g. Generate passive income, full-time business, side hustle">
+                </div>
+                <button type="submit" class="button" style="width:fit-content;"><i class="fas fa-magic"></i> Generate My Business Blueprint</button>
             </form>
 
-            <div class="page-notice">
-                <h3>How it works</h3>
-                <p><strong>DeepSeek</strong> analyzes your business type, budget, and timeline to generate practical advice. <strong>Genspark</strong> turns that advice into a structured blueprint with summary, budget allocation, timeline, risk, and next steps.</p>
+            <div class="page-notice" style="margin-top:1.5rem;">
+                <strong><i class="fas fa-info-circle" style="color:var(--orange);margin-right:0.4rem;"></i>How it works:</strong>
+                <p style="margin-top:0.5rem;"><strong>AI guidance</strong> analyzes your business type, budget, and timeline to generate practical advice. The builder then turns that advice into a structured blueprint with executive summary, budget allocation, timeline, risk assessment, and next steps.</p>
             </div>
 
-            <div id="ai-output-container" class="generator-output">
-                <h3 id="ai-output-title">Your Blueprint Output</h3>
+            <div id="ai-output-container" class="generator-output" style="margin-top:1.5rem;">
+                <h3 id="ai-output-title" style="margin-bottom:1rem;">Your Blueprint Output</h3>
                 <div id="ai-output">
-                    <p>Fill in the form and click generate to preview your AI blueprint.</p>
+                    <p style="color:rgba(44,62,80,0.6);">Fill in the form above and click Generate to preview your AI blueprint.</p>
                 </div>
-                <button id="download-blueprint" class="button secondary" style="display:none;">Download Blueprint</button>
+                <button id="download-blueprint" class="button secondary" style="display:none;margin-top:1rem;"><i class="fas fa-download"></i> Download Blueprint</button>
             </div>
         </section>
 
-        <section class="section-card">
+        <section class="section-card" style="margin-top:2rem;">
             <div class="section-title">
                 <h2>Blueprint History</h2>
+                <p class="section-subtitle">Your previously generated blueprints are saved locally.</p>
             </div>
             <div id="history-list" class="history-list">
-                <p>No blueprints generated yet.</p>
+                <p style="color:rgba(44,62,80,0.5);">No blueprints generated yet.</p>
+            </div>
+        </section>
+
+        <section class="trust-badges" style="margin-top:2rem;">
+            <div class="trust-card">
+                <h4><i class="fas fa-bolt" style="color:var(--orange);margin-right:0.5rem;"></i>Instant Generation</h4>
+                <p>Get a complete business blueprint in seconds — no waiting, no signup required.</p>
+            </div>
+            <div class="trust-card">
+                <h4><i class="fas fa-map-marked-alt" style="color:var(--orange);margin-right:0.5rem;"></i>Location-Aware</h4>
+                <p>Plans are tailored to your specific city and market so advice is locally relevant.</p>
+            </div>
+            <div class="trust-card">
+                <h4><i class="fas fa-save" style="color:var(--orange);margin-right:0.5rem;"></i>Saved History</h4>
+                <p>All your generated blueprints are saved in your browser for future reference.</p>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Negosyo Plan</h3>
-                <p>Your Business Blueprint to Success</p>
-                <p>AI-powered business plans, ready for instant download.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="ai-generator.html">AI Generator</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
-                <div class="social-icons">
-                    <a href="https://facebook.com/negosyoplan" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-                    <a href="https://instagram.com/negosyoplan" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="https://twitter.com/negosyoplan" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-                    <a href="https://linkedin.com/company/negosyoplan" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <div class="footer-inner">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Negosyo Plan</h3>
+                    <p class="footer-tagline">Your Business Blueprint to Success</p>
+                    <p class="footer-desc">AI-powered business plans, ready for instant download.</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/negosyoplan" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/negosyoplan" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/negosyoplan" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/negosyoplan" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="shop.html?category=starter">Starter Bundle</a></li>
+                        <li><a href="shop.html?category=founder">Founder Bundle</a></li>
+                        <li><a href="shop.html?category=complete">Complete Bundle</a></li>
+                        <li><a href="shop.html?category=custom">Custom Bundle</a></li>
+                        <li><a href="ai-generator.html">AI Blueprint Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="downloads.html">Free Downloads</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact & Legal</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" target="_blank" rel="noopener">WhatsApp Support</a></li>
+                        <li><a href="mailto:support@negosyoplan.com">support@negosyoplan.com</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Negosyo Plan. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Negosyo Plan. All rights reserved. &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a></p>
+            </div>
         </div>
     </footer>
 
-    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 </body>
 </html>

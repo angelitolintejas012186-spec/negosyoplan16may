@@ -1,76 +1,83 @@
-﻿// checkout.js - Checkout and payment functionality
+// checkout.js - Checkout billing form functionality
 
 document.addEventListener('DOMContentLoaded', function() {
     loadOrderSummary();
     const form = document.getElementById('checkout-form');
     if (form) {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            processPayment();
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            processBilling();
         });
     }
 });
 
 function loadOrderSummary() {
-    const cart = window.Cart.loadCart();
+    const cart = window.Cart ? window.Cart.loadCart() : JSON.parse(localStorage.getItem('cart') || '[]');
     const orderItems = document.getElementById('order-items');
     const totalAmount = document.getElementById('total-amount');
     const emptyState = document.getElementById('checkout-empty');
+    const form = document.getElementById('checkout-form');
 
-    if (!orderItems || !totalAmount) return;
+    if (!orderItems) return;
 
     if (cart.length === 0) {
-        orderItems.innerHTML = '<p>Your cart is empty. Add products before checkout.</p>';
-        totalAmount.textContent = '0 AED';
+        orderItems.innerHTML = '<p style="color:var(--text-muted);font-size:0.88rem;text-align:center;padding:1.5rem 0;">Your cart is empty.</p>';
+        if (totalAmount) totalAmount.textContent = window.NegosyoPlan.formatPrice(0);
         if (emptyState) emptyState.style.display = 'block';
+        if (form) form.style.display = 'none';
         return;
     }
 
     if (emptyState) emptyState.style.display = 'none';
-    orderItems.innerHTML = cart.map(item => {
-        const itemTotal = item.price * item.quantity;
-        return `
-            <div class="order-item">
-                <img src="${item.image}" alt="${item.name}" loading="lazy">
-                <div>
-                    <h4>${item.name}</h4>
-                    <p>Quantity: ${item.quantity}</p>
-                </div>
-                <p>${window.NegosyoPlan.formatPrice(itemTotal)}</p>
+    if (form) form.style.display = 'grid';
+
+    orderItems.innerHTML = cart.map(item => `
+        <div class="order-confirm-row">
+            <div>
+                <strong style="font-size:0.88rem;color:var(--navy);">${item.name}</strong>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.15rem;">Qty: ${item.quantity}</p>
             </div>
-        `;
-    }).join('');
-    totalAmount.textContent = window.NegosyoPlan.formatPrice(window.Cart.calculateTotal(cart));
+            <strong style="color:var(--orange);font-size:0.88rem;white-space:nowrap;">${window.NegosyoPlan.formatPrice(item.price * item.quantity)}</strong>
+        </div>
+    `).join('');
+
+    const total = window.Cart ? window.Cart.calculateTotal(cart) : cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    if (totalAmount) totalAmount.textContent = window.NegosyoPlan.formatPrice(total);
 }
 
-function processPayment() {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const address = document.getElementById('address').value.trim();
+function processBilling() {
+    const get = id => (document.getElementById(id) || {}).value?.trim() || '';
+    const name = get('checkout-name');
+    const email = get('checkout-email');
+    const phone = get('checkout-phone');
+    const address = get('checkout-address');
+    const city = get('checkout-city');
+    const country = get('checkout-country');
 
     if (!name || !email || !address) {
-        alert('Please complete all required fields.');
+        window.NegosyoPlan.showToast('Please fill in all required fields.', 'error');
+        return;
+    }
+    if (!email.includes('@') || !email.includes('.')) {
+        window.NegosyoPlan.showToast('Please enter a valid email address.', 'error');
         return;
     }
 
-    const cart = window.Cart.loadCart();
+    const cart = window.Cart ? window.Cart.loadCart() : JSON.parse(localStorage.getItem('cart') || '[]');
     if (cart.length === 0) {
-        alert('Your cart is empty. Add a bundle before checkout.');
+        window.NegosyoPlan.showToast('Your cart is empty. Please add a bundle first.', 'error');
         return;
     }
 
+    const total = window.Cart ? window.Cart.calculateTotal(cart) : cart.reduce((s, i) => s + i.price * i.quantity, 0);
     const pendingOrder = {
         id: Date.now(),
-        customer: { name, email, address },
+        customer: { name, email, phone, address, city, country },
         items: cart,
-        total: window.Cart.calculateTotal(cart),
+        total,
         createdAt: new Date().toISOString()
     };
 
     localStorage.setItem('pendingOrder', JSON.stringify(pendingOrder));
     window.location.href = 'payment.html';
-}
-
-function generatePurchaseToken() {
-    return 'NP-' + Math.random().toString(36).substring(2, 10).toUpperCase();
 }

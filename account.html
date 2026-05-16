@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account - Negosyo Plan</title>
-    <meta name="description" content="Manage your Negosyo Plan account, view orders, and access downloads.">
+    <meta name="theme-color" content="#E8420A">
+    <title>My Account - Negosyo Plan</title>
+    <meta name="description" content="Log in to your Negosyo Plan account to access your orders, downloads, and profile.">
+    <link rel="canonical" href="https://negosyoplan.com/account.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -19,7 +22,7 @@
         <nav>
             <div class="logo">
                 <a href="index.html"><img src="assets/images/logo.svg" alt="Negosyo Plan logo" class="site-logo"></a>
-                <h1 class="brand-name">Negosyo Plan</h1>
+                <a href="index.html"><span class="brand-name">Negosyo Plan</span></a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
@@ -39,6 +42,8 @@
                     <div class="dropdown-content">
                         <a href="about.html">About Us</a>
                         <a href="downloads.html">Free Downloads</a>
+                        <a href="faq.html">FAQ</a>
+                        <a href="contact.html">Contact</a>
                         <a href="account.html">My Account</a>
                         <a href="cart.html">Shopping Cart</a>
                     </div>
@@ -46,114 +51,236 @@
                 <li><a href="about.html">About</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" placeholder="Search products..." id="search-input">
-                <button type="button" id="search-btn"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search products..." id="search-input" aria-label="Search products">
+                <button type="button" id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
             </div>
-            <button class="hamburger" id="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="hamburger" id="hamburger-menu" aria-label="Open menu">
+                <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Menu</h3>
-            <button class="sidebar-close" id="sidebar-close">&times;</button>
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="ai-generator.html">AI Generator</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="account.html">Account</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="shop.html"><i class="fas fa-store"></i> Shop</a></li>
+            <li><a href="ai-generator.html"><i class="fas fa-robot"></i> AI Generator</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="downloads.html"><i class="fas fa-download"></i> Downloads</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
         </ul>
     </div>
-
     <div class="overlay" id="overlay"></div>
 
     <main>
         <div class="breadcrumbs">
-            <a href="index.html">Home</a> <span>/</span> <span>Account</span>
+            <a href="index.html">Home</a> <span>/</span> <span>My Account</span>
         </div>
 
-        <section class="account">
-            <h2>My Account</h2>
-            <div class="account-card">
-                <div id="login-section">
-                    <h3>Login</h3>
-                    <form id="login-form" class="form-grid">
-                        <div class="form-group">
-                            <label for="login-email">Email</label>
-                            <input type="email" id="login-email" required>
-                        </div>
-                        <button type="submit" class="button">Login</button>
-                    </form>
-                    <p>Don't have an account? <a href="#" id="show-register">Register here</a></p>
-                </div>
-                <div id="register-section" style="display:none;">
-                    <h3>Register</h3>
-                    <form id="register-form" class="form-grid">
-                        <div class="form-group">
-                            <label for="register-email">Email</label>
-                            <input type="email" id="register-email" required>
-                        </div>
-                        <button type="submit" class="button">Register</button>
-                    </form>
-                    <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
-                </div>
-                <div id="account-dashboard" style="display:none;">
-                    <h3>Welcome back!</h3>
-                    <p>Email: <span id="user-email"></span></p>
-                    <div class="account-card">
-                        <div class="tab-button active" data-tab="orders">Order History</div>
-                        <div class="tab-button" data-tab="downloads">Downloads</div>
-                    </div>
-                    <div class="tab-pane active" id="orders-tab">
-                        <h4>Order History</h4>
-                        <div id="order-history"></div>
-                    </div>
-                    <div class="tab-pane" id="downloads-tab">
-                        <h4>Downloads</h4>
-                        <div id="account-downloads"></div>
-                    </div>
-                    <button id="logout-btn" class="button secondary">Logout</button>
-                </div>
-            </div>
+        <section class="page-hero">
+            <h1><i class="fas fa-user-circle" style="color:var(--amber);margin-right:0.5rem;"></i>My Account</h1>
+            <p>Manage your profile, view order history, and access your purchased business blueprints.</p>
         </section>
+
+        <!-- Auth Panels (Login + Register) -->
+        <div id="auth-panels">
+            <!-- Login -->
+            <section class="section-card" id="login-section" style="max-width:480px;margin:0 auto;">
+                <div style="text-align:center;margin-bottom:2rem;">
+                    <div style="width:64px;height:64px;border-radius:50%;background:rgba(232,66,10,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.6rem;color:var(--orange);">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <h3>Welcome Back</h3>
+                    <p style="color:var(--text-muted);font-size:0.88rem;margin-top:0.35rem;">Sign in to access your orders and downloads.</p>
+                </div>
+                <form id="login-form" class="form-grid">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="you@email.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Your password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="button" style="justify-content:center;">
+                        <i class="fas fa-sign-in-alt"></i> Log In
+                    </button>
+                </form>
+                <p style="text-align:center;margin-top:1.25rem;font-size:0.88rem;color:var(--text-muted);">
+                    Don't have an account? <a href="#" id="show-register" style="color:var(--orange);font-weight:600;">Create one here</a>
+                </p>
+            </section>
+
+            <!-- Register -->
+            <section class="section-card" id="register-section" style="max-width:480px;margin:0 auto;display:none;">
+                <div style="text-align:center;margin-bottom:2rem;">
+                    <div style="width:64px;height:64px;border-radius:50%;background:rgba(232,66,10,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.6rem;color:var(--orange);">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Create Account</h3>
+                    <p style="color:var(--text-muted);font-size:0.88rem;margin-top:0.35rem;">Join Negosyo Plan to track orders and access downloads.</p>
+                </div>
+                <form id="register-form" class="form-grid">
+                    <div class="form-group">
+                        <label for="register-name">Full Name <span style="color:var(--orange);">*</span></label>
+                        <input type="text" id="register-name" placeholder="e.g. Maria Santos" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email Address <span style="color:var(--orange);">*</span></label>
+                        <input type="email" id="register-email" placeholder="you@email.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password <span style="color:var(--orange);">*</span></label>
+                        <input type="password" id="register-password" placeholder="At least 6 characters" required autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm">Confirm Password <span style="color:var(--orange);">*</span></label>
+                        <input type="password" id="register-confirm" placeholder="Repeat your password" required autocomplete="new-password">
+                    </div>
+                    <div class="page-notice" style="font-size:0.81rem;">
+                        <i class="fas fa-lock" style="color:var(--orange);margin-right:0.4rem;"></i>
+                        Your account data is stored securely in your browser. We never store passwords on our servers.
+                    </div>
+                    <button type="submit" class="button" style="justify-content:center;">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+                <p style="text-align:center;margin-top:1.25rem;font-size:0.88rem;color:var(--text-muted);">
+                    Already have an account? <a href="#" id="show-login" style="color:var(--orange);font-weight:600;">Log in here</a>
+                </p>
+            </section>
+        </div>
+
+        <!-- Account Dashboard (shown when logged in) -->
+        <div id="account-dashboard" style="display:none;">
+
+            <!-- Profile Card -->
+            <section class="section-card" style="margin-bottom:1.5rem;">
+                <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+                    <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--amber));display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;flex-shrink:0;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div style="flex:1;">
+                        <h3 id="user-name" style="margin-bottom:0.2rem;"></h3>
+                        <p id="user-email-display" style="color:var(--text-muted);font-size:0.88rem;"></p>
+                        <p id="user-joined" style="color:var(--text-muted);font-size:0.8rem;margin-top:0.15rem;"></p>
+                    </div>
+                    <button id="logout-btn" class="button secondary" style="flex-shrink:0;">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tabs -->
+            <div class="account-tabs">
+                <div class="tab-button active" data-tab="orders"><i class="fas fa-receipt" style="margin-right:0.4rem;"></i>Orders</div>
+                <div class="tab-button" data-tab="downloads-account"><i class="fas fa-download" style="margin-right:0.4rem;"></i>Downloads</div>
+                <div class="tab-button" data-tab="profile"><i class="fas fa-user" style="margin-right:0.4rem;"></i>Profile</div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div class="tab-pane active" id="orders-tab">
+                <section class="section-card">
+                    <h3 style="margin-bottom:1.25rem;"><i class="fas fa-history" style="color:var(--orange);margin-right:0.5rem;"></i>Order History</h3>
+                    <div id="order-history">
+                        <p style="color:var(--text-muted);font-size:0.88rem;">Loading orders...</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Downloads Tab -->
+            <div class="tab-pane" id="downloads-account-tab">
+                <section class="section-card">
+                    <h3 style="margin-bottom:1.25rem;"><i class="fas fa-file-download" style="color:var(--orange);margin-right:0.5rem;"></i>Your Downloads</h3>
+                    <div id="account-downloads">
+                        <p style="color:var(--text-muted);font-size:0.88rem;">Loading downloads...</p>
+                    </div>
+                    <div style="margin-top:1.25rem;">
+                        <a href="downloads.html" class="button secondary" style="font-size:0.85rem;padding:0.65rem 1.25rem;">
+                            <i class="fas fa-archive"></i> View Full Downloads Library
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-pane" id="profile-tab">
+                <section class="section-card">
+                    <h3 style="margin-bottom:1.25rem;"><i class="fas fa-id-card" style="color:var(--orange);margin-right:0.5rem;"></i>Profile Information</h3>
+                    <div class="account-info-grid" id="profile-info"></div>
+                    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border-soft);">
+                        <p style="font-size:0.83rem;color:var(--text-muted);">Need to update your details? <a href="contact.html" style="color:var(--orange);font-weight:600;">Contact our support team.</a></p>
+                    </div>
+                </section>
+            </div>
+
+        </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Negosyo Plan</h3>
-                <p>Your Business Blueprint to Success</p>
+        <div class="footer-inner">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Negosyo Plan</h3>
+                    <p class="footer-tagline">Your Business Blueprint to Success</p>
+                    <p class="footer-desc">Helping OFWs and entrepreneurs plan smarter, faster, and with confidence.</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/negosyoplan" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/negosyoplan" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/negosyoplan" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/negosyoplan" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="shop.html?category=starter">Starter Bundle</a></li>
+                        <li><a href="shop.html?category=founder">Founder Bundle</a></li>
+                        <li><a href="shop.html?category=complete">Complete Bundle</a></li>
+                        <li><a href="shop.html?category=custom">Custom Bundle</a></li>
+                        <li><a href="ai-generator.html">AI Blueprint Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="downloads.html">Free Downloads</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact & Legal</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" target="_blank" rel="noopener">WhatsApp Support</a></li>
+                        <li><a href="mailto:support@negosyoplan.com">support@negosyoplan.com</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="ai-generator.html">AI Generator</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Negosyo Plan. All rights reserved. &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a></p>
             </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Negosyo Plan. All rights reserved.</p>
         </div>
     </footer>
 
-    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 </body>
 </html>

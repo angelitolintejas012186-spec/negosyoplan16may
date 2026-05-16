@@ -1,14 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FF9951">
     <title>Negosyo Plan - Your Business Blueprint to Success</title>
-    <meta name="description" content="Buy downloadable PDF business plan bundles and generate AI-powered business blueprints for OFWs and entrepreneurs.">
+    <meta name="description" content="Buy downloadable PDF business plan bundles and generate AI-powered business blueprints for OFWs and entrepreneurs worldwide.">
+    <link rel="canonical" href="https://negosyoplan.com/">
+    <meta property="og:type" content="website">
     <meta property="og:title" content="Negosyo Plan - Your Business Blueprint to Success">
     <meta property="og:description" content="Premium downloadable PDF business plan bundles and AI Blueprint Generator for OFWs and entrepreneurs.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
     <meta property="og:url" content="https://negosyoplan.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -17,11 +22,12 @@
     <script src="js/main.js" defer></script>
 </head>
 <body>
+
     <header>
         <nav>
             <div class="logo">
                 <a href="index.html"><img src="assets/images/logo.svg" alt="Negosyo Plan logo" class="site-logo"></a>
-                <h1 class="brand-name">Negosyo Plan</h1>
+                <a href="index.html"><span class="brand-name">Negosyo Plan</span></a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
@@ -41,6 +47,8 @@
                     <div class="dropdown-content">
                         <a href="about.html">About Us</a>
                         <a href="downloads.html">Free Downloads</a>
+                        <a href="faq.html">FAQ</a>
+                        <a href="contact.html">Contact</a>
                         <a href="account.html">My Account</a>
                         <a href="cart.html">Shopping Cart</a>
                     </div>
@@ -48,34 +56,32 @@
                 <li><a href="about.html">About</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" placeholder="Search products..." id="search-input">
-                <button type="button" id="search-btn"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search products..." id="search-input" aria-label="Search products">
+                <button type="button" id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
             </div>
-            <button class="hamburger" id="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="hamburger" id="hamburger-menu" aria-label="Open menu">
+                <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
 
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar" id="sidebar" aria-hidden="true">
         <div class="sidebar-header">
             <h3>Menu</h3>
-            <button class="sidebar-close" id="sidebar-close">&times;</button>
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="ai-generator.html">AI Generator</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="account.html">Account</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="shop.html"><i class="fas fa-store"></i> Shop</a></li>
+            <li><a href="ai-generator.html"><i class="fas fa-robot"></i> AI Generator</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="downloads.html"><i class="fas fa-download"></i> Downloads</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
         </ul>
     </div>
-
     <div class="overlay" id="overlay"></div>
 
     <main>
@@ -84,31 +90,31 @@
         </div>
 
         <section class="hero">
-            <div>
-                <p class="section-subtitle">Digital business blueprints for OFWs, overseas workers, and aspiring entrepreneurs across Asia, the USA, Europe, and Africa.</p>
-                <h1>Negosyo Plan: Launch your business with a ready-made blueprint.</h1>
+            <div class="hero-text">
+                <p class="section-subtitle" style="margin-bottom:0.75rem;">Digital business blueprints for OFWs, entrepreneurs, and startup creators around the world.</p>
+                <h1>Launch your business with a ready-made blueprint.</h1>
                 <p>Download practical PDF business plans, access high-value bundles, and request a custom blueprint tailored to your location and budget.</p>
-                <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-top:1.5rem;">
-                    <a href="shop.html" class="cta-button">Browse Bundles</a>
-                    <a href="ai-generator.html" class="button secondary">Generate AI Blueprint</a>
+                <div class="hero-actions">
+                    <a href="shop.html" class="cta-button"><i class="fas fa-store"></i> Browse Bundles</a>
+                    <a href="ai-generator.html" class="button secondary"><i class="fas fa-robot"></i> Generate AI Blueprint</a>
                     <div class="currency-selector-wrapper">
-                        <span>Prices shown in</span>
+                        <span>Currency:</span>
                         <select id="currency-selector" class="currency-selector" aria-label="Choose currency"></select>
                     </div>
                 </div>
             </div>
             <div class="hero-quick">
                 <div class="hero-card">
-                    <h4>12 Popular Blueprints</h4>
+                    <h4><i class="fas fa-file-pdf" style="color:var(--orange);margin-right:0.5rem;"></i>12 Popular Blueprints</h4>
                     <p>Access top small business PDF plans for food, retail, services, tech, and green ventures.</p>
                 </div>
                 <div class="hero-card">
-                    <h4>4 Bundle Options</h4>
-                    <p>Starter, Founder, Complete Packing and Custom packages priced for fast launch.</p>
+                    <h4><i class="fas fa-boxes" style="color:var(--orange);margin-right:0.5rem;"></i>4 Bundle Options</h4>
+                    <p>Starter, Founder, Complete, and Custom packages priced for fast launch.</p>
                 </div>
                 <div class="hero-card">
-                    <h4>Global Currency Support</h4>
-                    <p>Automatic currency conversion helps customers from Philippines, USA, Europe, and Africa shop with confidence.</p>
+                    <h4><i class="fas fa-globe" style="color:var(--orange);margin-right:0.5rem;"></i>Global Currency Support</h4>
+                    <p>Automatic currency conversion for customers across multiple markets and regions.</p>
                 </div>
             </div>
         </section>
@@ -121,7 +127,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Food Cart Business" loading="lazy">
-                    <div class="pdf-badge">Philippines</div>
+                    <div class="pdf-badge">Food</div>
                 </div>
                 <h3>Food Cart Blueprint</h3>
                 <p>Plan your street food venture with cash flow, vendor sourcing and menu strategy.</p>
@@ -129,7 +135,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Digital Store" loading="lazy">
-                    <div class="pdf-badge">USA</div>
+                    <div class="pdf-badge">E-commerce</div>
                 </div>
                 <h3>E-commerce Store Plan</h3>
                 <p>Launch a digital store with product sourcing, checkout flow and marketing guidance.</p>
@@ -137,7 +143,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Consulting Agency" loading="lazy">
-                    <div class="pdf-badge">Europe</div>
+                    <div class="pdf-badge">Consulting</div>
                 </div>
                 <h3>Consulting Agency Blueprint</h3>
                 <p>Build a service business proposal, client onboarding, and pricing model.</p>
@@ -145,7 +151,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Wellness Business" loading="lazy">
-                    <div class="pdf-badge">Africa</div>
+                    <div class="pdf-badge">Wellness</div>
                 </div>
                 <h3>Wellness Brand Plan</h3>
                 <p>Launch beauty and health products with a clear positioning and retail strategy.</p>
@@ -153,7 +159,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1495121605193-b116b5b9c5f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Artisan Marketplace" loading="lazy">
-                    <div class="pdf-badge">Europe</div>
+                    <div class="pdf-badge">Artisan</div>
                 </div>
                 <h3>Artisan Marketplace Plan</h3>
                 <p>Structure product lines, pricing, and seller relationships for handmade goods.</p>
@@ -161,7 +167,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1515169067865-5387ec356754?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fitness Program" loading="lazy">
-                    <div class="pdf-badge">USA</div>
+                    <div class="pdf-badge">Fitness</div>
                 </div>
                 <h3>Fitness Program Blueprint</h3>
                 <p>Create membership, launch, and funnel plans for a fitness coaching business.</p>
@@ -169,7 +175,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Home Bakery" loading="lazy">
-                    <div class="pdf-badge">Philippines</div>
+                    <div class="pdf-badge">Bakery</div>
                 </div>
                 <h3>Home Bakery Plan</h3>
                 <p>Launch a home-based bakery with product, pricing and delivery plan templates.</p>
@@ -177,7 +183,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Digital Marketing" loading="lazy">
-                    <div class="pdf-badge">Africa</div>
+                    <div class="pdf-badge">Marketing</div>
                 </div>
                 <h3>Digital Marketing Agency</h3>
                 <p>Design service packages, lead funnels, and retention systems for digital marketers.</p>
@@ -185,7 +191,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Travel Startup" loading="lazy">
-                    <div class="pdf-badge">Europe</div>
+                    <div class="pdf-badge">Travel</div>
                 </div>
                 <h3>Tourism Start-up Blueprint</h3>
                 <p>Map out packages, supplier relationships, and online booking for travel experiences.</p>
@@ -193,7 +199,7 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Retail Kiosk" loading="lazy">
-                    <div class="pdf-badge">Asia</div>
+                    <div class="pdf-badge">Retail</div>
                 </div>
                 <h3>Retail Kiosk Business Plan</h3>
                 <p>Plan inventory, foot traffic, and pricing for a compact retail outlet.</p>
@@ -201,15 +207,15 @@
             <article class="product-card">
                 <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Event Services" loading="lazy">
-                    <div class="pdf-badge">USA</div>
+                    <div class="pdf-badge">Events</div>
                 </div>
                 <h3>Event Planner Blueprint</h3>
                 <p>Build a business model for events, corporate packages, and weekend productions.</p>
             </article>
             <article class="product-card">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1515169067865-5387ec356754?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Solar Supply" loading="lazy">
-                    <div class="pdf-badge">Africa</div>
+                    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Solar Supply" loading="lazy">
+                    <div class="pdf-badge">Green</div>
                 </div>
                 <h3>Solar Energy Supply Plan</h3>
                 <p>Plan stock, installation, and local partner agreements for solar solutions.</p>
@@ -227,9 +233,11 @@
                     <div class="pdf-badge">Starter</div>
                 </div>
                 <h3>Starter Bundle</h3>
-                <p class="price" data-base-price="1900">PHP 1900</p>
+                <p class="price" data-base-price="1900">PHP 1,900</p>
                 <p>Start with a practical business blueprint, budget planner, and launch checklist.</p>
-                <a href="product.html?id=1" class="button">Browse Starter</a>
+                <div class="product-actions">
+                    <a href="product.html?id=1" class="button">View Details</a>
+                </div>
             </article>
             <article class="product-card" data-base-price="2600">
                 <div class="product-image">
@@ -237,19 +245,23 @@
                     <div class="pdf-badge">Founder</div>
                 </div>
                 <h3>Founder Package</h3>
-                <p class="price" data-base-price="2600">PHP 2600</p>
+                <p class="price" data-base-price="2600">PHP 2,600</p>
                 <p>Advanced business blueprint with market validation, revenue plan, and investor toolkit.</p>
-                <a href="product.html?id=2" class="button">Browse Founder</a>
+                <div class="product-actions">
+                    <a href="product.html?id=2" class="button">View Details</a>
+                </div>
             </article>
             <article class="product-card" data-base-price="3500">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Complete Packing" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Complete Set" loading="lazy">
                     <div class="pdf-badge">Complete</div>
                 </div>
-                <h3>Complete Packing</h3>
-                <p class="price" data-base-price="3500">PHP 3500</p>
+                <h3>Complete Set</h3>
+                <p class="price" data-base-price="3500">PHP 3,500</p>
                 <p>Full PDF planning set with operations, marketing, growth and execution strategy.</p>
-                <a href="product.html?id=3" class="button">Browse Complete</a>
+                <div class="product-actions">
+                    <a href="product.html?id=3" class="button">View Details</a>
+                </div>
             </article>
             <article class="product-card" data-base-price="4600">
                 <div class="product-image">
@@ -257,9 +269,11 @@
                     <div class="pdf-badge">Custom</div>
                 </div>
                 <h3>Custom Package</h3>
-                <p class="price" data-base-price="4600">PHP 4600</p>
+                <p class="price" data-base-price="4600">PHP 4,600</p>
                 <p>Personalized blueprint created for your business idea, city, and funding level.</p>
-                <a href="#custom-blueprint" class="button">Request Custom</a>
+                <div class="product-actions">
+                    <a href="#custom-blueprint" class="button">Request Custom</a>
+                </div>
             </article>
         </div>
 
@@ -271,7 +285,7 @@
             <div class="custom-blueprint-grid">
                 <form id="custom-blueprint-form" class="form-grid">
                     <div class="form-group">
-                        <label for="client-name">Name</label>
+                        <label for="client-name">Full Name</label>
                         <input type="text" id="client-name" placeholder="Your name" required>
                     </div>
                     <div class="form-group">
@@ -287,67 +301,56 @@
                         <input type="text" id="client-business-type" placeholder="e.g. Coffee shop, retail, online store" required>
                     </div>
                     <div class="form-group">
-                        <label for="client-capital">Capital</label>
+                        <label for="client-capital">Starting Capital</label>
                         <input type="text" id="client-capital" placeholder="e.g. PHP 120,000" required>
                     </div>
                     <div class="form-group">
-                        <label for="client-email">Email</label>
-                        <input type="email" id="client-email" placeholder="Enter your email" required>
+                        <label for="client-email">Email Address</label>
+                        <input type="email" id="client-email" placeholder="you@email.com" required>
                     </div>
                     <div class="form-group">
                         <label for="client-phone">Contact Number</label>
                         <input type="tel" id="client-phone" placeholder="+63 912 345 6789" required>
                     </div>
                     <div class="form-group" style="grid-column:1 / -1;">
-                        <label for="client-details">Share your business idea</label>
-                        <textarea id="client-details" placeholder="Tell us what you want to create" required></textarea>
+                        <label for="client-details">Describe your business idea</label>
+                        <textarea id="client-details" placeholder="Tell us what you want to create..." required></textarea>
                     </div>
-                    <button type="submit" class="button">Request Custom Blueprint</button>
+                    <button type="submit" class="button"><i class="fas fa-paper-plane"></i> Request Custom Blueprint</button>
                     <div id="custom-request-status" class="page-notice" style="display:none;"></div>
                 </form>
                 <div id="custom-blueprint-result" class="custom-blueprint-result">
-                    <div class="page-notice">Submit your details to start your custom business blueprint request.</div>
+                    <div class="page-notice"><i class="fas fa-info-circle" style="color:var(--orange);margin-right:0.5rem;"></i>Submit your details to start your custom business blueprint request.</div>
                 </div>
             </div>
         </section>
 
-        <section class="section-card subscribe-card">
-            <div>
-                <h2>Subscribe for Exclusive Bundle Discounts</h2>
-                <p>Receive updates for new PDF business plans, launch offers, and OFW entrepreneur resources.</p>
-                <form id="subscribe-form" class="form-grid subscribe-form">
-                    <input type="email" id="subscribe-email" placeholder="Your email address" required>
-                    <button type="submit" class="button">Subscribe</button>
-                </form>
-                <p id="subscribe-success" style="margin-top:0.75rem;color:rgba(44,62,80,0.7);"></p>
-            </div>
+        <section class="subscribe-card section-card">
+            <h2>Subscribe for Exclusive Bundle Discounts</h2>
+            <p>Receive updates for new PDF business plans, launch offers, and OFW entrepreneur resources.</p>
+            <form id="subscribe-form" class="subscribe-form">
+                <input type="email" id="subscribe-email" placeholder="Your email address" required aria-label="Email address">
+                <button type="submit" class="button"><i class="fas fa-bell"></i> Subscribe</button>
+            </form>
+            <p id="subscribe-success" style="margin-top:0.75rem;font-size:0.88rem;color:var(--orange);"></p>
         </section>
 
-        <section class="section-card" id="terms">
-            <div class="section-title">
-                <h2>Terms & Conditions</h2>
-            </div>
-            <p>Negosyo Plan provides digital PDF business plans and blueprint guidance for planning purposes. All content is sold as downloadable material and is not refundable once downloaded. Custom blueprint creation uses automated API request handling and email delivery. Users must provide a valid email address and accept our standard terms of service.</p>
-        </section>
-
-        <section class="section-title">
-            <h2>AI Blueprint Generator</h2>
-        </section>
-        <section class="section-card">
+        <section class="section-card" style="margin-bottom:2.5rem;">
             <div class="section-grid">
                 <div>
-                    <h3>DeepSeek + Genspark</h3>
-                    <p>Generate a ready-to-use business blueprint with adaptive AI guidance and structured execution planning. Perfect for budgets measured in AED and launch timelines measured in months.</p>
-                    <a href="ai-generator.html" class="button">Generate My Blueprint</a>
+                    <h2 style="margin-bottom:1rem;">AI Blueprint Generator</h2>
+                    <h3 style="margin-bottom:0.75rem;color:var(--orange);">AI-Powered Blueprint Engine</h3>
+                    <p style="margin-bottom:1.25rem;">Generate a practical business blueprint with smart AI guidance and structured execution planning for your venture.</p>
+                    <a href="ai-generator.html" class="button"><i class="fas fa-robot"></i> Generate My Blueprint</a>
                 </div>
-                <div>
+                <div style="display:flex;flex-direction:column;gap:1rem;">
                     <div class="trust-card">
                         <h4>Executive Summary</h4>
-                        <p>Get a concise summary tailored to your chosen business model, budget allocation, risk assessment, and next steps.</p>
+                        <p>A concise summary tailored to your chosen business model, budget allocation, risk assessment, and next steps.</p>
                     </div>
                     <div class="trust-card">
                         <h4>Execution Timeline</h4>
-                        <p>Receive a step-by-step roadmap for the first months of your business launch, including validation and scaling milestones.</p>
+                        <p>A step-by-step roadmap for the first months of your business launch, including validation and scaling milestones.</p>
                     </div>
                 </div>
             </div>
@@ -383,75 +386,85 @@
             </article>
         </div>
 
-        <section class="trust-badges">
+        <div class="trust-badges">
             <div class="trust-card">
-                <h4>1000+ Trusted Customers</h4>
+                <h4><i class="fas fa-users" style="color:var(--orange);margin-right:0.5rem;"></i>1,000+ Trusted Customers</h4>
                 <p>Entrepreneurs worldwide trust our downloadable blueprints to launch faster.</p>
             </div>
             <div class="trust-card">
-                <h4>Instant Download</h4>
-                <p>Learn instantly with downloadable PDF templates and blueprint guides.</p>
+                <h4><i class="fas fa-bolt" style="color:var(--orange);margin-right:0.5rem;"></i>Instant Download</h4>
+                <p>Get your PDF templates and blueprint guides immediately after purchase.</p>
             </div>
             <div class="trust-card">
-                <h4>Secure Checkout</h4>
-                <p>Dummy payment simulation for a smooth, worry-free purchase flow.</p>
+                <h4><i class="fas fa-lock" style="color:var(--orange);margin-right:0.5rem;"></i>Secure Checkout</h4>
+                <p>Safe, encrypted payment flow for a smooth, worry-free purchase.</p>
             </div>
             <div class="trust-card">
-                <h4>Money Back Bonus</h4>
-                <p>Our business planning content is ready for real-world execution.</p>
+                <h4><i class="fas fa-headset" style="color:var(--orange);margin-right:0.5rem;"></i>24/7 Support</h4>
+                <p>WhatsApp and email support available anytime, anywhere in the world.</p>
             </div>
-        </section>
+        </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Negosyo Plan</h3>
-                <p>Your Business Blueprint to Success</p>
-                <p>Helping OFWs and entrepreneurs plan smarter, faster, and with confidence.</p>
-                <div class="social-icons">
-                    <a href="https://facebook.com/negosyoplan" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="https://instagram.com/negosyoplan" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://twitter.com/negosyoplan" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://linkedin.com/company/negosyoplan" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <div class="footer-inner">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Negosyo Plan</h3>
+                    <p class="footer-tagline">Your Business Blueprint to Success</p>
+                    <p class="footer-desc">Helping OFWs and entrepreneurs plan smarter, faster, and with confidence — anywhere in the world.</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/negosyoplan" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/negosyoplan" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/negosyoplan" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/negosyoplan" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="shop.html?category=starter">Starter Bundle</a></li>
+                        <li><a href="shop.html?category=founder">Founder Bundle</a></li>
+                        <li><a href="shop.html?category=complete">Complete Bundle</a></li>
+                        <li><a href="shop.html?category=custom">Custom Bundle</a></li>
+                        <li><a href="ai-generator.html">AI Blueprint Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="downloads.html">Free Downloads</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact & Support</h3>
+                    <ul>
+                        <li><a href="contact.html"><i class="fas fa-envelope" style="margin-right:0.4rem;"></i> Contact Us</a></li>
+                        <li><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="margin-right:0.4rem;"></i> WhatsApp Support</a></li>
+                        <li><a href="mailto:support@negosyoplan.com"><i class="fas fa-at" style="margin-right:0.4rem;"></i> support@negosyoplan.com</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Products</h3>
-                <ul>
-                    <li><a href="shop.html?category=starter">Starter Bundle</a></li>
-                    <li><a href="shop.html?category=founder">Founder Bundle</a></li>
-                    <li><a href="shop.html?category=complete">Complete Bundle</a></li>
-                    <li><a href="shop.html?category=custom">Custom Bundle</a></li>
-                    <li><a href="ai-generator.html">AI Blueprint Generator</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Negosyo Plan. All rights reserved. &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a></p>
             </div>
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="downloads.html">Free Downloads</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="account.html">My Account</a></li>
-                    <li><a href="cart.html">Shopping Cart</a></li>
-                    <li><a href="#terms">Terms & Conditions</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact & Support</h3>
-                <p><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan"><i class="fab fa-whatsapp"></i> WhatsApp Support</a></p>
-                <p><a href="mailto:support@negosyoplan.com"><i class="fas fa-envelope"></i> Email Us</a></p>
-                <p><i class="fas fa-clock"></i> 24/7 Support</p>
-                <p><i class="fas fa-globe"></i> Available Worldwide</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Negosyo Plan. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
         </div>
     </footer>
 
-    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     <script type="application/ld+json">
     {
@@ -459,7 +472,13 @@
         "@type": "Organization",
         "name": "Negosyo Plan",
         "url": "https://negosyoplan.com",
+        "logo": "https://negosyoplan.com/assets/images/logo.svg",
         "description": "Downloadable PDF business plans and AI-generated blueprints for OFWs and entrepreneurs.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "availableLanguage": ["English", "Filipino"]
+        },
         "sameAs": [
             "https://facebook.com/negosyoplan",
             "https://instagram.com/negosyoplan",

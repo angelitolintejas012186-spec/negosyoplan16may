@@ -4,7 +4,7 @@ const products = [
     {
         id: 1,
         name: 'Starter Bundle',
-        price: 130,
+        price: 1900,
         image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         description: 'Perfect for beginners starting their entrepreneurial journey with planning templates and launch guidance.',
         features: ['Business plan template', 'Financial projection model', 'Market analysis guide'],
@@ -13,7 +13,7 @@ const products = [
     {
         id: 2,
         name: 'Founder Bundle',
-        price: 200,
+        price: 2600,
         image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         description: 'Advanced tools for established entrepreneurs with complete strategy, marketing, and investor materials.',
         features: ['Marketing plan', 'Operational templates', 'Pitch deck framework'],
@@ -22,7 +22,7 @@ const products = [
     {
         id: 3,
         name: 'Complete Set Bundle',
-        price: 250,
+        price: 3500,
         image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         description: 'Everything in one package for entrepreneurs who want a full business planning system.',
         features: ['All starter and founder resources', 'Scaling checklist', 'Revenue model workbook'],
@@ -31,10 +31,9 @@ const products = [
     {
         id: 4,
         name: 'Custom Bundle',
-        price: 300,
+        price: 4600,
         image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-        description: 'Build your own bundle with personalized PDF planning tools and tailored business strategy.
-',
+        description: 'Build your own bundle with personalized PDF planning tools and tailored business strategy.',
         features: ['Custom planning checklist', 'Operational guides', 'Growth roadmap'],
         methodology: ['Design', 'Validate', 'Launch', 'Scale']
     }
@@ -52,24 +51,24 @@ function saveCart(cart) {
 function addToCart(productId) {
     const cart = loadCart();
     const existing = cart.find(item => item.id === productId);
+    const product = products.find(item => item.id === productId);
 
     if (existing) {
         existing.quantity += 1;
-    } else {
-        const product = products.find(item => item.id === productId);
-        if (product) {
-            cart.push({
-                id: product.id,
-                name: product.name,
-                image: product.image,
-                price: product.price,
-                quantity: 1
-            });
-        }
+    } else if (product) {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            image: product.image,
+            price: product.price,
+            quantity: 1
+        });
     }
 
     saveCart(cart);
-    alert('Added to cart successfully!');
+    if (window.NegosyoPlan && window.NegosyoPlan.showToast && product) {
+        window.NegosyoPlan.showToast(product.name + ' added to cart!', 'success');
+    }
 }
 
 function removeFromCart(productId) {
@@ -104,7 +103,7 @@ function renderCart() {
 
     if (cart.length === 0) {
         container.innerHTML = '<p>Your cart is empty.</p>';
-        if (subtotal) subtotal.textContent = '0 AED';
+        if (subtotal) subtotal.textContent = window.NegosyoPlan.formatPrice(0);
         if (checkoutBtn) checkoutBtn.style.display = 'none';
         return;
     }
@@ -126,8 +125,11 @@ function renderCart() {
         </div>
     `).join('');
 
-    if (subtotal) subtotal.textContent = window.NegosyoPlan.formatPrice(calculateTotal(cart));
-    if (checkoutBtn) checkoutBtn.style.display = 'block';
+    const total = window.NegosyoPlan.formatPrice(calculateTotal(cart));
+    if (subtotal) subtotal.textContent = total;
+    const cartTotal = document.getElementById('cart-total');
+    if (cartTotal) cartTotal.textContent = total;
+    if (checkoutBtn) checkoutBtn.style.display = 'flex';
 }
 
 function initCartControls() {

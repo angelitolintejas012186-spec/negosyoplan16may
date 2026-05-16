@@ -1,47 +1,73 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://negosyoplan.com/</loc>
+    <changefreq>weekly</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://negosyoplan.com/index.html</loc>
+    <loc>https://negosyoplan.com/shop.html</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://negosyoplan.com/shop.html</loc>
-    <priority>0.85</priority>
-  </url>
-  <url>
     <loc>https://negosyoplan.com/ai-generator.html</loc>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://negosyoplan.com/product.html</loc>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://negosyoplan.com/cart.html</loc>
-    <priority>0.65</priority>
-  </url>
-  <url>
-    <loc>https://negosyoplan.com/checkout.html</loc>
-    <priority>0.65</priority>
-  </url>
-  <url>
-    <loc>https://negosyoplan.com/downloads.html</loc>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://negosyoplan.com/account.html</loc>
-    <priority>0.70</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
   </url>
   <url>
     <loc>https://negosyoplan.com/about.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/contact.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/faq.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/downloads.html</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://negosyoplan.com/thank-you.html</loc>
+    <loc>https://negosyoplan.com/product.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/account.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/cart.html</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/checkout.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/thank-you.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://negosyoplan.com/terms.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.50</priority>
   </url>
 </urlset>

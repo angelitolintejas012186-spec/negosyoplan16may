@@ -1,4 +1,4 @@
-﻿// main.js - Shared functions for Negosyo Plan website
+// main.js - Shared functions for Negosyo Plan website
 
 const CURRENCY_RATES = {
     PHP: 1,
@@ -12,54 +12,24 @@ const CURRENCY_RATES = {
 const SUPPORTED_CURRENCIES = ['PHP', 'USD', 'EUR', 'GBP', 'AED', 'NGN'];
 let currentCurrency = 'PHP';
 
-const currencyLabels = {
-    AED: 'AED',
-    PHP: 'PHP',
-    USD: 'USD',
-    EUR: 'EUR',
-    GBP: 'GBP',
-    NGN: 'NGN'
-};
-
 document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
-    initWhatsAppButton();
-    initSocialIcons();
     initHamburgerMenu();
     initSearch();
     initCurrencySelector();
     initSubscribeForm();
+    initBackToTop();
     updatePriceTags();
     updateCartBadge();
 });
 
 function initNavigation() {
     const page = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinks = document.querySelectorAll('nav a');
-
-    navLinks.forEach(link => {
+    document.querySelectorAll('nav a').forEach(link => {
         const href = link.getAttribute('href');
         if (href === page || (href === 'index.html' && page === '')) {
             link.classList.add('active');
         }
-    });
-}
-
-function initWhatsAppButton() {
-    const whatsappBtn = document.querySelector('.whatsapp-float');
-    if (whatsappBtn) {
-        whatsappBtn.addEventListener('click', function() {
-            // Track WhatsApp click events if needed
-        });
-    }
-}
-
-function initSocialIcons() {
-    const socialLinks = document.querySelectorAll('.social-icons a');
-    socialLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            // Social media click tracking can be added here
-        });
     });
 }
 
@@ -69,173 +39,184 @@ function initHamburgerMenu() {
     const overlay = document.getElementById('overlay');
     const sidebarClose = document.getElementById('sidebar-close');
 
-    if (hamburger && sidebar && overlay) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
-        });
+    if (!hamburger || !sidebar || !overlay) return;
 
-        sidebarClose.addEventListener('click', function() {
-            hamburger.classList.remove('active');
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-
-        overlay.addEventListener('click', function() {
-            hamburger.classList.remove('active');
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
+    function openSidebar() {
+        hamburger.classList.add('active');
+        sidebar.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
+
+    function closeSidebar() {
+        hamburger.classList.remove('active');
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', openSidebar);
+    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
 }
 
 function initSearch() {
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
 
-    if (searchInput && searchBtn) {
-        searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-    }
+    if (!searchInput || !searchBtn) return;
+
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') performSearch();
+    });
 }
 
 function performSearch() {
     const searchInput = document.getElementById('search-input');
-    const query = searchInput.value.trim().toLowerCase();
-
+    const query = searchInput ? searchInput.value.trim() : '';
     if (query) {
-        window.location.href = `shop.html?search=${encodeURIComponent(query)}`;
+        window.location.href = 'shop.html?search=' + encodeURIComponent(query.toLowerCase());
     }
 }
 
 function initCurrencySelector() {
-    const savedCurrency = localStorage.getItem('negosyoCurrency');
-    currentCurrency = savedCurrency || detectCurrencyFromBrowser();
+    const saved = localStorage.getItem('negosyoCurrency');
+    currentCurrency = saved || detectCurrencyFromBrowser();
 
     const selector = document.getElementById('currency-selector');
-    const currencyLabel = document.getElementById('currency-label');
-
     if (selector) {
-        selector.innerHTML = SUPPORTED_CURRENCIES.map(code => `<option value="${code}">${code}</option>`).join('');
+        selector.innerHTML = SUPPORTED_CURRENCIES.map(code =>
+            `<option value="${code}">${code}</option>`
+        ).join('');
         selector.value = currentCurrency;
         selector.addEventListener('change', function() {
             currentCurrency = selector.value;
             localStorage.setItem('negosyoCurrency', currentCurrency);
             updatePriceTags();
-            updateCurrencyLabel();
         });
-    }
-
-    if (currencyLabel) {
-        currencyLabel.textContent = currentCurrency;
     }
 }
 
 function initSubscribeForm() {
-    const subscribeForm = document.getElementById('subscribe-form');
-    if (!subscribeForm) return;
+    const form = document.getElementById('subscribe-form');
+    if (!form) return;
 
-    subscribeForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
         const emailInput = document.getElementById('subscribe-email');
-        const successMessage = document.getElementById('subscribe-success');
-        if (!emailInput || !successMessage) return;
+        const successMsg = document.getElementById('subscribe-success');
+        const email = emailInput ? emailInput.value.trim() : '';
 
-        const email = emailInput.value.trim();
         if (!email || !email.includes('@')) {
-            successMessage.textContent = 'Please enter a valid email address.';
-            successMessage.style.color = '#d9534f';
+            showToast('Please enter a valid email address.', 'error');
             return;
         }
 
-        successMessage.textContent = 'Thanks! You are subscribed to business blueprint updates.';
-        successMessage.style.color = '#2C3E50';
-        emailInput.value = '';
         localStorage.setItem('newsletterSubscriber', email);
+        if (successMsg) successMsg.textContent = 'Thanks! You are subscribed to business blueprint updates.';
+        if (emailInput) emailInput.value = '';
+        showToast('Subscribed successfully!', 'success');
+    });
+}
+
+function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    window.addEventListener('scroll', function() {
+        btn.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
 
 function detectCurrencyFromBrowser() {
     try {
         const locale = navigator.language || 'en-US';
-        const region = locale.split('-')[1] ? locale.split('-')[1].toUpperCase() : 'PH';
-        switch (region) {
-            case 'US': return 'USD';
-            case 'PH': return 'PHP';
-            case 'AE': return 'AED';
-            case 'GB': return 'GBP';
-            case 'EU': return 'EUR';
-            case 'DE': return 'EUR';
-            case 'FR': return 'EUR';
-            case 'NG': return 'NGN';
-            case 'ZA': return 'NGN';
-            default: return 'PHP';
-        }
-    } catch (error) {
-        return 'USD';
+        const region = (locale.split('-')[1] || '').toUpperCase();
+        const map = { US: 'USD', PH: 'PHP', AE: 'AED', GB: 'GBP', DE: 'EUR', FR: 'EUR', NL: 'EUR', NG: 'NGN', ZA: 'NGN' };
+        return map[region] || 'PHP';
+    } catch (e) {
+        return 'PHP';
     }
 }
 
-function convertAmount(valueInAED) {
+function formatPrice(valueInPHP) {
     const rate = CURRENCY_RATES[currentCurrency] || 1;
-    return valueInAED * rate;
-}
-
-function formatPrice(valueInAED) {
-    const convertedValue = convertAmount(valueInAED);
+    const converted = valueInPHP * rate;
     return new Intl.NumberFormat(undefined, {
         style: 'currency',
         currency: currentCurrency,
         maximumFractionDigits: 2
-    }).format(convertedValue);
+    }).format(converted);
 }
 
 function updatePriceTags() {
     document.querySelectorAll('[data-base-price]').forEach(node => {
         const base = parseFloat(node.getAttribute('data-base-price'));
         if (!Number.isNaN(base)) {
-            node.textContent = window.NegosyoPlan.formatPrice(base);
+            node.textContent = formatPrice(base);
         }
     });
+}
 
-    const currencyLabel = document.getElementById('currency-label');
-    if (currencyLabel) {
-        currencyLabel.textContent = currentCurrency;
-    }
+function generateStars(rating, maxStars) {
+    maxStars = maxStars || 5;
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.5;
+    let html = '';
+    for (let i = 0; i < full; i++) html += '<i class="fas fa-star"></i>';
+    if (half) html += '<i class="fas fa-star-half-alt"></i>';
+    const empty = maxStars - full - (half ? 1 : 0);
+    for (let i = 0; i < empty; i++) html += '<i class="far fa-star"></i>';
+    return html;
 }
 
 function updateCartBadge() {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const cartLinks = document.querySelectorAll('a[href="cart.html"]');
-
-    cartLinks.forEach(link => {
+    document.querySelectorAll('a[href="cart.html"]').forEach(link => {
         let badge = link.querySelector('.cart-badge');
         if (!badge) {
             badge = document.createElement('span');
             badge.className = 'cart-badge';
-            badge.style.cssText = 'background: #FF9951; color: #fff; border-radius: 999px; padding: 0.2rem 0.55rem; font-size: 0.8rem; margin-left: 0.45rem;';
             link.appendChild(badge);
         }
-
-        if (cart.length > 0) {
-            badge.textContent = cart.length;
-            badge.style.display = 'inline-flex';
-        } else {
-            badge.style.display = 'none';
-        }
+        badge.textContent = cart.length;
+        badge.style.display = cart.length > 0 ? 'inline-flex' : 'none';
     });
+}
+
+function showToast(message, type) {
+    type = type || 'success';
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-' + type;
+    toast.innerHTML = '<i class="fas fa-' + (type === 'success' ? 'check-circle' : 'exclamation-circle') + '"></i> ' + message;
+    container.appendChild(toast);
+
+    requestAnimationFrame(function() {
+        toast.classList.add('show');
+    });
+
+    setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() { toast.remove(); }, 350);
+    }, 3500);
 }
 
 window.NegosyoPlan = {
     formatPrice,
     generateStars,
-    updateCartBadge
+    updateCartBadge,
+    showToast,
+    currentCurrency: function() { return currentCurrency; }
 };

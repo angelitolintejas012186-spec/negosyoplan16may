@@ -1,14 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FF9951">
     <title>About Us - Negosyo Plan</title>
-    <meta name="description" content="Learn about Negosyo Plan, our mission, and how Blueprint OS helps OFWs and entrepreneurs build successful businesses.">
+    <meta name="description" content="Learn about Negosyo Plan, our mission, and how we help OFWs and entrepreneurs build successful businesses with downloadable blueprints.">
+    <link rel="canonical" href="https://negosyoplan.com/about.html">
     <meta property="og:title" content="About Us - Negosyo Plan">
     <meta property="og:description" content="Empowering OFWs and entrepreneurs with downloadable business plans and AI blueprint tools.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
     <meta property="og:url" content="https://negosyoplan.com/about.html">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -21,7 +23,7 @@
         <nav>
             <div class="logo">
                 <a href="index.html"><img src="assets/images/logo.svg" alt="Negosyo Plan logo" class="site-logo"></a>
-                <h1 class="brand-name">Negosyo Plan</h1>
+                <a href="index.html"><span class="brand-name">Negosyo Plan</span></a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
@@ -41,6 +43,8 @@
                     <div class="dropdown-content">
                         <a href="about.html">About Us</a>
                         <a href="downloads.html">Free Downloads</a>
+                        <a href="faq.html">FAQ</a>
+                        <a href="contact.html">Contact</a>
                         <a href="account.html">My Account</a>
                         <a href="cart.html">Shopping Cart</a>
                     </div>
@@ -48,34 +52,32 @@
                 <li><a href="about.html">About</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" placeholder="Search products..." id="search-input">
-                <button type="button" id="search-btn"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search products..." id="search-input" aria-label="Search products">
+                <button type="button" id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
             </div>
-            <button class="hamburger" id="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="hamburger" id="hamburger-menu" aria-label="Open menu">
+                <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Menu</h3>
-            <button class="sidebar-close" id="sidebar-close">&times;</button>
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">&times;</button>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="ai-generator.html">AI Generator</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="account.html">Account</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="shop.html"><i class="fas fa-store"></i> Shop</a></li>
+            <li><a href="ai-generator.html"><i class="fas fa-robot"></i> AI Generator</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="downloads.html"><i class="fas fa-download"></i> Downloads</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="account.html"><i class="fas fa-user"></i> Account</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
         </ul>
     </div>
-
     <div class="overlay" id="overlay"></div>
 
     <main>
@@ -85,63 +87,98 @@
 
         <section class="about-hero">
             <h2>About Negosyo Plan</h2>
-            <p>We provide modern downloadable business plan bundles and AI blueprint technology for OFWs and entrepreneurs seeking structure, confidence, and growth.</p>
+            <p>We provide modern downloadable business plan bundles and AI blueprint technology for OFWs and entrepreneurs seeking structure, confidence, and growth. Founded by entrepreneurs, for entrepreneurs.</p>
         </section>
 
-        <section class="section-card">
+        <section class="section-card" style="margin-bottom:2rem;">
             <div class="section-title">
                 <h2>Our Mission</h2>
             </div>
-            <p>Negosyo Plan exists to help Filipino entrepreneurs plan smarter with downloadable PDF tools, strategy templates, and AI-powered guidance. We combine practical business planning with warm, trustworthy design for modern businesses.</p>
+            <p style="font-size:1rem;line-height:1.8;color:rgba(44,62,80,0.85);">Negosyo Plan exists to help Filipino entrepreneurs plan smarter with downloadable PDF tools, strategy templates, and AI-powered guidance. We combine practical business planning with warm, trustworthy design for modern businesses — whether you're an OFW saving to start your first venture, or a founder ready to scale.</p>
         </section>
 
-        <section class="section-card">
+        <section class="section-card" style="margin-bottom:2rem;">
+            <div class="section-title">
+                <h2>Why Choose Negosyo Plan?</h2>
+            </div>
+            <div class="methodology-grid">
+                <div class="trust-card">
+                    <h4><i class="fas fa-file-pdf" style="color:var(--orange);margin-right:0.5rem;"></i>Ready-Made Blueprints</h4>
+                    <p>Professional PDF business plan templates crafted for real-world execution — no blank page syndrome.</p>
+                </div>
+                <div class="trust-card">
+                    <h4><i class="fas fa-robot" style="color:var(--orange);margin-right:0.5rem;"></i>AI-Powered Guidance</h4>
+                    <p>AI-powered tools generate custom blueprints that fit your industry, budget, and market.</p>
+                </div>
+                <div class="trust-card">
+                    <h4><i class="fas fa-globe" style="color:var(--orange);margin-right:0.5rem;"></i>Market Adaptable</h4>
+                    <p>Designed to work for entrepreneurs in any local or international market.</p>
+                </div>
+                <div class="trust-card">
+                    <h4><i class="fas fa-headset" style="color:var(--orange);margin-right:0.5rem;"></i>Dedicated Support</h4>
+                    <p>WhatsApp and email support available 24/7 to help you at every stage of your business journey.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card" style="margin-bottom:2rem;">
             <div class="section-title">
                 <h2>Blueprint OS Methodology</h2>
+                <p class="section-subtitle">Our 5-step framework that guides every business plan we create.</p>
             </div>
             <div class="methodology-grid">
                 <article class="methodology-card">
-                    <h4>Diagnose</h4>
+                    <h4><span style="color:var(--orange);font-size:1.4rem;font-weight:900;display:block;margin-bottom:0.5rem;">01</span>Diagnose</h4>
                     <p>Assess market opportunity, customer needs, and strengths before making a plan.</p>
                 </article>
                 <article class="methodology-card">
-                    <h4>Design</h4>
+                    <h4><span style="color:var(--orange);font-size:1.4rem;font-weight:900;display:block;margin-bottom:0.5rem;">02</span>Design</h4>
                     <p>Create a practical model using our PDF templates, pricing guidance, and financial tools.</p>
                 </article>
                 <article class="methodology-card">
-                    <h4>Validate</h4>
-                    <p>Test your offer with the right audience and improve before launch.</p>
+                    <h4><span style="color:var(--orange);font-size:1.4rem;font-weight:900;display:block;margin-bottom:0.5rem;">03</span>Validate</h4>
+                    <p>Test your offer with the right audience and improve before full launch.</p>
                 </article>
                 <article class="methodology-card">
-                    <h4>Launch</h4>
+                    <h4><span style="color:var(--orange);font-size:1.4rem;font-weight:900;display:block;margin-bottom:0.5rem;">04</span>Launch</h4>
                     <p>Execute your launch plan with marketing, sales, and customer experience priorities.</p>
                 </article>
                 <article class="methodology-card">
-                    <h4>Scale</h4>
-                    <p>Build repeatable systems, track growth, and expand sustainably.</p>
+                    <h4><span style="color:var(--orange);font-size:1.4rem;font-weight:900;display:block;margin-bottom:0.5rem;">05</span>Scale</h4>
+                    <p>Build repeatable systems, track growth, and expand your business sustainably.</p>
                 </article>
             </div>
         </section>
 
-        <section class="section-card">
+        <section class="section-card" style="margin-bottom:2rem;">
             <div class="section-title">
                 <h2>Success Stories</h2>
+                <p class="section-subtitle">Real entrepreneurs who used Negosyo Plan to launch and grow.</p>
             </div>
             <div class="testimonial-grid">
                 <article class="story">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Success story" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Maria Santos" loading="lazy">
                     <h4>Maria Santos</h4>
-                    <p>"The PDF templates and AI blueprint helped me build a clear plan for my new business in Dubai."</p>
+                    <p>"The PDF templates and AI blueprint helped me build a clear plan for my new business in Dubai. I launched within 2 months!"</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
                 </article>
                 <article class="story">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Success story" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Juan dela Cruz" loading="lazy">
                     <h4>Juan dela Cruz</h4>
-                    <p>"Negosyo Plan made planning simple. I was able to launch quickly and stay focused."</p>
+                    <p>"Negosyo Plan made planning simple and affordable. I was able to launch my food cart quickly and stay focused on what matters."</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
                 </article>
                 <article class="story">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Success story" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Ana Reyes" loading="lazy">
                     <h4>Ana Reyes</h4>
-                    <p>"The Complete Set gave me everything needed to scale my business with confidence."</p>
+                    <p>"The Complete Set gave me everything needed to scale my business with confidence. Worth every peso!"</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
                 </article>
             </div>
         </section>
@@ -150,41 +187,72 @@
             <div class="section-title">
                 <h2>Ready to Start?</h2>
             </div>
-            <p>Explore bundles, generate a custom AI blueprint, or contact us on WhatsApp for personalized guidance.</p>
+            <p style="margin-bottom:1.5rem;">Explore bundles, generate a custom AI blueprint, or contact us on WhatsApp for personalized guidance.</p>
             <div class="product-actions">
-                <a href="shop.html" class="button">Shop Bundles</a>
-                <a href="ai-generator.html" class="button secondary">AI Generator</a>
+                <a href="shop.html" class="button"><i class="fas fa-store"></i> Shop Bundles</a>
+                <a href="ai-generator.html" class="button secondary"><i class="fas fa-robot"></i> AI Generator</a>
+                <a href="contact.html" class="button secondary"><i class="fas fa-envelope"></i> Contact Us</a>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Negosyo Plan</h3>
-                <p>Your Business Blueprint to Success</p>
+        <div class="footer-inner">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Negosyo Plan</h3>
+                    <p class="footer-tagline">Your Business Blueprint to Success</p>
+                    <p class="footer-desc">Helping OFWs and entrepreneurs plan smarter, faster, and with confidence.</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/negosyoplan" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/negosyoplan" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/negosyoplan" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/company/negosyoplan" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="shop.html?category=starter">Starter Bundle</a></li>
+                        <li><a href="shop.html?category=founder">Founder Bundle</a></li>
+                        <li><a href="shop.html?category=complete">Complete Bundle</a></li>
+                        <li><a href="shop.html?category=custom">Custom Bundle</a></li>
+                        <li><a href="ai-generator.html">AI Blueprint Generator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="downloads.html">Free Downloads</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact & Legal</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" target="_blank" rel="noopener">WhatsApp Support</a></li>
+                        <li><a href="mailto:support@negosyoplan.com">support@negosyoplan.com</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="ai-generator.html">AI Generator</a></li>
-                    <li><a href="account.html">Account</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Negosyo Plan. All rights reserved. &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a></p>
             </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Negosyo Plan. All rights reserved.</p>
         </div>
     </footer>
 
-    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/1234567890?text=Hello%20Negosyo%20Plan" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 </body>
 </html>
