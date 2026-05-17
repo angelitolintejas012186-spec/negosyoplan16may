@@ -9,271 +9,375 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --orange:#E8420A; --navy:#0F1F3D; --amber:#F5A500;
-            --bg:#0A1628; --surface:#111E35; --surface2:#162240;
-            --border:#1E2F50; --text:#E8EDF5; --muted:#7A8FAD;
-            --gold-grad: linear-gradient(135deg,#FFF9DC 0%,#F5C030 30%,#C07808 60%,#F5C030 80%,#8C5602 100%);
-            --radius:12px; --trans:0.18s ease;
+        :root{
+            --orange:#E8420A;--navy:#0F1F3D;--amber:#F5A500;
+            --bg:#080F1E;--surface:#0F1B2E;--surface2:#152036;--surface3:#1A2840;
+            --border:#1D2E48;--border2:#243655;--text:#DDE4F0;--muted:#6B80A0;
+            --gold:linear-gradient(135deg,#FFF9DC 0%,#F5C030 30%,#C07808 60%,#F5C030 80%,#8C5602 100%);
+            --green:#10B981;--red:#EF4444;
+            --radius:14px;--radius-sm:9px;--t:.18s ease;
         }
         *{box-sizing:border-box;margin:0;padding:0;}
         body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+        a{text-decoration:none;color:inherit;}
+        button,input,select,textarea{font:inherit;}
+
+        /* ── BUTTONS ── */
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+            padding:.65rem 1.35rem;border-radius:var(--radius-sm);font-size:.85rem;
+            font-weight:700;cursor:pointer;border:none;transition:all var(--t);}
+        .btn-primary{background:var(--orange);color:#fff;}
+        .btn-primary:hover{background:#cc3a08;transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,66,10,.4);}
+        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border2);}
+        .btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
+        .btn-danger{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+        .btn-danger:hover{background:var(--red);color:#fff;}
+        .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+        .btn-ghost:hover{color:var(--text);border-color:var(--border2);}
+        .btn-full{width:100%;}
+        .btn-lg{padding:.9rem 2rem;font-size:1rem;}
+        .btn-sm{padding:.4rem .85rem;font-size:.78rem;}
+
+        /* ── FORMS ── */
+        .form-field{margin-bottom:1rem;}
+        .form-field label{display:block;font-size:.73rem;font-weight:700;color:var(--muted);
+            text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem;}
+        .form-field input,.form-field select,.form-field textarea{
+            width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);
+            padding:.7rem 1rem;color:var(--text);font-size:.88rem;
+            transition:border-color var(--t),box-shadow var(--t);outline:none;}
+        .form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+            border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,66,10,.14);}
+        .form-field textarea{resize:vertical;min-height:75px;line-height:1.55;}
+        .form-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem;}
 
         /* ── LOGIN ── */
         #login-screen{
             position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-            background:radial-gradient(ellipse at 30% 20%,rgba(232,66,10,0.12) 0%,transparent 60%),var(--bg);
+            background:radial-gradient(ellipse at 30% 20%,rgba(232,66,10,.1) 0%,transparent 55%),var(--bg);
             z-index:1000;
         }
         .login-card{
-            background:var(--surface);border:1px solid var(--border);border-radius:20px;
-            padding:2.5rem 2.25rem;width:100%;max-width:420px;
-            box-shadow:0 24px 64px rgba(0,0,0,0.6);
+            background:var(--surface);border:1px solid var(--border);border-radius:22px;
+            padding:2.75rem 2.5rem;width:100%;max-width:430px;
+            box-shadow:0 32px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.03);
         }
-        .login-logo{display:flex;align-items:center;gap:0.85rem;margin-bottom:2rem;justify-content:center;}
-        .login-logo img{width:48px;filter:drop-shadow(0 2px 8px rgba(232,66,10,0.5));}
-        .login-logo span{font-size:1.4rem;font-weight:900;letter-spacing:0.1em;
-            background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .login-logo{display:flex;align-items:center;gap:.9rem;margin-bottom:1.75rem;justify-content:center;}
+        .login-logo img{width:50px;filter:drop-shadow(0 2px 10px rgba(232,66,10,.55));}
+        .login-logo span{font-size:1.45rem;font-weight:900;letter-spacing:.1em;
+            background:var(--gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
         .login-badge{
-            display:inline-block;background:rgba(232,66,10,0.15);color:var(--orange);
-            font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-            padding:0.3rem 0.85rem;border-radius:20px;border:1px solid rgba(232,66,10,0.3);
-            margin-bottom:1.75rem;text-align:center;width:100%;
+            display:flex;align-items:center;justify-content:center;gap:.4rem;
+            background:rgba(232,66,10,.12);color:var(--orange);
+            font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+            padding:.32rem .9rem;border-radius:20px;border:1px solid rgba(232,66,10,.25);
+            margin-bottom:2rem;
         }
-        .login-card h2{font-size:1.4rem;font-weight:700;margin-bottom:0.35rem;}
-        .login-card p{font-size:0.82rem;color:var(--muted);margin-bottom:1.75rem;}
-        .form-field{margin-bottom:1.1rem;}
-        .form-field label{display:block;font-size:0.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;}
-        .form-field input,.form-field select,.form-field textarea{
-            width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;
-            padding:0.75rem 1rem;color:var(--text);font-family:inherit;font-size:0.9rem;
-            transition:border-color var(--trans),box-shadow var(--trans);outline:none;
-        }
-        .form-field input:focus,.form-field select:focus,.form-field textarea:focus{
-            border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,66,10,0.15);
-        }
-        .form-field textarea{resize:vertical;min-height:80px;}
-        .form-field input[type="color"]{padding:0.3rem;height:44px;cursor:pointer;}
-        .btn{
-            display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-            padding:0.75rem 1.5rem;border-radius:10px;font-family:inherit;font-size:0.88rem;
-            font-weight:700;cursor:pointer;border:none;transition:all var(--trans);
-            text-decoration:none;
-        }
-        .btn-primary{background:var(--orange);color:#fff;}
-        .btn-primary:hover{background:#c53508;transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,66,10,0.4);}
-        .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
-        .btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
-        .btn-danger{background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid rgba(239,68,68,0.3);}
-        .btn-danger:hover{background:#EF4444;color:#fff;}
-        .btn-success{background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.3);}
-        .btn-success:hover{background:#10B981;color:#fff;}
-        .btn-full{width:100%;}
-        .btn-lg{padding:0.9rem 2rem;font-size:1rem;}
+        .login-title{font-size:1.35rem;font-weight:700;margin-bottom:.3rem;}
+        .login-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.75rem;line-height:1.5;}
         #login-error{
-            display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);
-            color:#EF4444;padding:0.65rem 1rem;border-radius:8px;font-size:0.82rem;
-            margin-bottom:1rem;
+            display:none;align-items:center;gap:.5rem;
+            background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);
+            color:var(--red);padding:.65rem 1rem;border-radius:9px;font-size:.82rem;margin-bottom:1rem;
         }
 
-        /* ── ADMIN SHELL ── */
-        #admin-shell{display:none;min-height:100vh;}
-
-        /* Top bar */
+        /* ── TOPBAR ── */
+        #admin-shell{display:none;flex-direction:column;min-height:100vh;}
         .admin-topbar{
-            position:sticky;top:0;z-index:100;
+            position:sticky;top:0;z-index:200;
             background:var(--surface);border-bottom:1px solid var(--border);
-            display:flex;align-items:center;gap:1rem;padding:0.85rem 1.5rem;
+            display:flex;align-items:center;gap:.9rem;padding:.75rem 1.5rem;
+            backdrop-filter:blur(12px);
         }
-        .admin-topbar .brand{display:flex;align-items:center;gap:0.75rem;flex-shrink:0;}
-        .admin-topbar .brand img{width:34px;filter:drop-shadow(0 1px 4px rgba(232,66,10,0.45));}
-        .admin-topbar .brand span{font-size:1rem;font-weight:800;letter-spacing:0.08em;
-            background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-        .admin-topbar .badge-admin{
-            background:rgba(232,66,10,0.2);color:var(--orange);font-size:0.65rem;font-weight:700;
-            padding:0.2rem 0.6rem;border-radius:20px;letter-spacing:0.08em;text-transform:uppercase;
-        }
-        .topbar-spacer{flex:1;}
-        .topbar-user{display:flex;align-items:center;gap:0.75rem;font-size:0.82rem;color:var(--muted);}
-        .topbar-user strong{color:var(--text);}
-        .topbar-back{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted);text-decoration:none;padding:0.4rem 0.75rem;border-radius:7px;border:1px solid var(--border);transition:all var(--trans);}
-        .topbar-back:hover{color:var(--orange);border-color:var(--orange);}
+        .tb-brand{display:flex;align-items:center;gap:.7rem;flex-shrink:0;}
+        .tb-brand img{width:32px;filter:drop-shadow(0 1px 6px rgba(232,66,10,.5));}
+        .tb-brand .bname{font-size:.95rem;font-weight:800;letter-spacing:.08em;
+            background:var(--gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .tb-brand .badge-admin{
+            background:rgba(232,66,10,.18);color:var(--orange);font-size:.6rem;font-weight:700;
+            padding:.18rem .55rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;}
+        .tb-spacer{flex:1;}
+        .tb-status{display:flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:600;
+            padding:.28rem .8rem;border-radius:20px;}
+        .tb-status.online{background:rgba(16,185,129,.12);color:var(--green);}
+        .tb-status.offline{background:rgba(239,68,68,.1);color:var(--red);}
+        .tb-status i{font-size:.5rem;}
+        .tb-user{display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--muted);}
+        .tb-user strong{color:var(--text);}
+        .tb-link{display:flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--muted);
+            padding:.38rem .75rem;border-radius:8px;border:1px solid var(--border);transition:all var(--t);}
+        .tb-link:hover{color:var(--orange);border-color:var(--orange);}
 
-        /* Layout */
-        .admin-body{display:flex;min-height:calc(100vh - 57px);}
+        /* ── LAYOUT ── */
+        .admin-body{display:flex;flex:1;min-height:0;}
 
-        /* Sidebar */
+        /* ── SIDEBAR ── */
         .admin-sidebar{
-            width:220px;min-width:220px;background:var(--surface);
-            border-right:1px solid var(--border);padding:1rem 0;
+            width:230px;min-width:230px;background:var(--surface);
+            border-right:1px solid var(--border);
             display:flex;flex-direction:column;
+            overflow-y:auto;
         }
-        .sidebar-section{padding:0 0.75rem;margin-bottom:0.5rem;}
-        .sidebar-section-label{
-            font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-            color:var(--muted);padding:0 0.5rem;margin-bottom:0.35rem;
-        }
+        .sidebar-inner{flex:1;padding:1rem .75rem;}
+        .sidebar-group{margin-bottom:.25rem;}
+        .sidebar-label{
+            font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+            color:var(--muted);padding:.5rem .6rem .25rem;display:block;}
         .nav-item{
-            display:flex;align-items:center;gap:0.65rem;padding:0.6rem 0.75rem;
-            border-radius:9px;cursor:pointer;font-size:0.83rem;font-weight:500;
-            color:var(--muted);transition:all var(--trans);border:none;background:none;
-            width:100%;text-align:left;text-decoration:none;
+            display:flex;align-items:center;gap:.65rem;padding:.6rem .75rem;
+            border-radius:9px;cursor:pointer;font-size:.82rem;font-weight:500;
+            color:var(--muted);transition:all var(--t);border:none;background:none;
+            width:100%;text-align:left;position:relative;
         }
         .nav-item:hover{background:var(--surface2);color:var(--text);}
-        .nav-item.active{background:rgba(232,66,10,0.15);color:var(--orange);font-weight:600;}
-        .nav-item i{width:16px;text-align:center;font-size:0.9rem;}
-        .sidebar-footer{margin-top:auto;padding:0.75rem;}
+        .nav-item.active{background:rgba(232,66,10,.15);color:var(--orange);font-weight:700;}
+        .nav-item i:first-child{width:16px;text-align:center;font-size:.88rem;flex-shrink:0;}
+        .nav-item .dirty-dot{
+            width:7px;height:7px;border-radius:50%;background:var(--amber);
+            margin-left:auto;flex-shrink:0;display:none;}
+        .nav-item.dirty .dirty-dot{display:block;}
+        .sidebar-footer{padding:.75rem;border-top:1px solid var(--border);}
 
-        /* Content */
-        .admin-content{flex:1;padding:2rem;overflow-y:auto;}
-        .section-panel{display:none;}
+        /* ── CONTENT ── */
+        .admin-content{flex:1;padding:2rem 2.25rem;overflow-y:auto;max-width:1100px;}
+        .section-panel{display:none;animation:fadeIn .18s ease;}
         .section-panel.active{display:block;}
-        .panel-header{margin-bottom:1.75rem;}
-        .panel-header h2{font-size:1.35rem;font-weight:700;margin-bottom:0.25rem;}
-        .panel-header p{font-size:0.82rem;color:var(--muted);}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+        .panel-header{margin-bottom:2rem;}
+        .panel-header h2{font-size:1.4rem;font-weight:700;margin-bottom:.2rem;
+            display:flex;align-items:center;gap:.6rem;}
+        .panel-header h2 i{color:var(--orange);font-size:1.1rem;}
+        .panel-header p{font-size:.82rem;color:var(--muted);line-height:1.55;}
 
-        /* Cards */
+        /* ── CARDS ── */
         .admin-card{
             background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
             padding:1.5rem;margin-bottom:1.25rem;
         }
-        .admin-card h3{font-size:0.95rem;font-weight:600;margin-bottom:1rem;
-            display:flex;align-items:center;gap:0.5rem;}
-        .admin-card h3 i{color:var(--orange);}
+        .card-title{font-size:.9rem;font-weight:700;margin-bottom:1.1rem;
+            display:flex;align-items:center;gap:.5rem;color:var(--text);}
+        .card-title i{color:var(--orange);}
 
-        /* Grid helpers */
+        /* ── GRIDS ── */
         .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
         .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
         .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
 
-        /* Price input group */
-        .price-input-wrap{position:relative;}
-        .price-input-wrap .currency{
-            position:absolute;left:0.9rem;top:50%;transform:translateY(-50%);
-            font-size:0.78rem;font-weight:700;color:var(--muted);pointer-events:none;
-        }
-        .price-input-wrap input{padding-left:2.5rem;}
-
-        /* Toggle */
-        .toggle-wrap{display:flex;align-items:center;gap:0.85rem;margin-bottom:1rem;}
-        .toggle{position:relative;width:44px;height:24px;flex-shrink:0;}
-        .toggle input{opacity:0;width:0;height:0;position:absolute;}
-        .toggle-slider{
-            position:absolute;inset:0;background:var(--border);border-radius:24px;
-            cursor:pointer;transition:background var(--trans);
-        }
-        .toggle-slider::before{
-            content:'';position:absolute;width:18px;height:18px;border-radius:50%;
-            background:#fff;left:3px;top:3px;transition:transform var(--trans);
-        }
-        .toggle input:checked + .toggle-slider{background:var(--orange);}
-        .toggle input:checked + .toggle-slider::before{transform:translateX(20px);}
-        .toggle-label{font-size:0.85rem;font-weight:600;}
-
-        /* Color swatch preview */
-        .color-field{display:flex;align-items:center;gap:0.75rem;}
-        .color-field input[type="color"]{width:52px;height:42px;border-radius:8px;padding:3px;cursor:pointer;}
-        .color-field input[type="text"]{flex:1;}
-
-        /* Banner preview */
-        #banner-preview{
-            padding:0.6rem 1.25rem;border-radius:8px;font-size:0.85rem;font-weight:600;
-            display:flex;align-items:center;justify-content:space-between;gap:1rem;
-            margin-top:1rem;
-        }
-
-        /* Status badge */
-        .status-badge{
-            display:inline-flex;align-items:center;gap:0.35rem;font-size:0.75rem;font-weight:600;
-            padding:0.25rem 0.65rem;border-radius:20px;
-        }
-        .status-badge.online{background:rgba(16,185,129,0.15);color:#10B981;}
-        .status-badge.offline{background:rgba(239,68,68,0.1);color:#EF4444;}
-
-        /* Toast */
-        #a-toast{
-            position:fixed;bottom:1.5rem;right:1.5rem;
-            background:var(--surface2);border:1px solid var(--border);
-            padding:0.8rem 1.25rem;border-radius:10px;font-size:0.85rem;
-            box-shadow:0 8px 24px rgba(0,0,0,0.4);
-            transform:translateY(120%);opacity:0;transition:all 0.3s ease;
-            z-index:9999;max-width:360px;
-        }
-        #a-toast.show{transform:translateY(0);opacity:1;}
-        #a-toast.success{border-left:4px solid #10B981;}
-        #a-toast.error{border-left:4px solid #EF4444;}
-        #a-toast.info{border-left:4px solid var(--amber);}
-
-        /* Overview stats */
-        .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem;}
-        .stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.1rem;}
-        .stat-card .stat-val{font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:0.15rem;}
-        .stat-card .stat-val span{font-size:0.7rem;font-weight:600;color:var(--amber);margin-left:0.3rem;}
-        .stat-card .stat-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
-
-        /* Product row */
-        .product-row{display:grid;grid-template-columns:60px 1fr;gap:1rem;align-items:start;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);}
-        .product-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-        .product-thumb{width:60px;height:60px;border-radius:8px;object-fit:cover;border:2px solid var(--border);}
-        .product-fields{display:flex;flex-direction:column;gap:0.65rem;}
-
-        /* Save bar */
+        /* ── SAVE BAR ── */
         .save-bar{
-            display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;
+            display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;
             background:var(--surface2);border:1px solid var(--border);
-            border-radius:var(--radius);margin-top:1.25rem;
+            border-radius:var(--radius-sm);margin-top:1.25rem;
         }
-        .save-bar p{flex:1;font-size:0.8rem;color:var(--muted);}
+        .save-bar p{flex:1;font-size:.78rem;color:var(--muted);line-height:1.45;}
+        .save-bar .btn-group{display:flex;gap:.5rem;flex-shrink:0;}
 
-        /* Toast */
+        /* ── TOGGLE ── */
+        .toggle-wrap{display:flex;align-items:center;gap:.85rem;margin-bottom:1.1rem;}
+        .toggle{position:relative;width:46px;height:26px;flex-shrink:0;}
+        .toggle input{opacity:0;width:0;height:0;position:absolute;}
+        .toggle-track{position:absolute;inset:0;background:var(--border);border-radius:26px;cursor:pointer;transition:background var(--t);}
+        .toggle-track::before{content:'';position:absolute;width:20px;height:20px;border-radius:50%;
+            background:#fff;left:3px;top:3px;transition:transform var(--t);}
+        .toggle input:checked + .toggle-track{background:var(--orange);}
+        .toggle input:checked + .toggle-track::before{transform:translateX(20px);}
+        .toggle-label{font-size:.85rem;font-weight:600;}
+
+        /* ── PRICE INPUTS ── */
+        .price-wrap{position:relative;}
+        .price-wrap .currency{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);
+            font-size:.75rem;font-weight:700;color:var(--muted);pointer-events:none;}
+        .price-wrap input{padding-left:2.75rem;}
+        .price-live{font-size:.72rem;color:var(--amber);font-weight:600;margin-top:.3rem;}
+
+        /* ── COLOR SWATCH PICKER ── */
+        .swatch-picker{
+            display:flex;align-items:center;gap:.85rem;
+            padding:.9rem 1rem;background:var(--bg);
+            border:1.5px solid var(--border);border-radius:var(--radius-sm);
+            cursor:pointer;transition:border-color var(--t),box-shadow var(--t);
+        }
+        .swatch-picker:hover{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,66,10,.1);}
+        .swatch-circle{width:38px;height:38px;border-radius:50%;flex-shrink:0;
+            border:3px solid rgba(255,255,255,.15);box-shadow:0 2px 8px rgba(0,0,0,.4);
+            transition:transform var(--t);}
+        .swatch-picker:hover .swatch-circle{transform:scale(1.08);}
+        .swatch-info{flex:1;}
+        .swatch-name{font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:.15rem;}
+        .swatch-hex{font-size:.72rem;color:var(--muted);font-family:monospace;letter-spacing:.04em;}
+        .swatch-picker input[type="color"]{opacity:0;position:absolute;width:0;height:0;}
+        .swatch-edit-btn{font-size:.7rem;color:var(--muted);flex-shrink:0;}
+
+        /* ── PRESETS ── */
+        .preset-grid{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:.5rem;}
+        .preset-btn{
+            display:flex;flex-direction:column;align-items:center;gap:.4rem;
+            padding:.65rem .85rem;border-radius:10px;cursor:pointer;
+            border:1.5px solid var(--border);background:var(--surface2);
+            transition:all var(--t);font-size:.72rem;font-weight:600;color:var(--muted);
+            min-width:80px;
+        }
+        .preset-btn:hover{border-color:var(--orange);color:var(--text);background:var(--surface3);}
+        .preset-swatches{display:flex;gap:3px;}
+        .preset-dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.2);}
+
+        /* ── THEME LIVE PREVIEW ── */
+        #theme-preview{
+            border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;
+        }
+        .tp-nav{
+            padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;
+            background:var(--tp-secondary,#0F1F3D);
+        }
+        .tp-nav-logo{width:20px;height:20px;border-radius:4px;background:var(--tp-accent,#F5A500);}
+        .tp-nav-links{display:flex;gap:.5rem;}
+        .tp-nav-link{width:32px;height:6px;border-radius:3px;background:rgba(255,255,255,.3);}
+        .tp-nav-btn{
+            padding:.3rem .7rem;border-radius:5px;font-size:.65rem;font-weight:700;color:#fff;
+            background:var(--tp-primary,#E8420A);
+        }
+        .tp-hero{
+            padding:1rem;background:linear-gradient(135deg,var(--tp-secondary,#0F1F3D),rgba(15,31,61,.7));
+            text-align:center;
+        }
+        .tp-hero-title{font-size:.8rem;font-weight:700;color:#fff;margin-bottom:.3rem;}
+        .tp-hero-sub{font-size:.62rem;color:rgba(255,255,255,.6);margin-bottom:.65rem;}
+        .tp-hero-btn{
+            display:inline-block;padding:.35rem .9rem;border-radius:6px;
+            font-size:.65rem;font-weight:700;color:#fff;
+            background:var(--tp-primary,#E8420A);
+        }
+        .tp-card-row{display:flex;gap:.5rem;padding:.75rem;background:var(--surface2);}
+        .tp-card{
+            flex:1;background:var(--surface);border-radius:6px;padding:.6rem .7rem;
+            border:1px solid var(--border);
+        }
+        .tp-card-badge{
+            display:inline-block;font-size:.55rem;font-weight:700;padding:.1rem .4rem;
+            border-radius:3px;margin-bottom:.3rem;color:#fff;
+            background:var(--tp-accent,#F5A500);
+        }
+        .tp-card-title{font-size:.65rem;font-weight:600;color:var(--text);margin-bottom:.2rem;}
+        .tp-card-price{font-size:.72rem;font-weight:800;color:var(--tp-primary,#E8420A);}
+        .tp-card-btn{
+            display:block;text-align:center;margin-top:.4rem;padding:.25rem;
+            border-radius:4px;font-size:.6rem;font-weight:700;color:#fff;
+            background:var(--tp-primary,#E8420A);
+        }
+
+        /* ── BANNER PREVIEW ── */
+        #banner-preview{
+            border-radius:9px;padding:.6rem 1.25rem;font-size:.84rem;font-weight:600;
+            display:flex;align-items:center;justify-content:space-between;gap:1rem;
+            margin-top:1rem;transition:background var(--t),color var(--t);
+        }
+        #banner-prev-btn{
+            font-size:.72rem;padding:.2rem .75rem;border-radius:20px;
+            background:rgba(255,255,255,.22);cursor:default;white-space:nowrap;
+            border:1px solid currentColor;
+        }
+
+        /* ── PRODUCT EDITOR ── */
+        .product-editor{
+            display:grid;grid-template-columns:80px 1fr;gap:1rem;align-items:start;
+            padding:1.1rem;border:1px solid var(--border);border-radius:var(--radius-sm);
+            margin-bottom:.85rem;transition:border-color var(--t);
+        }
+        .product-editor:hover{border-color:var(--border2);}
+        .product-thumb-wrap{position:relative;}
+        .product-thumb-img{
+            width:80px;height:80px;border-radius:9px;object-fit:cover;
+            border:2px solid var(--border);display:block;background:var(--surface2);
+        }
+        .product-thumb-overlay{
+            position:absolute;inset:0;border-radius:9px;
+            background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;
+            opacity:0;transition:opacity var(--t);cursor:pointer;font-size:.65rem;color:#fff;font-weight:700;
+        }
+        .product-thumb-wrap:hover .product-thumb-overlay{opacity:1;}
+        .product-id-badge{
+            font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+            color:var(--orange);background:rgba(232,66,10,.12);
+            padding:.15rem .45rem;border-radius:4px;display:inline-block;margin-bottom:.5rem;
+        }
+
+        /* ── OVERVIEW ── */
+        .overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem;}
+        .overview-card{
+            background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+            padding:1.1rem 1.25rem;display:flex;align-items:center;gap:.9rem;
+            cursor:pointer;transition:all var(--t);
+        }
+        .overview-card:hover{border-color:var(--orange);background:var(--surface2);}
+        .ov-icon{
+            width:40px;height:40px;border-radius:10px;
+            background:rgba(232,66,10,.13);display:flex;align-items:center;justify-content:center;
+            color:var(--orange);font-size:1rem;flex-shrink:0;
+        }
+        .ov-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+        .ov-value{font-size:.95rem;font-weight:700;margin-top:.1rem;line-height:1.2;}
+
+        /* ── TOAST ── */
         #a-toast{
             position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
-            padding:0.8rem 1.25rem;border-radius:10px;font-size:0.85rem;font-weight:500;
-            display:flex;align-items:center;gap:0.6rem;
-            box-shadow:0 8px 24px rgba(0,0,0,0.45);
-            opacity:0;transform:translateY(12px);pointer-events:none;
-            transition:opacity 0.22s ease,transform 0.22s ease;
+            padding:.8rem 1.25rem;border-radius:10px;font-size:.84rem;font-weight:500;
+            display:flex;align-items:center;gap:.6rem;
+            box-shadow:0 10px 30px rgba(0,0,0,.5);
+            opacity:0;transform:translateY(14px);pointer-events:none;
+            transition:opacity .22s ease,transform .22s ease;
             background:var(--surface);border:1px solid var(--border);color:var(--text);
+            max-width:340px;
         }
         #a-toast.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-        #a-toast.toast-success{background:#0d2a1a;border-color:#2e7d32;color:#81c784;}
-        #a-toast.toast-error{background:#2a0d0d;border-color:#c62828;color:#ef9a9a;}
-        #a-toast.toast-info{background:var(--surface);border-color:var(--orange);color:var(--text);}
+        #a-toast.toast-success{background:#0b2218;border-color:#1a5c35;color:#6ee7b7;}
+        #a-toast.toast-error{background:#220d0d;border-color:#7f1d1d;color:#fca5a5;}
+        #a-toast.toast-info{background:var(--surface);border-color:var(--amber);color:var(--text);}
 
-        /* Stat cards */
-        .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;}
-        .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:1rem;}
-        .stat-icon{width:40px;height:40px;border-radius:10px;background:rgba(232,66,10,0.15);display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0;}
-        .stat-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}
-        .stat-value{font-size:1rem;font-weight:700;margin-top:0.1rem;}
+        /* ── MISC ── */
+        .divider{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
+        .tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;font-weight:700;
+            padding:.2rem .55rem;border-radius:5px;text-transform:uppercase;letter-spacing:.05em;}
+        .tag-green{background:rgba(16,185,129,.12);color:var(--green);}
+        .tag-red{background:rgba(239,68,68,.1);color:var(--red);}
+        .tag-amber{background:rgba(245,165,0,.12);color:var(--amber);}
 
-        @media(max-width:768px){
+        .kbd{display:inline-block;background:var(--surface2);border:1px solid var(--border2);
+            border-radius:4px;font-size:.68rem;padding:.1rem .4rem;font-family:monospace;color:var(--muted);}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:900px){
+            .admin-sidebar{width:190px;min-width:190px;}
+            .grid-3{grid-template-columns:1fr 1fr;}
+            .grid-4{grid-template-columns:1fr 1fr;}
+        }
+        @media(max-width:660px){
             .admin-sidebar{display:none;}
-            .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
             .admin-content{padding:1rem;}
+            .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+            .overview-grid{grid-template-columns:1fr 1fr;}
         }
     </style>
 </head>
 <body>
 
-<!-- ── LOGIN ──────────────────────────────────────────────────────────────── -->
+<!-- ── LOGIN ───────────────────────────────────────────────── -->
 <div id="login-screen">
     <div class="login-card">
         <div class="login-logo">
             <img src="assets/images/logo.svg" alt="Negosyo Plan">
             <span>Negosyo Plan</span>
         </div>
-        <div class="login-badge"><i class="fas fa-shield-alt" style="margin-right:0.4rem;"></i>Admin Access Only</div>
-        <h2>Welcome back, Admin</h2>
-        <p>Sign in to manage pricing, promotions, theme and content.</p>
-        <div id="login-error"><i class="fas fa-exclamation-circle" style="margin-right:0.4rem;"></i><span id="login-error-msg">Invalid credentials</span></div>
+        <div class="login-badge"><i class="fas fa-shield-alt"></i> Admin Access Only</div>
+        <div class="login-title">Welcome back, Admin</div>
+        <p class="login-sub">Sign in to manage pricing, theme, promotions and content.</p>
+        <div id="login-error"><i class="fas fa-exclamation-circle"></i><span id="login-error-msg">Invalid credentials</span></div>
         <div class="form-field">
             <label for="l-user">Username</label>
             <input type="text" id="l-user" placeholder="admin" autocomplete="username">
         </div>
         <div class="form-field">
             <label for="l-pass">Password</label>
-            <input type="password" id="l-pass" placeholder="••••••••••••" autocomplete="current-password">
+            <input type="password" id="l-pass" placeholder="••••••••••" autocomplete="current-password">
         </div>
         <button class="btn btn-primary btn-full btn-lg" id="login-btn" onclick="doLogin()">
             <i class="fas fa-sign-in-alt"></i> Sign In
@@ -281,23 +385,26 @@
     </div>
 </div>
 
-<!-- ── ADMIN SHELL ─────────────────────────────────────────────────────────── -->
+<!-- ── ADMIN SHELL ──────────────────────────────────────────── -->
 <div id="admin-shell">
 
+    <!-- Topbar -->
     <header class="admin-topbar">
-        <div class="brand">
+        <div class="tb-brand">
             <img src="assets/images/logo.svg" alt="logo">
-            <span>NEGOSYO PLAN</span>
+            <span class="bname">NEGOSYO PLAN</span>
             <span class="badge-admin">Admin</span>
         </div>
-        <div class="topbar-spacer"></div>
+        <div class="tb-spacer"></div>
         <div id="backend-status"></div>
-        <div class="topbar-user">
-            <i class="fas fa-user-circle" style="font-size:1.2rem;color:var(--orange);"></i>
+        <div class="tb-user">
+            <i class="fas fa-user-circle" style="font-size:1.1rem;color:var(--orange);"></i>
             <span>Logged in as <strong id="admin-username">admin</strong></span>
         </div>
-        <a href="index.html" class="topbar-back" target="_blank"><i class="fas fa-external-link-alt"></i> View Site</a>
-        <button class="btn btn-secondary" onclick="doLogout()" style="padding:0.45rem 0.9rem;font-size:0.8rem;">
+        <a href="index.html" class="tb-link" target="_blank">
+            <i class="fas fa-external-link-alt"></i> View Site
+        </a>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">
             <i class="fas fa-sign-out-alt"></i> Logout
         </button>
     </header>
@@ -306,38 +413,43 @@
 
         <!-- Sidebar -->
         <aside class="admin-sidebar">
-            <div class="sidebar-section">
-                <div class="sidebar-section-label">Main</div>
-                <button class="nav-item active" onclick="showSection('overview')">
-                    <i class="fas fa-th-large"></i> Overview
-                </button>
-                <button class="nav-item" onclick="showSection('pricing')">
-                    <i class="fas fa-tags"></i> Pricing
-                </button>
-                <button class="nav-item" onclick="showSection('promo')">
-                    <i class="fas fa-bullhorn"></i> Promotions
-                </button>
-            </div>
-            <div class="sidebar-section">
-                <div class="sidebar-section-label">Design</div>
-                <button class="nav-item" onclick="showSection('theme')">
-                    <i class="fas fa-palette"></i> Theme Colors
-                </button>
-                <button class="nav-item" onclick="showSection('products')">
-                    <i class="fas fa-box-open"></i> Products
-                </button>
-            </div>
-            <div class="sidebar-section">
-                <div class="sidebar-section-label">Settings</div>
-                <button class="nav-item" onclick="showSection('hero')">
-                    <i class="fas fa-heading"></i> Hero Content
-                </button>
-                <button class="nav-item" onclick="showSection('contact')">
-                    <i class="fas fa-address-book"></i> Contact Info
-                </button>
-                <button class="nav-item" onclick="showSection('system')">
-                    <i class="fas fa-cog"></i> System
-                </button>
+            <div class="sidebar-inner">
+                <div class="sidebar-group">
+                    <span class="sidebar-label">Main</span>
+                    <button class="nav-item active" data-section="overview" onclick="showSection('overview')">
+                        <i class="fas fa-th-large"></i> Overview <span class="dirty-dot"></span>
+                    </button>
+                    <button class="nav-item" data-section="pricing" onclick="showSection('pricing')">
+                        <i class="fas fa-tags"></i> Pricing <span class="dirty-dot"></span>
+                    </button>
+                    <button class="nav-item" data-section="promo" onclick="showSection('promo')">
+                        <i class="fas fa-bullhorn"></i> Promotions <span class="dirty-dot"></span>
+                    </button>
+                </div>
+                <div class="sidebar-group">
+                    <span class="sidebar-label">Design</span>
+                    <button class="nav-item" data-section="theme" onclick="showSection('theme')">
+                        <i class="fas fa-palette"></i> Theme Colors <span class="dirty-dot"></span>
+                    </button>
+                    <button class="nav-item" data-section="products" onclick="showSection('products')">
+                        <i class="fas fa-box-open"></i> Products <span class="dirty-dot"></span>
+                    </button>
+                </div>
+                <div class="sidebar-group">
+                    <span class="sidebar-label">Content</span>
+                    <button class="nav-item" data-section="hero" onclick="showSection('hero')">
+                        <i class="fas fa-heading"></i> Hero Content <span class="dirty-dot"></span>
+                    </button>
+                    <button class="nav-item" data-section="contact" onclick="showSection('contact')">
+                        <i class="fas fa-address-book"></i> Contact Info <span class="dirty-dot"></span>
+                    </button>
+                </div>
+                <div class="sidebar-group">
+                    <span class="sidebar-label">System</span>
+                    <button class="nav-item" data-section="system" onclick="showSection('system')">
+                        <i class="fas fa-cog"></i> System <span class="dirty-dot"></span>
+                    </button>
+                </div>
             </div>
             <div class="sidebar-footer">
                 <button class="nav-item" onclick="doLogout()" style="color:var(--muted);">
@@ -346,255 +458,367 @@
             </div>
         </aside>
 
-        <!-- Main content -->
+        <!-- Main -->
         <main class="admin-content">
 
-            <!-- OVERVIEW -->
+            <!-- ══ OVERVIEW ══════════════════════════════════════ -->
             <div class="section-panel active" id="sec-overview">
                 <div class="panel-header">
-                    <h2>Dashboard Overview</h2>
-                    <p>Current site configuration at a glance.</p>
+                    <h2><i class="fas fa-th-large"></i> Dashboard Overview</h2>
+                    <p>Your site settings at a glance. Click any card to jump to that section.</p>
                 </div>
-                <div class="stat-grid" id="overview-stats"></div>
+                <div class="overview-grid" id="overview-stats"></div>
                 <div class="admin-card">
-                    <h3><i class="fas fa-info-circle"></i> Quick Guide</h3>
-                    <p style="font-size:0.83rem;color:var(--muted);line-height:1.8;">
-                        Use the left sidebar to navigate between sections. Each section lets you update a part of your website in real-time.
-                        Changes are saved to the backend and applied automatically to all visitors.
-                        <br><br>
-                        <strong style="color:var(--text);">Backend must be running</strong> at <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;">http://localhost:8000</code> for changes to take effect.
+                    <div class="card-title"><i class="fas fa-keyboard"></i> Keyboard Shortcuts</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:.85rem;font-size:.8rem;color:var(--muted);">
+                        <span><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">S</kbd> — Save current section</span>
+                        <span><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">1–8</kbd> — Jump to section</span>
+                    </div>
+                </div>
+                <div class="admin-card" style="border-color:rgba(232,66,10,.2);">
+                    <div class="card-title"><i class="fas fa-info-circle"></i> Quick Guide</div>
+                    <p style="font-size:.82rem;color:var(--muted);line-height:1.75;">
+                        Changes save to the backend in real time — visitors see them immediately.
+                        <strong style="color:var(--text);">Yellow dots</strong> on sidebar items mean you have unsaved changes in that section.
+                        The backend must be running at
+                        <code style="background:var(--surface2);padding:1px 6px;border-radius:4px;font-size:.8rem;">http://localhost:8000</code>.
                     </p>
                 </div>
             </div>
 
-            <!-- PRICING -->
+            <!-- ══ PRICING ════════════════════════════════════════ -->
             <div class="section-panel" id="sec-pricing">
                 <div class="panel-header">
-                    <h2><i class="fas fa-tags" style="color:var(--orange);margin-right:0.5rem;"></i>Bundle Pricing</h2>
-                    <p>Update prices for all 4 bundles. Changes apply instantly across the site.</p>
+                    <h2><i class="fas fa-tags"></i> Bundle Pricing</h2>
+                    <p>Set the PHP price for each bundle. Changes reflect immediately on Shop and Product pages.</p>
                 </div>
                 <div class="admin-card">
-                    <h3><i class="fas fa-store"></i> Bundle Prices (PHP)</h3>
+                    <div class="card-title"><i class="fas fa-store"></i> Bundle Prices (PHP)</div>
                     <div class="grid-2">
                         <div class="form-field">
                             <label>Starter Bundle</label>
-                            <div class="price-input-wrap">
+                            <div class="price-wrap">
                                 <span class="currency">PHP</span>
-                                <input type="number" id="p-starter" min="0" step="50" placeholder="1900">
+                                <input type="number" id="p-starter" min="0" step="50" placeholder="1900" oninput="updatePriceDisplay('p-starter','p-starter-live')">
                             </div>
+                            <div class="price-live" id="p-starter-live"></div>
                         </div>
                         <div class="form-field">
                             <label>Founder Bundle</label>
-                            <div class="price-input-wrap">
+                            <div class="price-wrap">
                                 <span class="currency">PHP</span>
-                                <input type="number" id="p-founder" min="0" step="50" placeholder="2600">
+                                <input type="number" id="p-founder" min="0" step="50" placeholder="2600" oninput="updatePriceDisplay('p-founder','p-founder-live')">
                             </div>
+                            <div class="price-live" id="p-founder-live"></div>
                         </div>
                         <div class="form-field">
                             <label>Complete Set Bundle</label>
-                            <div class="price-input-wrap">
+                            <div class="price-wrap">
                                 <span class="currency">PHP</span>
-                                <input type="number" id="p-complete" min="0" step="50" placeholder="3500">
+                                <input type="number" id="p-complete" min="0" step="50" placeholder="3500" oninput="updatePriceDisplay('p-complete','p-complete-live')">
                             </div>
+                            <div class="price-live" id="p-complete-live"></div>
                         </div>
                         <div class="form-field">
                             <label>Custom Bundle</label>
-                            <div class="price-input-wrap">
+                            <div class="price-wrap">
                                 <span class="currency">PHP</span>
-                                <input type="number" id="p-custom" min="0" step="50" placeholder="4600">
+                                <input type="number" id="p-custom" min="0" step="50" placeholder="4600" oninput="updatePriceDisplay('p-custom','p-custom-live')">
                             </div>
+                            <div class="price-live" id="p-custom-live"></div>
                         </div>
                     </div>
                     <div class="save-bar">
-                        <p>Pricing changes are reflected immediately on the Shop and Product pages.</p>
-                        <button class="btn btn-primary" onclick="savePricing()"><i class="fas fa-save"></i> Save Prices</button>
+                        <p>Tip: Use the arrow keys or scroll to adjust values by ₱50.</p>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="savePricing()"><i class="fas fa-save"></i> Save Prices</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PROMO BANNER -->
+            <!-- ══ PROMO BANNER ══════════════════════════════════ -->
             <div class="section-panel" id="sec-promo">
                 <div class="panel-header">
-                    <h2><i class="fas fa-bullhorn" style="color:var(--orange);margin-right:0.5rem;"></i>Promotions</h2>
-                    <p>Show a full-width promotional banner at the top of every page.</p>
+                    <h2><i class="fas fa-bullhorn"></i> Promotions</h2>
+                    <p>Show a full-width promotional banner at the top of every page when enabled.</p>
                 </div>
                 <div class="admin-card">
-                    <h3><i class="fas fa-toggle-on"></i> Banner Settings</h3>
+                    <div class="card-title"><i class="fas fa-toggle-on"></i> Banner Settings</div>
                     <div class="toggle-wrap">
-                        <label class="toggle"><input type="checkbox" id="promo-enabled"><span class="toggle-slider"></span></label>
-                        <span class="toggle-label">Enable promo banner</span>
+                        <label class="toggle">
+                            <input type="checkbox" id="promo-enabled" onchange="markDirty('promo')">
+                            <span class="toggle-track"></span>
+                        </label>
+                        <span class="toggle-label">Enable promo banner on all pages</span>
                     </div>
                     <div class="form-field">
                         <label>Banner Text</label>
-                        <input type="text" id="promo-text" placeholder="e.g. 🎉 20% off all bundles this week!">
+                        <input type="text" id="promo-text" placeholder="e.g. 🎉 20% off all bundles this week!" oninput="updateBannerPreview();markDirty('promo')">
                     </div>
                     <div class="grid-2">
                         <div class="form-field">
                             <label>Background Color</label>
-                            <div class="color-field">
-                                <input type="color" id="promo-bg" value="#E8420A" oninput="syncColor('promo-bg','promo-bg-hex');updateBannerPreview()">
-                                <input type="text" id="promo-bg-hex" placeholder="#E8420A" oninput="syncHex('promo-bg','promo-bg-hex');updateBannerPreview()">
+                            <div class="swatch-picker" onclick="document.getElementById('promo-bg').click()">
+                                <div class="swatch-circle" id="promo-bg-swatch" style="background:#E8420A;"></div>
+                                <div class="swatch-info">
+                                    <div class="swatch-name">Banner BG</div>
+                                    <div class="swatch-hex" id="promo-bg-hex-display">#E8420A</div>
+                                </div>
+                                <i class="fas fa-eye-dropper swatch-edit-btn"></i>
+                                <input type="color" id="promo-bg" value="#E8420A" oninput="syncSwatchColor('promo-bg','promo-bg-swatch','promo-bg-hex-display','promo-bg-hex');updateBannerPreview();markDirty('promo')">
                             </div>
+                            <input type="text" id="promo-bg-hex" placeholder="#E8420A" style="margin-top:.4rem;" oninput="syncHexToSwatch('promo-bg','promo-bg-swatch','promo-bg-hex-display','promo-bg-hex');updateBannerPreview();markDirty('promo')">
                         </div>
                         <div class="form-field">
                             <label>Text Color</label>
-                            <div class="color-field">
-                                <input type="color" id="promo-txt" value="#ffffff" oninput="syncColor('promo-txt','promo-txt-hex');updateBannerPreview()">
-                                <input type="text" id="promo-txt-hex" placeholder="#ffffff" oninput="syncHex('promo-txt','promo-txt-hex');updateBannerPreview()">
+                            <div class="swatch-picker" onclick="document.getElementById('promo-txt').click()">
+                                <div class="swatch-circle" id="promo-txt-swatch" style="background:#ffffff;"></div>
+                                <div class="swatch-info">
+                                    <div class="swatch-name">Banner Text</div>
+                                    <div class="swatch-hex" id="promo-txt-hex-display">#ffffff</div>
+                                </div>
+                                <i class="fas fa-eye-dropper swatch-edit-btn"></i>
+                                <input type="color" id="promo-txt" value="#ffffff" oninput="syncSwatchColor('promo-txt','promo-txt-swatch','promo-txt-hex-display','promo-txt-hex');updateBannerPreview();markDirty('promo')">
                             </div>
+                            <input type="text" id="promo-txt-hex" placeholder="#ffffff" style="margin-top:.4rem;" oninput="syncHexToSwatch('promo-txt','promo-txt-swatch','promo-txt-hex-display','promo-txt-hex');updateBannerPreview();markDirty('promo')">
                         </div>
                         <div class="form-field">
-                            <label>Link URL (optional)</label>
-                            <input type="text" id="promo-link" placeholder="shop.html">
+                            <label>Link URL <span style="font-weight:400;text-transform:none;">(optional)</span></label>
+                            <input type="text" id="promo-link" placeholder="shop.html" oninput="markDirty('promo')">
                         </div>
                         <div class="form-field">
-                            <label>Link Button Text</label>
-                            <input type="text" id="promo-link-text" placeholder="Shop Now">
+                            <label>Button Text</label>
+                            <input type="text" id="promo-link-text" placeholder="Shop Now" oninput="updateBannerPreview();markDirty('promo')">
                         </div>
                     </div>
                     <div id="banner-preview">
                         <span id="banner-prev-text">Preview text</span>
-                        <span id="banner-prev-btn" style="font-size:0.75rem;padding:0.2rem 0.75rem;border-radius:20px;background:rgba(255,255,255,0.25);cursor:default;">Shop Now</span>
+                        <span id="banner-prev-btn">Shop Now</span>
                     </div>
                     <div class="save-bar">
-                        <p>Banner appears at the top of every page when enabled.</p>
-                        <button class="btn btn-primary" onclick="savePromo()"><i class="fas fa-save"></i> Save Banner</button>
+                        <p>Banner shows at the top of every page sitewide when enabled.</p>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="savePromo()"><i class="fas fa-save"></i> Save Banner</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- THEME -->
+            <!-- ══ THEME ══════════════════════════════════════════ -->
             <div class="section-panel" id="sec-theme">
                 <div class="panel-header">
-                    <h2><i class="fas fa-palette" style="color:var(--orange);margin-right:0.5rem;"></i>Theme Colors</h2>
-                    <p>Change the site-wide color scheme. Colors update instantly for all visitors.</p>
+                    <h2><i class="fas fa-palette"></i> Theme Colors</h2>
+                    <p>Pick from a preset palette or customize each color individually. The live preview updates instantly.</p>
                 </div>
+
+                <!-- Presets -->
                 <div class="admin-card">
-                    <h3><i class="fas fa-fill-drip"></i> Brand Colors</h3>
-                    <div class="grid-3">
+                    <div class="card-title"><i class="fas fa-swatchbook"></i> Quick Presets</div>
+                    <div class="preset-grid" id="preset-grid"></div>
+                    <p class="form-hint">Click a preset to instantly apply all three colors, then save.</p>
+                </div>
+
+                <!-- Editor + Preview side by side -->
+                <div class="grid-2" style="align-items:start;">
+
+                    <!-- Color editors -->
+                    <div class="admin-card" style="margin-bottom:0;">
+                        <div class="card-title"><i class="fas fa-fill-drip"></i> Brand Colors</div>
+
                         <div class="form-field">
-                            <label>Primary (Orange)</label>
-                            <div class="color-field">
-                                <input type="color" id="t-primary" oninput="syncColor('t-primary','t-primary-hex')">
-                                <input type="text" id="t-primary-hex" placeholder="#E8420A" oninput="syncHex('t-primary','t-primary-hex')">
+                            <label>Primary Color <span style="font-weight:400;text-transform:none;color:var(--muted);">— buttons, links, highlights</span></label>
+                            <div class="swatch-picker" onclick="document.getElementById('t-primary').click()">
+                                <div class="swatch-circle" id="t-primary-swatch"></div>
+                                <div class="swatch-info">
+                                    <div class="swatch-name">Primary</div>
+                                    <div class="swatch-hex" id="t-primary-hex-display">#E8420A</div>
+                                </div>
+                                <i class="fas fa-eye-dropper swatch-edit-btn"></i>
+                                <input type="color" id="t-primary" oninput="onThemeColor('t-primary')">
                             </div>
+                            <input type="text" id="t-primary-hex" placeholder="#E8420A" style="margin-top:.4rem;" oninput="onThemeHex('t-primary')">
                         </div>
+
                         <div class="form-field">
-                            <label>Secondary (Navy)</label>
-                            <div class="color-field">
-                                <input type="color" id="t-secondary" oninput="syncColor('t-secondary','t-secondary-hex')">
-                                <input type="text" id="t-secondary-hex" placeholder="#0F1F3D" oninput="syncHex('t-secondary','t-secondary-hex')">
+                            <label>Secondary Color <span style="font-weight:400;text-transform:none;color:var(--muted);">— navbar, backgrounds</span></label>
+                            <div class="swatch-picker" onclick="document.getElementById('t-secondary').click()">
+                                <div class="swatch-circle" id="t-secondary-swatch"></div>
+                                <div class="swatch-info">
+                                    <div class="swatch-name">Secondary</div>
+                                    <div class="swatch-hex" id="t-secondary-hex-display">#0F1F3D</div>
+                                </div>
+                                <i class="fas fa-eye-dropper swatch-edit-btn"></i>
+                                <input type="color" id="t-secondary" oninput="onThemeColor('t-secondary')">
                             </div>
+                            <input type="text" id="t-secondary-hex" placeholder="#0F1F3D" style="margin-top:.4rem;" oninput="onThemeHex('t-secondary')">
                         </div>
+
                         <div class="form-field">
-                            <label>Accent (Amber/Gold)</label>
-                            <div class="color-field">
-                                <input type="color" id="t-accent" oninput="syncColor('t-accent','t-accent-hex')">
-                                <input type="text" id="t-accent-hex" placeholder="#F5A500" oninput="syncHex('t-accent','t-accent-hex')">
+                            <label>Accent Color <span style="font-weight:400;text-transform:none;color:var(--muted);">— badges, prices, highlights</span></label>
+                            <div class="swatch-picker" onclick="document.getElementById('t-accent').click()">
+                                <div class="swatch-circle" id="t-accent-swatch"></div>
+                                <div class="swatch-info">
+                                    <div class="swatch-name">Accent</div>
+                                    <div class="swatch-hex" id="t-accent-hex-display">#F5A500</div>
+                                </div>
+                                <i class="fas fa-eye-dropper swatch-edit-btn"></i>
+                                <input type="color" id="t-accent" oninput="onThemeColor('t-accent')">
+                            </div>
+                            <input type="text" id="t-accent-hex" placeholder="#F5A500" style="margin-top:.4rem;" oninput="onThemeHex('t-accent')">
+                        </div>
+
+                        <div class="save-bar">
+                            <p>Colors apply sitewide on save.</p>
+                            <div class="btn-group">
+                                <button class="btn btn-ghost btn-sm" onclick="resetTheme()"><i class="fas fa-undo"></i> Reset</button>
+                                <button class="btn btn-primary" onclick="saveTheme()"><i class="fas fa-save"></i> Save Theme</button>
                             </div>
                         </div>
                     </div>
-                    <div class="save-bar">
-                        <p>All buttons, highlights, and accents across the site will use these colors.</p>
-                        <button class="btn btn-secondary" onclick="resetTheme()" style="margin-right:0.5rem;"><i class="fas fa-undo"></i> Reset</button>
-                        <button class="btn btn-primary" onclick="saveTheme()"><i class="fas fa-save"></i> Save Theme</button>
+
+                    <!-- Live preview -->
+                    <div class="admin-card" style="margin-bottom:0;">
+                        <div class="card-title"><i class="fas fa-eye"></i> Live Preview</div>
+                        <div id="theme-preview">
+                            <div class="tp-nav">
+                                <div class="tp-nav-logo"></div>
+                                <div class="tp-nav-links">
+                                    <div class="tp-nav-link"></div>
+                                    <div class="tp-nav-link"></div>
+                                    <div class="tp-nav-link"></div>
+                                </div>
+                                <div class="tp-nav-btn">Shop</div>
+                            </div>
+                            <div class="tp-hero">
+                                <div class="tp-hero-title">Launch your business today.</div>
+                                <div class="tp-hero-sub">Ready-made blueprints for entrepreneurs.</div>
+                                <div class="tp-hero-btn">Browse Bundles</div>
+                            </div>
+                            <div class="tp-card-row">
+                                <div class="tp-card">
+                                    <div class="tp-card-badge">Starter</div>
+                                    <div class="tp-card-title">Starter Bundle</div>
+                                    <div class="tp-card-price">PHP 1,900</div>
+                                    <div class="tp-card-btn">Add to Cart</div>
+                                </div>
+                                <div class="tp-card">
+                                    <div class="tp-card-badge">Popular</div>
+                                    <div class="tp-card-title">Founder Bundle</div>
+                                    <div class="tp-card-price">PHP 2,600</div>
+                                    <div class="tp-card-btn">Add to Cart</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="form-hint" style="margin-top:.75rem;">This is a scaled-down preview of how your site will look with the selected colors.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- PRODUCTS -->
+            <!-- ══ PRODUCTS ════════════════════════════════════════ -->
             <div class="section-panel" id="sec-products">
                 <div class="panel-header">
-                    <h2><i class="fas fa-box-open" style="color:var(--orange);margin-right:0.5rem;"></i>Product Details</h2>
-                    <p>Update product names, images, and short descriptions.</p>
+                    <h2><i class="fas fa-box-open"></i> Product Details</h2>
+                    <p>Update bundle names, images, and descriptions. Images update as you type the URL.</p>
                 </div>
-                <div class="admin-card" id="products-card">
-                    <h3><i class="fas fa-cubes"></i> All Bundles</h3>
-                    <!-- Populated by JS -->
-                </div>
+                <div id="products-card"></div>
                 <div class="save-bar">
-                    <p>Images can be URLs (Unsplash, your own CDN, etc.).</p>
-                    <button class="btn btn-primary" onclick="saveProducts()"><i class="fas fa-save"></i> Save Products</button>
+                    <p>Use any image URL — Unsplash, your own CDN, or Google Drive (direct link).</p>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="saveProducts()"><i class="fas fa-save"></i> Save Products</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- HERO -->
+            <!-- ══ HERO ════════════════════════════════════════════ -->
             <div class="section-panel" id="sec-hero">
                 <div class="panel-header">
-                    <h2><i class="fas fa-heading" style="color:var(--orange);margin-right:0.5rem;"></i>Hero Content</h2>
-                    <p>Edit the headline, subtitle, and CTA button text on the homepage.</p>
+                    <h2><i class="fas fa-heading"></i> Hero Content</h2>
+                    <p>Edit the homepage headline, subtitle, and CTA button labels.</p>
                 </div>
                 <div class="admin-card">
-                    <h3><i class="fas fa-text-height"></i> Homepage Hero</h3>
+                    <div class="card-title"><i class="fas fa-text-height"></i> Homepage Hero</div>
                     <div class="form-field">
                         <label>Main Headline</label>
-                        <input type="text" id="h-title" placeholder="Launch your business with a ready-made blueprint.">
+                        <input type="text" id="h-title" placeholder="Launch your business with a ready-made blueprint." oninput="markDirty('hero')">
                     </div>
                     <div class="form-field">
                         <label>Subtitle</label>
-                        <textarea id="h-subtitle" rows="2" placeholder="Digital business blueprints for OFWs..."></textarea>
+                        <textarea id="h-subtitle" rows="2" placeholder="Digital business blueprints for OFWs..." oninput="markDirty('hero')"></textarea>
                     </div>
                     <div class="grid-2">
                         <div class="form-field">
-                            <label>Primary CTA Text</label>
-                            <input type="text" id="h-cta1" placeholder="Browse Bundles">
+                            <label>Primary Button Text</label>
+                            <input type="text" id="h-cta1" placeholder="Browse Bundles" oninput="markDirty('hero')">
                         </div>
                         <div class="form-field">
-                            <label>Secondary CTA Text</label>
-                            <input type="text" id="h-cta2" placeholder="Generate AI Blueprint">
+                            <label>Secondary Button Text</label>
+                            <input type="text" id="h-cta2" placeholder="Generate AI Blueprint" oninput="markDirty('hero')">
                         </div>
                     </div>
                     <div class="save-bar">
-                        <p>These changes update the hero section on the homepage.</p>
-                        <button class="btn btn-primary" onclick="saveHero()"><i class="fas fa-save"></i> Save Hero</button>
+                        <p>Updates the hero section of the homepage.</p>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="saveHero()"><i class="fas fa-save"></i> Save Hero</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- CONTACT -->
+            <!-- ══ CONTACT ═════════════════════════════════════════ -->
             <div class="section-panel" id="sec-contact">
                 <div class="panel-header">
-                    <h2><i class="fas fa-address-book" style="color:var(--orange);margin-right:0.5rem;"></i>Contact Info</h2>
-                    <p>Update the WhatsApp number and support email across the site.</p>
+                    <h2><i class="fas fa-address-book"></i> Contact Info</h2>
+                    <p>Update WhatsApp and email used across the site.</p>
                 </div>
                 <div class="admin-card">
-                    <h3><i class="fas fa-phone-alt"></i> Support Channels</h3>
+                    <div class="card-title"><i class="fas fa-phone-alt"></i> Support Channels</div>
                     <div class="grid-2">
                         <div class="form-field">
-                            <label>WhatsApp Number (digits only)</label>
-                            <input type="text" id="c-whatsapp" placeholder="1234567890">
+                            <label>WhatsApp Number</label>
+                            <input type="text" id="c-whatsapp" placeholder="1234567890" oninput="markDirty('contact')">
+                            <div class="form-hint">Digits only, no + or spaces. Include country code.</div>
                         </div>
                         <div class="form-field">
                             <label>Support Email</label>
-                            <input type="email" id="c-email" placeholder="support@negosyoplan.com">
+                            <input type="email" id="c-email" placeholder="support@negosyoplan.com" oninput="markDirty('contact')">
                         </div>
                     </div>
                     <div class="save-bar">
-                        <p>WhatsApp links and email addresses across the site will use these values.</p>
-                        <button class="btn btn-primary" onclick="saveContact()"><i class="fas fa-save"></i> Save Contact</button>
+                        <p>All WhatsApp links and email addresses on the site use these values.</p>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="saveContact()"><i class="fas fa-save"></i> Save Contact</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SYSTEM -->
+            <!-- ══ SYSTEM ══════════════════════════════════════════ -->
             <div class="section-panel" id="sec-system">
                 <div class="panel-header">
-                    <h2><i class="fas fa-cog" style="color:var(--orange);margin-right:0.5rem;"></i>System</h2>
-                    <p>Backend status and system-level actions.</p>
+                    <h2><i class="fas fa-cog"></i> System</h2>
+                    <p>Backend connection and factory reset.</p>
                 </div>
                 <div class="admin-card">
-                    <h3><i class="fas fa-server"></i> Backend Status</h3>
-                    <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1rem;">
+                    <div class="card-title"><i class="fas fa-server"></i> Backend Status</div>
+                    <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem;">
                         API endpoint: <code style="background:var(--surface2);padding:2px 8px;border-radius:5px;" id="api-base-display">http://localhost:8000</code>
                     </p>
-                    <div id="system-status-detail" style="font-size:0.82rem;color:var(--muted);"></div>
+                    <div id="system-status-detail" style="font-size:.82rem;"></div>
+                    <div style="margin-top:1rem;">
+                        <button class="btn btn-secondary btn-sm" onclick="checkBackendStatus()">
+                            <i class="fas fa-sync-alt"></i> Refresh Status
+                        </button>
+                    </div>
                 </div>
-                <div class="admin-card">
-                    <h3><i class="fas fa-undo"></i> Reset Settings</h3>
-                    <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1rem;">
-                        Restore all site settings to factory defaults. This cannot be undone.
+                <div class="admin-card" style="border-color:rgba(239,68,68,.2);">
+                    <div class="card-title"><i class="fas fa-exclamation-triangle" style="color:var(--red);"></i> Danger Zone</div>
+                    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;">
+                        Restore <strong style="color:var(--text);">all settings</strong> to factory defaults. This cannot be undone.
                     </p>
-                    <button class="btn btn-danger" onclick="confirmReset()"><i class="fas fa-trash-alt"></i> Reset to Defaults</button>
+                    <button class="btn btn-danger" onclick="confirmReset()">
+                        <i class="fas fa-trash-alt"></i> Reset to Defaults
+                    </button>
                 </div>
             </div>
 

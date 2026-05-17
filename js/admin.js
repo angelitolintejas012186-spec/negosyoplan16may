@@ -4,35 +4,63 @@
     var BASE = 'http://localhost:8000';
     var TOKEN_KEY = 'np_admin_token';
     var currentSettings = {};
+    var dirtyMap = {};
 
-    /* ── helpers ──────────────────────────────────────────────── */
+    var SECTION_KEYS = ['overview','pricing','promo','theme','products','hero','contact','system'];
+
+    /* ── Color presets ──────────────────────────────────────── */
+    var PRESETS = [
+        { name:'Original', p:'#E8420A', s:'#0F1F3D', a:'#F5A500' },
+        { name:'Ocean',    p:'#0077B6', s:'#03045E', a:'#00B4D8' },
+        { name:'Forest',   p:'#2D6A4F', s:'#1B4332', a:'#95D5B2' },
+        { name:'Purple',   p:'#7B2D8B', s:'#240046', a:'#E040FB' },
+        { name:'Crimson',  p:'#C0392B', s:'#1A0A0A', a:'#E67E22' },
+        { name:'Slate',    p:'#475569', s:'#0F172A', a:'#38BDF8' },
+    ];
+
+    /* ── Token helpers ─────────────────────────────────────── */
     function token() { return sessionStorage.getItem(TOKEN_KEY); }
-
     function authHeaders() {
         return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token() };
     }
 
+    /* ── Toast ──────────────────────────────────────────────── */
     function showToast(msg, type) {
         var t = document.getElementById('a-toast');
         if (!t) return;
+        var icons = { success:'check-circle', error:'exclamation-circle', info:'info-circle' };
         t.className = 'toast-' + (type || 'info');
-        t.innerHTML = '<i class="fas fa-' + (type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle') + '"></i> ' + msg;
+        t.innerHTML = '<i class="fas fa-' + (icons[type] || 'info-circle') + '"></i> ' + msg;
         t.classList.add('visible');
         clearTimeout(t._timer);
         t._timer = setTimeout(function () { t.classList.remove('visible'); }, 3500);
     }
 
+    /* ── Dirty tracking ────────────────────────────────────── */
+    window.markDirty = function (section) {
+        dirtyMap[section] = true;
+        document.querySelectorAll('.nav-item[data-section="' + section + '"]').forEach(function (b) {
+            b.classList.add('dirty');
+        });
+    };
+
+    function clearDirty(section) {
+        dirtyMap[section] = false;
+        document.querySelectorAll('.nav-item[data-section="' + section + '"]').forEach(function (b) {
+            b.classList.remove('dirty');
+        });
+    }
+
+    /* ── API fetch ─────────────────────────────────────────── */
     async function apiFetch(path, opts) {
         try {
             var r = await fetch(BASE + path, opts);
-            if (r.status === 401) { doLogout(); return null; }
+            if (r.status === 401 && path !== '/admin/login') { doLogout(); return null; }
             return r;
-        } catch (e) {
-            return null;
-        }
+        } catch (e) { return null; }
     }
 
-    /* ── auth ──────────────────────────────────────────────────── */
+    /* ── Auth ───────────────────────────────────────────────── */
     async function doLogin() {
         var btn = document.getElementById('login-btn');
         var errWrap = document.getElementById('login-error');
@@ -46,7 +74,6 @@
             errWrap.style.display = 'flex';
             return;
         }
-
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in…';
 
@@ -75,7 +102,6 @@
             document.getElementById('l-pass').value = '';
             return;
         }
-
         sessionStorage.setItem(TOKEN_KEY, data.access_token);
         var uEl = document.getElementById('admin-username');
         if (uEl) uEl.textContent = data.username || username;
@@ -93,46 +119,48 @@
     function enterShell() {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('admin-shell').style.display = 'flex';
+        buildPresets();
         loadSettings();
         checkBackendStatus();
     }
 
-    /* ── section nav ───────────────────────────────────────────── */
+    /* ── Section nav ────────────────────────────────────────── */
     window.showSection = function (name) {
         document.querySelectorAll('.section-panel').forEach(function (p) { p.classList.remove('active'); });
-        var target = document.getElementById('sec-' + name);
-        if (target) target.classList.add('active');
-
+        var t = document.getElementById('sec-' + name);
+        if (t) t.classList.add('active');
         document.querySelectorAll('.nav-item').forEach(function (b) { b.classList.remove('active'); });
-        var navBtns = document.querySelectorAll('.nav-item');
-        navBtns.forEach(function (b) {
-            if (b.getAttribute('onclick') === "showSection('" + name + "')") b.classList.add('active');
+        document.querySelectorAll('.nav-item[data-section="' + name + '"]').forEach(function (b) {
+            b.classList.add('active');
         });
     };
 
-    /* ── backend status ────────────────────────────────────────── */
-    async function checkBackendStatus() {
+    /* ── Backend status ─────────────────────────────────────── */
+    window.checkBackendStatus = async function () {
         var statusEl = document.getElementById('backend-status');
         var detailEl = document.getElementById('system-status-detail');
         var apiBase = document.getElementById('api-base-display');
         if (apiBase) apiBase.textContent = BASE;
 
+        if (statusEl) statusEl.innerHTML = '<div class="tb-status"><i class="fas fa-circle"></i> Checking…</div>';
         try {
-            var r = await fetch(BASE + '/health', { signal: AbortSignal.timeout(4000) });
-            var data = r.ok ? await r.json() : null;
-            if (r.ok && data) {
-                if (statusEl) statusEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:#4CAF50;"><i class="fas fa-circle" style="font-size:0.5rem;"></i>Backend Online</span>';
-                if (detailEl) detailEl.innerHTML = '<span style="color:#4CAF50;"><i class="fas fa-check-circle"></i> Backend is online and responding.</span><br><small>Status: ' + (data.status || 'ok') + '</small>';
-            } else {
-                throw new Error('not ok');
-            }
+            var r = await fetch(BASE + '/health', { signal: AbortSignal.timeout(5000) });
+            var d = r.ok ? await r.json() : null;
+            if (r.ok && d) {
+                if (statusEl) statusEl.innerHTML = '<div class="tb-status online"><i class="fas fa-circle"></i> Online</div>';
+                if (detailEl) detailEl.innerHTML =
+                    '<span class="tag tag-green"><i class="fas fa-check-circle"></i> Backend online</span>' +
+                    '<br><span style="color:var(--muted);font-size:.78rem;margin-top:.4rem;display:block;">Model: ' + (d.model || 'deepseek-chat') + ' &nbsp;·&nbsp; DeepSeek: ' + (d.deepseek_configured ? '✓ Configured' : '✗ Not set') + '</span>';
+            } else { throw new Error(); }
         } catch (e) {
-            if (statusEl) statusEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:#FF5252;"><i class="fas fa-circle" style="font-size:0.5rem;"></i>Backend Offline</span>';
-            if (detailEl) detailEl.innerHTML = '<span style="color:#FF5252;"><i class="fas fa-times-circle"></i> Cannot reach backend at ' + BASE + '</span><br><small>Start the FastAPI server to enable settings management.</small>';
+            if (statusEl) statusEl.innerHTML = '<div class="tb-status offline"><i class="fas fa-circle"></i> Offline</div>';
+            if (detailEl) detailEl.innerHTML =
+                '<span class="tag tag-red"><i class="fas fa-times-circle"></i> Cannot reach backend</span>' +
+                '<br><small style="color:var(--muted);margin-top:.4rem;display:block;">Start uvicorn: <code style="background:var(--surface2);padding:1px 5px;border-radius:4px;">uvicorn main:app --reload --port 8000</code></small>';
         }
-    }
+    };
 
-    /* ── load settings ─────────────────────────────────────────── */
+    /* ── Load settings ──────────────────────────────────────── */
     async function loadSettings() {
         var r = await apiFetch('/api/settings', { headers: { 'Authorization': 'Bearer ' + token() } });
         if (!r || !r.ok) { showToast('Failed to load settings.', 'error'); return; }
@@ -142,95 +170,122 @@
     }
 
     function populateAll(s) {
-        /* pricing */
         if (s.pricing) {
             setVal('p-starter', s.pricing.starter);
             setVal('p-founder', s.pricing.founder);
             setVal('p-complete', s.pricing.complete);
             setVal('p-custom', s.pricing.custom);
+            ['starter','founder','complete','custom'].forEach(function (k) {
+                updatePriceDisplay('p-' + k, 'p-' + k + '-live');
+            });
         }
-
-        /* promo banner */
         if (s.promo_banner) {
             var pb = s.promo_banner;
             setChecked('promo-enabled', pb.enabled);
             setVal('promo-text', pb.text);
-            setColor('promo-bg', 'promo-bg-hex', pb.bg_color || '#E8420A');
-            setColor('promo-txt', 'promo-txt-hex', pb.text_color || '#ffffff');
+            setSwatchAll('promo-bg', 'promo-bg-swatch', 'promo-bg-hex-display', 'promo-bg-hex', pb.bg_color || '#E8420A');
+            setSwatchAll('promo-txt', 'promo-txt-swatch', 'promo-txt-hex-display', 'promo-txt-hex', pb.text_color || '#ffffff');
             setVal('promo-link', pb.link);
             setVal('promo-link-text', pb.link_text);
             updateBannerPreview();
         }
-
-        /* theme */
         if (s.theme) {
-            setColor('t-primary', 't-primary-hex', s.theme.primary || '#E8420A');
-            setColor('t-secondary', 't-secondary-hex', s.theme.secondary || '#0F1F3D');
-            setColor('t-accent', 't-accent-hex', s.theme.accent || '#F5A500');
+            setThemeColor('t-primary', s.theme.primary || '#E8420A');
+            setThemeColor('t-secondary', s.theme.secondary || '#0F1F3D');
+            setThemeColor('t-accent', s.theme.accent || '#F5A500');
+            updateThemePreview();
         }
-
-        /* hero */
         if (s.hero) {
             setVal('h-title', s.hero.title);
             setVal('h-subtitle', s.hero.subtitle);
             setVal('h-cta1', s.hero.cta_primary);
             setVal('h-cta2', s.hero.cta_secondary);
         }
-
-        /* contact */
         if (s.contact) {
             setVal('c-whatsapp', s.contact.whatsapp);
             setVal('c-email', s.contact.email);
         }
-
-        /* products */
         if (s.products) buildProductCards(s.products);
-
-        /* overview stats */
         buildOverview(s);
+        dirtyMap = {};
+        document.querySelectorAll('.nav-item').forEach(function (b) { b.classList.remove('dirty'); });
     }
 
+    /* ── Overview ───────────────────────────────────────────── */
     function buildOverview(s) {
         var el = document.getElementById('overview-stats');
         if (!el || !s) return;
-        var pricing = s.pricing || {};
-        var promo = s.promo_banner || {};
-        var theme = s.theme || {};
+        var pr = s.pricing || {};
+        var pb = s.promo_banner || {};
+        var th = s.theme || {};
+        var links = {
+            starter:'pricing', founder:'pricing', complete:'pricing', custom:'pricing',
+            promo:'promo', primary:'theme', secondary:'theme', accent:'theme'
+        };
+        function card(icon, label, value, section) {
+            return '<div class="overview-card" onclick="showSection(\'' + section + '\')">' +
+                '<div class="ov-icon"><i class="fas fa-' + icon + '"></i></div>' +
+                '<div><div class="ov-label">' + label + '</div><div class="ov-value">' + value + '</div></div>' +
+                '</div>';
+        }
+        function dot(color) {
+            return '<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:' + color + ';vertical-align:middle;margin-right:4px;border:1.5px solid rgba(255,255,255,.2);"></span>' + color;
+        }
         el.innerHTML = [
-            stat('fas fa-tag', 'Starter', 'PHP ' + fmtPrice(pricing.starter)),
-            stat('fas fa-briefcase', 'Founder', 'PHP ' + fmtPrice(pricing.founder)),
-            stat('fas fa-layer-group', 'Complete Set', 'PHP ' + fmtPrice(pricing.complete)),
-            stat('fas fa-star', 'Custom Bundle', 'PHP ' + fmtPrice(pricing.custom)),
-            stat('fas fa-bullhorn', 'Promo Banner', promo.enabled ? '<span style="color:#4CAF50;">Active</span>' : '<span style="color:var(--muted);">Off</span>'),
-            stat('fas fa-palette', 'Primary Color', '<span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:' + (theme.primary || '#E8420A') + ';vertical-align:middle;margin-right:4px;border:1px solid rgba(255,255,255,0.2);"></span>' + (theme.primary || '#E8420A')),
+            card('star', 'Starter', '₱' + fmtNum(pr.starter), 'pricing'),
+            card('briefcase', 'Founder', '₱' + fmtNum(pr.founder), 'pricing'),
+            card('layer-group', 'Complete Set', '₱' + fmtNum(pr.complete), 'pricing'),
+            card('gem', 'Custom Bundle', '₱' + fmtNum(pr.custom), 'pricing'),
+            card('bullhorn', 'Promo Banner', pb.enabled ?
+                '<span class="tag tag-green" style="font-size:.68rem;">Active</span>' :
+                '<span class="tag" style="font-size:.68rem;background:var(--surface2);color:var(--muted);">Off</span>', 'promo'),
+            card('palette', 'Primary Color', dot(th.primary || '#E8420A'), 'theme'),
         ].join('');
     }
 
-    function stat(icon, label, value) {
-        return '<div class="stat-card"><div class="stat-icon"><i class="' + icon + '"></i></div><div><div class="stat-label">' + label + '</div><div class="stat-value">' + value + '</div></div></div>';
-    }
-
+    /* ── Product cards ──────────────────────────────────────── */
     function buildProductCards(products) {
         var container = document.getElementById('products-card');
         if (!container) return;
-        var html = '<h3 style="margin-bottom:1rem;"><i class="fas fa-cubes"></i> All Bundles</h3>';
-        var names = { 1: 'Starter Bundle', 2: 'Founder Bundle', 3: 'Complete Set Bundle', 4: 'Custom Bundle' };
+        var names = { 1:'Starter Bundle', 2:'Founder Bundle', 3:'Complete Set Bundle', 4:'Custom Bundle' };
+        var html = '';
         [1, 2, 3, 4].forEach(function (id) {
-            var p = (products[id] || products[String(id)] || {});
-            html += '<div class="product-editor" style="border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem;">';
-            html += '<div style="font-size:0.75rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.75rem;">Bundle ' + id + ' — ' + (p.name || names[id]) + '</div>';
-            html += '<div class="grid-3">';
-            html += '<div class="form-field" style="grid-column:span 1;"><label>Product Name</label><input type="text" id="prod-name-' + id + '" value="' + esc(p.name || '') + '" placeholder="' + names[id] + '"></div>';
-            html += '<div class="form-field" style="grid-column:span 2;"><label>Image URL</label><input type="text" id="prod-img-' + id + '" value="' + esc(p.image || '') + '" placeholder="https://…"></div>';
-            html += '</div>';
-            html += '<div class="form-field"><label>Short Description</label><input type="text" id="prod-desc-' + id + '" value="' + esc(p.description || '') + '" placeholder="Brief product description…"></div>';
-            html += '</div>';
+            var p = products[id] || products[String(id)] || {};
+            html += '<div class="admin-card" style="margin-bottom:1rem;">' +
+                '<div class="product-editor">' +
+                '<div class="product-thumb-wrap">' +
+                '<img class="product-thumb-img" id="prod-thumb-' + id + '" src="' + esc(p.image || '') + '" alt="" onerror="this.src=\'\';">' +
+                '<div class="product-thumb-overlay"><i class="fas fa-image"></i></div>' +
+                '</div>' +
+                '<div>' +
+                '<div class="product-id-badge">Bundle ' + id + '</div>' +
+                '<div class="form-field" style="margin-bottom:.65rem;">' +
+                '<label>Name</label>' +
+                '<input type="text" id="prod-name-' + id + '" value="' + esc(p.name || '') + '" placeholder="' + names[id] + '" oninput="markDirty(\'products\')">' +
+                '</div>' +
+                '<div class="form-field" style="margin-bottom:.65rem;">' +
+                '<label>Image URL</label>' +
+                '<input type="text" id="prod-img-' + id + '" value="' + esc(p.image || '') + '" placeholder="https://…" oninput="updateThumb(' + id + ');markDirty(\'products\')">' +
+                '</div>' +
+                '<div class="form-field" style="margin-bottom:0;">' +
+                '<label>Description</label>' +
+                '<input type="text" id="prod-desc-' + id + '" value="' + esc(p.description || '') + '" placeholder="Short description…" oninput="markDirty(\'products\')">' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
         });
         container.innerHTML = html;
     }
 
-    /* ── save functions ────────────────────────────────────────── */
-    async function putSettings(patch, label) {
+    window.updateThumb = function (id) {
+        var img = document.getElementById('prod-thumb-' + id);
+        var url = (document.getElementById('prod-img-' + id) || {}).value || '';
+        if (img) img.src = url;
+    };
+
+    /* ── Save helpers ───────────────────────────────────────── */
+    async function putSettings(patch, label, section) {
         var r = await apiFetch('/admin/settings', {
             method: 'PUT',
             headers: authHeaders(),
@@ -239,51 +294,51 @@
         if (!r) { showToast('Cannot connect to backend.', 'error'); return false; }
         if (!r.ok) {
             var d = await r.json().catch(function () { return {}; });
-            showToast((d.detail || 'Save failed.'), 'error');
+            showToast(d.detail || 'Save failed.', 'error');
             return false;
         }
         var updated = await r.json();
-        currentSettings = updated;
-        buildOverview(updated);
-        showToast(label + ' saved successfully.', 'success');
+        currentSettings = updated.settings || updated;
+        buildOverview(currentSettings);
+        if (section) clearDirty(section);
+        showToast(label + ' saved.', 'success');
         return true;
     }
 
     window.savePricing = async function () {
-        var patch = { pricing: {
+        await putSettings({ pricing: {
             starter: numVal('p-starter'),
             founder: numVal('p-founder'),
             complete: numVal('p-complete'),
             custom: numVal('p-custom')
-        }};
-        await putSettings(patch, 'Pricing');
+        }}, 'Pricing', 'pricing');
     };
 
     window.savePromo = async function () {
-        var patch = { promo_banner: {
+        await putSettings({ promo_banner: {
             enabled: document.getElementById('promo-enabled').checked,
             text: strVal('promo-text'),
-            bg_color: strVal('promo-bg-hex') || strVal('promo-bg'),
-            text_color: strVal('promo-txt-hex') || strVal('promo-txt'),
+            bg_color: strVal('promo-bg-hex') || colorVal('promo-bg'),
+            text_color: strVal('promo-txt-hex') || colorVal('promo-txt'),
             link: strVal('promo-link'),
             link_text: strVal('promo-link-text')
-        }};
-        await putSettings(patch, 'Promo banner');
+        }}, 'Promo banner', 'promo');
     };
 
     window.saveTheme = async function () {
-        var patch = { theme: {
-            primary: strVal('t-primary-hex') || strVal('t-primary'),
-            secondary: strVal('t-secondary-hex') || strVal('t-secondary'),
-            accent: strVal('t-accent-hex') || strVal('t-accent')
-        }};
-        await putSettings(patch, 'Theme');
+        await putSettings({ theme: {
+            primary: strVal('t-primary-hex') || colorVal('t-primary'),
+            secondary: strVal('t-secondary-hex') || colorVal('t-secondary'),
+            accent: strVal('t-accent-hex') || colorVal('t-accent')
+        }}, 'Theme', 'theme');
     };
 
     window.resetTheme = function () {
-        setColor('t-primary', 't-primary-hex', '#E8420A');
-        setColor('t-secondary', 't-secondary-hex', '#0F1F3D');
-        setColor('t-accent', 't-accent-hex', '#F5A500');
+        setThemeColor('t-primary', '#E8420A');
+        setThemeColor('t-secondary', '#0F1F3D');
+        setThemeColor('t-accent', '#F5A500');
+        updateThemePreview();
+        markDirty('theme');
     };
 
     window.saveProducts = async function () {
@@ -295,30 +350,28 @@
                 description: strVal('prod-desc-' + id)
             };
         });
-        await putSettings({ products: products }, 'Products');
+        await putSettings({ products: products }, 'Products', 'products');
     };
 
     window.saveHero = async function () {
-        var patch = { hero: {
+        await putSettings({ hero: {
             title: strVal('h-title'),
             subtitle: strVal('h-subtitle'),
             cta_primary: strVal('h-cta1'),
             cta_secondary: strVal('h-cta2')
-        }};
-        await putSettings(patch, 'Hero content');
+        }}, 'Hero content', 'hero');
     };
 
     window.saveContact = async function () {
-        var patch = { contact: {
+        await putSettings({ contact: {
             whatsapp: strVal('c-whatsapp'),
             email: strVal('c-email')
-        }};
-        await putSettings(patch, 'Contact info');
+        }}, 'Contact info', 'contact');
     };
 
-    /* ── reset ─────────────────────────────────────────────────── */
+    /* ── Reset ──────────────────────────────────────────────── */
     window.confirmReset = async function () {
-        if (!confirm('Reset ALL settings to factory defaults? This cannot be undone.')) return;
+        if (!confirm('Reset ALL settings to factory defaults?\n\nThis cannot be undone.')) return;
         var r = await apiFetch('/admin/settings/reset', { method: 'POST', headers: authHeaders() });
         if (!r || !r.ok) { showToast('Reset failed.', 'error'); return; }
         var data = await r.json();
@@ -327,97 +380,243 @@
         showToast('Settings reset to defaults.', 'success');
     };
 
-    /* ── color helpers ─────────────────────────────────────────── */
-    window.syncColor = function (colorId, hexId) {
-        var hex = document.getElementById(colorId);
-        var txt = document.getElementById(hexId);
-        if (hex && txt) txt.value = hex.value;
+    /* ── Theme color helpers ────────────────────────────────── */
+    function setThemeColor(id, val) {
+        var normalized = normalizeHex(val);
+        if (!normalized) return;
+        var colorEl = document.getElementById(id);
+        var hexEl = document.getElementById(id + '-hex');
+        var swatchEl = document.getElementById(id + '-swatch');
+        var hexDisplay = document.getElementById(id + '-hex-display');
+        if (colorEl) colorEl.value = normalized;
+        if (hexEl) hexEl.value = normalized;
+        if (swatchEl) swatchEl.style.background = normalized;
+        if (hexDisplay) hexDisplay.textContent = normalized;
+    }
+
+    window.onThemeColor = function (id) {
+        var colorEl = document.getElementById(id);
+        if (!colorEl) return;
+        var val = colorEl.value;
+        var hexEl = document.getElementById(id + '-hex');
+        var swatchEl = document.getElementById(id + '-swatch');
+        var hexDisplay = document.getElementById(id + '-hex-display');
+        if (hexEl) hexEl.value = val;
+        if (swatchEl) swatchEl.style.background = val;
+        if (hexDisplay) hexDisplay.textContent = val;
+        updateThemePreview();
+        markDirty('theme');
     };
 
-    window.syncHex = function (colorId, hexId) {
-        var hex = document.getElementById(colorId);
-        var txt = document.getElementById(hexId);
-        if (!hex || !txt) return;
-        var v = txt.value.trim();
-        if (/^#[0-9a-fA-F]{6}$/.test(v)) hex.value = v;
+    window.onThemeHex = function (id) {
+        var hexEl = document.getElementById(id + '-hex');
+        if (!hexEl) return;
+        var val = hexEl.value.trim();
+        var normalized = normalizeHex(val);
+        if (!normalized) return;
+        var colorEl = document.getElementById(id);
+        var swatchEl = document.getElementById(id + '-swatch');
+        var hexDisplay = document.getElementById(id + '-hex-display');
+        if (colorEl) colorEl.value = normalized;
+        if (swatchEl) swatchEl.style.background = normalized;
+        if (hexDisplay) hexDisplay.textContent = normalized;
+        updateThemePreview();
+        markDirty('theme');
     };
 
+    /* ── Theme live preview ─────────────────────────────────── */
+    function updateThemePreview() {
+        var p = colorVal('t-primary') || '#E8420A';
+        var s = colorVal('t-secondary') || '#0F1F3D';
+        var a = colorVal('t-accent') || '#F5A500';
+        var preview = document.getElementById('theme-preview');
+        if (!preview) return;
+        preview.style.setProperty('--tp-primary', p);
+        preview.style.setProperty('--tp-secondary', s);
+        preview.style.setProperty('--tp-accent', a);
+        preview.querySelectorAll('.tp-nav-btn,.tp-hero-btn,.tp-card-btn').forEach(function (el) {
+            el.style.background = p;
+        });
+        preview.querySelectorAll('.tp-card-badge').forEach(function (el) {
+            el.style.background = a;
+        });
+        preview.querySelectorAll('.tp-card-price').forEach(function (el) {
+            el.style.color = p;
+        });
+        preview.querySelectorAll('.tp-nav').forEach(function (el) {
+            el.style.background = s;
+        });
+        preview.querySelectorAll('.tp-hero').forEach(function (el) {
+            el.style.background = 'linear-gradient(135deg,' + s + ',' + s + 'aa)';
+        });
+        preview.querySelectorAll('.tp-nav-logo').forEach(function (el) {
+            el.style.background = a;
+        });
+    }
+
+    /* ── Presets ────────────────────────────────────────────── */
+    function buildPresets() {
+        var grid = document.getElementById('preset-grid');
+        if (!grid) return;
+        grid.innerHTML = PRESETS.map(function (pr) {
+            return '<button class="preset-btn" onclick="applyPreset(\'' + pr.p + '\',\'' + pr.s + '\',\'' + pr.a + '\')">' +
+                '<div class="preset-swatches">' +
+                '<div class="preset-dot" style="background:' + pr.p + ';"></div>' +
+                '<div class="preset-dot" style="background:' + pr.s + ';"></div>' +
+                '<div class="preset-dot" style="background:' + pr.a + ';"></div>' +
+                '</div>' + pr.name + '</button>';
+        }).join('');
+    }
+
+    window.applyPreset = function (p, s, a) {
+        setThemeColor('t-primary', p);
+        setThemeColor('t-secondary', s);
+        setThemeColor('t-accent', a);
+        updateThemePreview();
+        markDirty('theme');
+        showToast('Preset applied — click Save Theme to keep it.', 'info');
+    };
+
+    /* ── Promo color sync ───────────────────────────────────── */
+    window.syncSwatchColor = function (colorId, swatchId, displayId, hexId) {
+        var colorEl = document.getElementById(colorId);
+        if (!colorEl) return;
+        var val = colorEl.value;
+        var sw = document.getElementById(swatchId);
+        var dp = document.getElementById(displayId);
+        var hx = document.getElementById(hexId);
+        if (sw) sw.style.background = val;
+        if (dp) dp.textContent = val;
+        if (hx) hx.value = val;
+    };
+
+    window.syncHexToSwatch = function (colorId, swatchId, displayId, hexId) {
+        var hexEl = document.getElementById(hexId);
+        if (!hexEl) return;
+        var normalized = normalizeHex(hexEl.value.trim());
+        if (!normalized) return;
+        var colorEl = document.getElementById(colorId);
+        var sw = document.getElementById(swatchId);
+        var dp = document.getElementById(displayId);
+        if (colorEl) colorEl.value = normalized;
+        if (sw) sw.style.background = normalized;
+        if (dp) dp.textContent = normalized;
+    };
+
+    function setSwatchAll(colorId, swatchId, displayId, hexId, val) {
+        var normalized = normalizeHex(val) || val;
+        var colorEl = document.getElementById(colorId);
+        var sw = document.getElementById(swatchId);
+        var dp = document.getElementById(displayId);
+        var hx = document.getElementById(hexId);
+        if (colorEl) colorEl.value = normalized;
+        if (sw) sw.style.background = normalized;
+        if (dp) dp.textContent = normalized;
+        if (hx) hx.value = normalized;
+    }
+
+    /* ── Banner preview ─────────────────────────────────────── */
     window.updateBannerPreview = function () {
         var preview = document.getElementById('banner-preview');
         var prevText = document.getElementById('banner-prev-text');
         var prevBtn = document.getElementById('banner-prev-btn');
         if (!preview) return;
-        var bg = strVal('promo-bg-hex') || strVal('promo-bg') || '#E8420A';
-        var txtClr = strVal('promo-txt-hex') || strVal('promo-txt') || '#ffffff';
-        var text = strVal('promo-text') || 'Preview text';
+        var bg = strVal('promo-bg-hex') || colorVal('promo-bg') || '#E8420A';
+        var txtClr = strVal('promo-txt-hex') || colorVal('promo-txt') || '#ffffff';
+        var text = strVal('promo-text') || 'Your banner text appears here';
         var btnTxt = strVal('promo-link-text') || 'Shop Now';
         preview.style.background = bg;
         preview.style.color = txtClr;
         if (prevText) prevText.textContent = text;
         if (prevBtn) {
             prevBtn.textContent = btnTxt;
+            prevBtn.style.borderColor = txtClr;
             prevBtn.style.color = txtClr;
-            prevBtn.style.border = '1px solid ' + txtClr;
         }
     };
 
-    /* ── utils ─────────────────────────────────────────────────── */
-    function setVal(id, val) {
+    /* ── Price display ──────────────────────────────────────── */
+    window.updatePriceDisplay = function (inputId, displayId) {
+        var el = document.getElementById(displayId);
+        var val = parseFloat((document.getElementById(inputId) || {}).value || 0);
+        if (el) el.textContent = val > 0 ? '₱' + val.toLocaleString() : '';
+        markDirty('pricing');
+    };
+
+    /* ── Keyboard shortcuts ─────────────────────────────────── */
+    var sectionOrder = ['overview','pricing','promo','theme','products','hero','contact','system'];
+    document.addEventListener('keydown', function (e) {
+        var shell = document.getElementById('admin-shell');
+        var loginVisible = document.getElementById('login-screen').style.display !== 'none';
+
+        if (loginVisible && e.key === 'Enter') { doLogin(); return; }
+
+        if (shell && shell.style.display !== 'none') {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                var active = document.querySelector('.section-panel.active');
+                if (!active) return;
+                var id = active.id.replace('sec-', '');
+                var saveFns = {
+                    pricing: window.savePricing, promo: window.savePromo,
+                    theme: window.saveTheme, products: window.saveProducts,
+                    hero: window.saveHero, contact: window.saveContact
+                };
+                if (saveFns[id]) saveFns[id]();
+                return;
+            }
+            if ((e.ctrlKey || e.metaKey) && /^[1-8]$/.test(e.key)) {
+                e.preventDefault();
+                var idx = parseInt(e.key, 10) - 1;
+                if (sectionOrder[idx]) showSection(sectionOrder[idx]);
+            }
+        }
+    });
+
+    /* ── Utility ────────────────────────────────────────────── */
+    function normalizeHex(val) {
+        if (!val) return null;
+        val = val.trim();
+        if (!/^#/.test(val)) val = '#' + val;
+        return /^#[0-9a-fA-F]{6}$/.test(val) ? val : null;
+    }
+    function colorVal(id) {
         var el = document.getElementById(id);
-        if (el) el.value = (val !== undefined && val !== null) ? String(val) : '';
+        return el ? el.value : '';
     }
-
-    function setChecked(id, val) {
-        var el = document.getElementById(id);
-        if (el) el.checked = !!val;
-    }
-
-    function setColor(colorId, hexId, val) {
-        if (!val) return;
-        var normalized = val.trim();
-        if (normalized && !normalized.startsWith('#')) normalized = '#' + normalized;
-        var colorEl = document.getElementById(colorId);
-        var hexEl = document.getElementById(hexId);
-        if (colorEl) colorEl.value = normalized;
-        if (hexEl) hexEl.value = normalized;
-    }
-
     function strVal(id) {
         var el = document.getElementById(id);
         return el ? el.value.trim() : '';
     }
-
     function numVal(id) {
         var el = document.getElementById(id);
         return el ? (parseFloat(el.value) || 0) : 0;
     }
-
-    function fmtPrice(n) {
-        if (!n && n !== 0) return '—';
-        return Number(n).toLocaleString();
+    function setVal(id, val) {
+        var el = document.getElementById(id);
+        if (el) el.value = (val !== undefined && val !== null) ? String(val) : '';
     }
-
+    function setChecked(id, val) {
+        var el = document.getElementById(id);
+        if (el) el.checked = !!val;
+    }
+    function fmtNum(n) {
+        return (n || 0).toLocaleString();
+    }
     function esc(str) {
         return String(str).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    /* ── keyboard enter on login ───────────────────────────────── */
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
-            doLogin();
-        }
-    });
-
-    /* ── expose globals ────────────────────────────────────────── */
+    /* ── Expose globals ─────────────────────────────────────── */
     window.doLogin = doLogin;
     window.doLogout = doLogout;
     window.loadSettings = loadSettings;
+    window.checkBackendStatus = window.checkBackendStatus;
 
-    /* ── init: auto-login if token exists ──────────────────────── */
+    /* ── Auto-login on reload ───────────────────────────────── */
     (async function init() {
         var saved = token();
         if (!saved) return;
-
         var r = await apiFetch('/admin/verify', { headers: { 'Authorization': 'Bearer ' + saved } });
         if (r && r.ok) {
             var d = await r.json();
