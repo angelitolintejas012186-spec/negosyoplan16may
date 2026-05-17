@@ -1,19 +1,23 @@
 """
 Negosyo Plan – FastAPI backend
-Calls DeepSeek to extract comprehensive business blueprint data for any
-business-type / bundle-tier / location combination chosen in the web form.
+- DeepSeek AI blueprint generation
+- Admin authentication (JWT) + site settings CRUD
 
 Run:
     uvicorn main:app --reload --port 8000
 """
 
+import hmac
 import json
 import os
-from typing import Optional
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any, Optional
 
 import httpx
+import jwt as pyjwt
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -24,6 +28,119 @@ load_dotenv()
 DEEPSEEK_API_KEY: str = os.getenv("DEEPSEEK_API_KEY", "")
 DEEPSEEK_URL = "https://api.deepseek.com/chat/completions"
 DEEPSEEK_MODEL = "deepseek-chat"
+
+# Admin auth
+ADMIN_USERNAME: str = os.getenv("ADMIN_USERNAME", "admin")
+ADMIN_PASSWORD: str = os.getenv("ADMIN_PASSWORD", "NegosyoPlan@2026!")
+JWT_SECRET: str = os.getenv("JWT_SECRET", "np-jwt-secret-change-in-production-2026")
+JWT_ALGORITHM = "HS256"
+JWT_EXPIRE_HOURS = 10
+
+# Settings file (persisted on disk next to main.py)
+SETTINGS_PATH = Path(__file__).parent / "settings.json"
+
+DEFAULT_SETTINGS: dict[str, Any] = {
+    "pricing": {
+        "starter": 1900,
+        "founder": 2600,
+        "complete": 3500,
+        "custom": 4600,
+    },
+    "promo_banner": {
+        "enabled": False,
+        "text": "🎉 Special launch offer — 20% off all bundles this week!",
+        "bg_color": "#E8420A",
+        "text_color": "#ffffff",
+        "link": "shop.html",
+        "link_text": "Shop Now",
+    },
+    "theme": {
+        "primary": "#E8420A",
+        "secondary": "#0F1F3D",
+        "accent": "#F5A500",
+    },
+    "hero": {
+        "title": "Launch your business with a ready-made blueprint.",
+        "subtitle": "Digital business blueprints for OFWs, entrepreneurs, and startup creators.",
+        "cta_primary": "Browse Bundles",
+        "cta_secondary": "Generate AI Blueprint",
+    },
+    "products": {
+        "1": {
+            "name": "Starter Bundle",
+            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+            "description": "Perfect for beginners starting their entrepreneurial journey.",
+        },
+        "2": {
+            "name": "Founder Bundle",
+            "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+            "description": "Advanced business strategy and investor-ready templates.",
+        },
+        "3": {
+            "name": "Complete Set Bundle",
+            "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+            "description": "Comprehensive package for planning, launch, and growth.",
+        },
+        "4": {
+            "name": "Custom Bundle",
+            "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+            "description": "Tailor-made toolkit for your market, operations, and goals.",
+        },
+    },
+    "contact": {
+        "whatsapp": "1234567890",
+        "email": "support@negosyoplan.com",
+    },
+}
+
+
+# ── Settings helpers ──────────────────────────────────────────────────────────
+
+def load_settings() -> dict:
+    if SETTINGS_PATH.exists():
+        try:
+            return json.loads(SETTINGS_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return json.loads(json.dumps(DEFAULT_SETTINGS))   # deep copy
+
+
+def save_settings(data: dict) -> None:
+    SETTINGS_PATH.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def deep_merge(base: dict, override: dict) -> dict:
+    result = base.copy()
+    for k, v in override.items():
+        if k in result and isinstance(result[k], dict) and isinstance(v, dict):
+            result[k] = deep_merge(result[k], v)
+        else:
+            result[k] = v
+    return result
+
+
+# ── JWT helpers ───────────────────────────────────────────────────────────────
+
+def create_token(username: str) -> str:
+    exp = datetime.now(timezone.utc) + timedelta(hours=JWT_EXPIRE_HOURS)
+    return pyjwt.encode({"sub": username, "exp": exp}, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+
+def decode_token(token: str) -> str | None:
+    try:
+        payload = pyjwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        return payload.get("sub")
+    except pyjwt.PyJWTError:
+        return None
+
+
+def require_admin(authorization: str | None) -> str:
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(403, "Not authenticated")
+    user = decode_token(authorization.split(" ", 1)[1])
+    if not user:
+        raise HTTPException(401, "Token expired or invalid — please log in again")
+    return user
 
 # ── App ───────────────────────────────────────────────────────────────────────
 
@@ -426,3 +543,72 @@ async def quick_analysis(req: QuickAnalysisRequest):
         timeout=30.0,
     )
     return {"success": True, "analysis": data}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ADMIN ROUTES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class AdminLoginRequest(BaseModel):
+    username: str
+    password: str
+
+
+@app.post("/admin/login")
+async def admin_login(creds: AdminLoginRequest):
+    """Validate admin credentials and return a JWT token."""
+    ok = (
+        hmac.compare_digest(creds.username, ADMIN_USERNAME)
+        and hmac.compare_digest(creds.password, ADMIN_PASSWORD)
+    )
+    if not ok:
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+    token = create_token(creds.username)
+    return {
+        "success": True,
+        "access_token": token,
+        "username": creds.username,
+        "expires_in_hours": JWT_EXPIRE_HOURS,
+    }
+
+
+@app.get("/admin/verify")
+async def admin_verify(authorization: str | None = Header(default=None)):
+    """Check whether a JWT token is still valid."""
+    user = require_admin(authorization)
+    return {"valid": True, "username": user}
+
+
+# ── Site settings (public read, admin write) ──────────────────────────────────
+
+@app.get("/api/settings")
+async def get_settings():
+    """
+    Public endpoint — returns current site settings so the frontend can
+    apply admin-configured prices, theme colours, promo banner, etc.
+    """
+    return load_settings()
+
+
+@app.put("/admin/settings")
+async def update_settings(
+    payload: dict,
+    authorization: str | None = Header(default=None),
+):
+    """
+    Merge-update site settings.  Requires a valid admin JWT.
+    Send only the keys you want to change; unchanged keys are preserved.
+    """
+    require_admin(authorization)
+    current = load_settings()
+    merged = deep_merge(current, payload)
+    save_settings(merged)
+    return {"success": True, "settings": merged}
+
+
+@app.post("/admin/settings/reset")
+async def reset_settings(authorization: str | None = Header(default=None)):
+    """Restore all settings to factory defaults."""
+    require_admin(authorization)
+    save_settings(json.loads(json.dumps(DEFAULT_SETTINGS)))
+    return {"success": True, "settings": DEFAULT_SETTINGS}

@@ -1,0 +1,53 @@
+{
+  "pricing": {
+    "starter": 1900,
+    "founder": 2600,
+    "complete": 3500,
+    "custom": 4600
+  },
+  "promo_banner": {
+    "enabled": false,
+    "text": "🎉 Special launch offer — 20% off all bundles this week!",
+    "bg_color": "#E8420A",
+    "text_color": "#ffffff",
+    "link": "shop.html",
+    "link_text": "Shop Now"
+  },
+  "theme": {
+    "primary": "#E8420A",
+    "secondary": "#0F1F3D",
+    "accent": "#F5A500"
+  },
+  "hero": {
+    "title": "Launch your business with a ready-made blueprint.",
+    "subtitle": "Digital business blueprints for OFWs, entrepreneurs, and startup creators.",
+    "cta_primary": "Browse Bundles",
+    "cta_secondary": "Generate AI Blueprint"
+  },
+  "products": {
+    "1": {
+      "name": "Starter Bundle",
+      "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "description": "Perfect for beginners starting their entrepreneurial journey."
+    },
+    "2": {
+      "name": "Founder Bundle",
+      "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "description": "Advanced business strategy and investor-ready templates."
+    },
+    "3": {
+      "name": "Complete Set Bundle",
+      "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "description": "Comprehensive package for planning, launch, and growth."
+    },
+    "4": {
+      "name": "Custom Bundle",
+      "image": "https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "description": "Tailor-made toolkit for your market, operations, and goals."
+    }
+  },
+  "contact": {
+    "whatsapp": "1234567890",
+    "email": "support@negosyoplan.com"
+  }
+}

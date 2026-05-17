@@ -109,6 +109,34 @@ nav{
     background:rgba(232,66,10,0.25);color:#fff;padding-left:1.3rem;
 }
 
+/* Nav action buttons (Shop + Cart) */
+.nav-actions{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
+.nav-shop-btn{
+    display:inline-flex;align-items:center;gap:0.4rem;
+    background:var(--orange);color:#fff;
+    font-weight:700;font-size:0.82rem;letter-spacing:0.04em;
+    padding:0.45rem 1rem;border-radius:999px;
+    transition:var(--transition);white-space:nowrap;
+}
+.nav-shop-btn:hover{background:var(--orange-light);transform:translateY(-1px);box-shadow:0 4px 14px rgba(232,66,10,0.45);}
+.nav-cart-btn{
+    position:relative;display:inline-flex;align-items:center;justify-content:center;
+    width:38px;height:38px;border-radius:50%;
+    background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);
+    color:#fff;font-size:1rem;
+    transition:var(--transition);
+}
+.nav-cart-btn:hover{background:rgba(232,66,10,0.4);border-color:var(--orange);color:#fff;}
+.nav-cart-badge{
+    position:absolute;top:-4px;right:-4px;
+    background:var(--amber);color:var(--navy);
+    font-size:0.6rem;font-weight:800;
+    min-width:16px;height:16px;border-radius:999px;
+    display:flex;align-items:center;justify-content:center;
+    border:1.5px solid var(--navy);
+    line-height:1;padding:0 3px;
+}
+
 /* Search bar */
 .search-bar{
     display:flex;align-items:center;

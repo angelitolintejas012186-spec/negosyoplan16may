@@ -177,15 +177,25 @@ function generateStars(rating, maxStars) {
 
 function updateCartBadge() {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    document.querySelectorAll('a[href="cart.html"]').forEach(link => {
+    const count = cart.length;
+
+    /* nav-cart-btn specific badge */
+    const navBadge = document.getElementById('nav-cart-count');
+    if (navBadge) {
+        navBadge.textContent = count;
+        navBadge.style.display = count > 0 ? 'flex' : 'none';
+    }
+
+    /* generic cart link badges (other pages) */
+    document.querySelectorAll('a[href="cart.html"]:not(.nav-cart-btn)').forEach(link => {
         let badge = link.querySelector('.cart-badge');
         if (!badge) {
             badge = document.createElement('span');
             badge.className = 'cart-badge';
             link.appendChild(badge);
         }
-        badge.textContent = cart.length;
-        badge.style.display = cart.length > 0 ? 'inline-flex' : 'none';
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'inline-flex' : 'none';
     });
 }
 
