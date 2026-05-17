@@ -50,23 +50,27 @@
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in…';
 
-        var r = await apiFetch('/admin/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: username, password: password })
-        });
+        var r, data;
+        try {
+            r = await fetch(BASE + '/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: username, password: password })
+            });
+            data = await r.json();
+        } catch (e) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            errMsg.textContent = 'Cannot connect to backend at ' + BASE + '. Make sure the server is running.';
+            errWrap.style.display = 'flex';
+            return;
+        }
 
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
 
-        if (!r) {
-            errMsg.textContent = 'Cannot connect to backend. Make sure the server is running.';
-            errWrap.style.display = 'flex';
-            return;
-        }
-        var data = await r.json();
         if (!r.ok) {
-            errMsg.textContent = data.detail || 'Invalid credentials.';
+            errMsg.textContent = data.detail || 'Invalid username or password.';
             errWrap.style.display = 'flex';
             document.getElementById('l-pass').value = '';
             return;
