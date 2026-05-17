@@ -14,10 +14,12 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
+import shutil
+
 import httpx
 import jwt as pyjwt
 from dotenv import load_dotenv
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, File, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -38,6 +40,7 @@ JWT_EXPIRE_HOURS = 10
 
 # Settings file (persisted on disk next to main.py)
 SETTINGS_PATH = Path(__file__).parent / "settings.json"
+ASSETS_IMAGES = Path(__file__).parent.parent / "assets" / "images"
 
 DEFAULT_SETTINGS: dict[str, Any] = {
     "pricing": {
@@ -90,6 +93,10 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "contact": {
         "whatsapp": "1234567890",
         "email": "support@negosyoplan.com",
+    },
+    "branding": {
+        "logo_url": "",
+        "brand_name": "NEGOSYO PLAN",
     },
 }
 
@@ -612,3 +619,35 @@ async def reset_settings(authorization: str | None = Header(default=None)):
     require_admin(authorization)
     save_settings(json.loads(json.dumps(DEFAULT_SETTINGS)))
     return {"success": True, "settings": DEFAULT_SETTINGS}
+
+
+@app.post("/admin/upload-logo")
+async def upload_logo(
+    file: UploadFile = File(...),
+    authorization: str | None = Header(default=None),
+):
+    """Upload a new logo image. Saves to assets/images/logo-custom.<ext>."""
+    require_admin(authorization)
+
+    allowed = {".png", ".jpg", ".jpeg", ".svg", ".webp", ".ico"}
+    suffix = Path(file.filename or "logo.png").suffix.lower()
+    if suffix not in allowed:
+        raise HTTPException(
+            400, f"File type not allowed. Use: {', '.join(sorted(allowed))}"
+        )
+
+    contents = await file.read()
+    if len(contents) > 5 * 1024 * 1024:
+        raise HTTPException(400, "File too large. Maximum 5 MB.")
+
+    ASSETS_IMAGES.mkdir(parents=True, exist_ok=True)
+    save_path = ASSETS_IMAGES / f"logo-custom{suffix}"
+    save_path.write_bytes(contents)
+
+    relative_url = f"assets/images/logo-custom{suffix}"
+    return {
+        "success": True,
+        "url": relative_url,
+        "filename": file.filename,
+        "size_bytes": len(contents),
+    }

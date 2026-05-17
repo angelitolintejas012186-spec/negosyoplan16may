@@ -5,8 +5,9 @@
     var TOKEN_KEY = 'np_admin_token';
     var currentSettings = {};
     var dirtyMap = {};
+    var pendingLogoFile = null;
 
-    var SECTION_KEYS = ['overview','pricing','promo','theme','products','hero','contact','system'];
+    var SECTION_KEYS = ['overview','pricing','promo','branding','theme','products','hero','contact','system'];
 
     /* ── Color presets ──────────────────────────────────────── */
     var PRESETS = [
@@ -124,6 +125,134 @@
         checkBackendStatus();
     }
 
+    /* ── Branding ───────────────────────────────────────────── */
+    window.handleLogoDrop = function (e) {
+        e.preventDefault();
+        document.getElementById('logo-dropzone').classList.remove('drag-over');
+        var file = e.dataTransfer.files[0];
+        if (file) applyLogoFile(file);
+    };
+
+    window.handleLogoFileInput = function (input) {
+        var file = input.files[0];
+        if (file) applyLogoFile(file);
+    };
+
+    function applyLogoFile(file) {
+        var allowed = ['image/png','image/jpeg','image/jpg','image/svg+xml','image/webp','image/x-icon'];
+        if (!allowed.includes(file.type) && !file.name.match(/\.(png|jpg|jpeg|svg|webp|ico)$/i)) {
+            showToast('Invalid file type. Use PNG, JPG, SVG, or WebP.', 'error');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            showToast('File too large. Maximum 5 MB.', 'error');
+            return;
+        }
+        pendingLogoFile = file;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var src = e.target.result;
+            var prevImg = document.getElementById('new-logo-preview');
+            var prevBox = document.getElementById('new-logo-box');
+            if (prevImg) prevImg.src = src;
+            if (prevBox) prevBox.style.display = 'block';
+            var info = document.getElementById('logo-file-info');
+            if (info) info.innerHTML = file.name + '<br>' + (file.size / 1024).toFixed(1) + ' KB';
+            var statusEl = document.getElementById('logo-save-status');
+            if (statusEl) statusEl.textContent = 'Ready to upload: ' + file.name;
+            markDirty('branding');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    window.previewLogoUrl = function () {
+        var url = strVal('logo-url-input');
+        var prevImg = document.getElementById('new-logo-preview');
+        var prevBox = document.getElementById('new-logo-box');
+        var info = document.getElementById('logo-file-info');
+        if (url) {
+            if (prevImg) { prevImg.src = url; prevImg.onerror = function () { prevImg.src = ''; }; }
+            if (prevBox) prevBox.style.display = 'block';
+            if (info) info.textContent = 'URL preview';
+            pendingLogoFile = null;
+        } else {
+            if (prevBox) prevBox.style.display = 'none';
+        }
+        markDirty('branding');
+    };
+
+    window.resetLogoSelection = function () {
+        pendingLogoFile = null;
+        var prevBox = document.getElementById('new-logo-box');
+        var urlInput = document.getElementById('logo-url-input');
+        var fileInput = document.getElementById('logo-file-input');
+        var statusEl = document.getElementById('logo-save-status');
+        if (prevBox) prevBox.style.display = 'none';
+        if (urlInput) urlInput.value = '';
+        if (fileInput) fileInput.value = '';
+        if (statusEl) statusEl.textContent = 'Select a file above or paste a URL, then save.';
+    };
+
+    window.saveLogo = async function () {
+        var btn = document.getElementById('logo-save-btn');
+        var statusEl = document.getElementById('logo-save-status');
+        var urlInput = strVal('logo-url-input');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving…';
+
+        try {
+            var logoUrl = '';
+
+            if (urlInput) {
+                logoUrl = urlInput;
+            } else if (pendingLogoFile) {
+                if (statusEl) statusEl.textContent = 'Uploading file…';
+                var form = new FormData();
+                form.append('file', pendingLogoFile);
+                var r = await fetch(BASE + '/admin/upload-logo', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token() },
+                    body: form
+                });
+                if (!r.ok) {
+                    var err = await r.json().catch(function () { return {}; });
+                    throw new Error(err.detail || 'Upload failed.');
+                }
+                var uploadData = await r.json();
+                logoUrl = uploadData.url;
+            } else {
+                showToast('No file or URL provided.', 'error');
+                return;
+            }
+
+            var ok = await putSettings({ branding: { logo_url: logoUrl } }, 'Logo', 'branding');
+            if (ok) {
+                var currentImg = document.getElementById('current-logo-display');
+                var mockLogo = document.getElementById('brand-mock-logo');
+                if (currentImg) currentImg.src = logoUrl + '?t=' + Date.now();
+                if (mockLogo) mockLogo.src = logoUrl + '?t=' + Date.now();
+                if (statusEl) statusEl.textContent = 'Logo saved: ' + logoUrl;
+                pendingLogoFile = null;
+            }
+        } catch (e) {
+            showToast(e.message || 'Upload failed.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-upload"></i> Upload &amp; Save';
+        }
+    };
+
+    window.saveBrandName = async function () {
+        await putSettings({ branding: { brand_name: strVal('brand-name-input') } }, 'Brand name', 'branding');
+    };
+
+    window.updateBrandPreview = function () {
+        var name = strVal('brand-name-input') || 'NEGOSYO PLAN';
+        var mockName = document.getElementById('brand-mock-name');
+        if (mockName) mockName.textContent = name;
+    };
+
     /* ── Section nav ────────────────────────────────────────── */
     window.showSection = function (name) {
         document.querySelectorAll('.section-panel').forEach(function (p) { p.classList.remove('active'); });
@@ -206,6 +335,18 @@
             setVal('c-email', s.contact.email);
         }
         if (s.products) buildProductCards(s.products);
+        if (s.branding) {
+            var logoUrl = s.branding.logo_url || 'assets/images/logo.svg';
+            var brandName = s.branding.brand_name || 'NEGOSYO PLAN';
+            setVal('brand-name-input', brandName);
+            setVal('logo-url-input', s.branding.logo_url || '');
+            var curLogo = document.getElementById('current-logo-display');
+            var mockLogo = document.getElementById('brand-mock-logo');
+            var mockName = document.getElementById('brand-mock-name');
+            if (curLogo) curLogo.src = logoUrl;
+            if (mockLogo) mockLogo.src = logoUrl;
+            if (mockName) mockName.textContent = brandName;
+        }
         buildOverview(s);
         dirtyMap = {};
         document.querySelectorAll('.nav-item').forEach(function (b) { b.classList.remove('dirty'); });
@@ -559,6 +700,7 @@
                 var id = active.id.replace('sec-', '');
                 var saveFns = {
                     pricing: window.savePricing, promo: window.savePromo,
+                    branding: window.saveBrandName,
                     theme: window.saveTheme, products: window.saveProducts,
                     hero: window.saveHero, contact: window.saveContact
                 };

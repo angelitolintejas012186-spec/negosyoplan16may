@@ -344,6 +344,57 @@
         .kbd{display:inline-block;background:var(--surface2);border:1px solid var(--border2);
             border-radius:4px;font-size:.68rem;padding:.1rem .4rem;font-family:monospace;color:var(--muted);}
 
+        /* ── LOGO DROPZONE ── */
+        .logo-dropzone{
+            border:2px dashed var(--border2);border-radius:var(--radius-sm);
+            padding:2.25rem 1.5rem;text-align:center;cursor:pointer;
+            transition:all var(--t);display:flex;flex-direction:column;
+            align-items:center;gap:.55rem;
+        }
+        .logo-dropzone:hover,.logo-dropzone.drag-over{
+            border-color:var(--orange);background:rgba(232,66,10,.06);
+        }
+        .logo-dropzone i{font-size:2.2rem;color:var(--orange);margin-bottom:.1rem;}
+        .logo-dropzone .dz-main{font-size:.88rem;font-weight:600;color:var(--text);}
+        .logo-dropzone .dz-sub{font-size:.72rem;color:var(--muted);}
+        .logo-dropzone .dz-link{color:var(--orange);text-decoration:underline;cursor:pointer;}
+
+        /* Logo display row */
+        .logo-compare{display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;margin-bottom:1.5rem;}
+        .logo-box{text-align:center;}
+        .logo-box-label{font-size:.68rem;font-weight:700;text-transform:uppercase;
+            letter-spacing:.07em;color:var(--muted);margin-bottom:.5rem;}
+        .logo-box-label.new{color:var(--amber);}
+        .logo-box-img{
+            width:110px;height:110px;border-radius:10px;
+            background:var(--surface2);border:1.5px solid var(--border);
+            display:flex;align-items:center;justify-content:center;padding:.85rem;
+        }
+        .logo-box-img.new{border-color:var(--amber);border-style:dashed;}
+        .logo-box-img img{max-width:100%;max-height:100%;object-fit:contain;}
+        .logo-file-info{font-size:.68rem;color:var(--muted);margin-top:.4rem;text-align:center;line-height:1.5;}
+
+        /* Brand nav preview */
+        .brand-nav-mock{
+            background:#0F1F3D;border-radius:10px;padding:.8rem 1.25rem;
+            display:flex;align-items:center;gap:.75rem;margin-top:.9rem;
+        }
+        .brand-nav-mock img{width:34px;height:34px;object-fit:contain;flex-shrink:0;}
+        .brand-nav-mock .mock-name{
+            font-size:.95rem;font-weight:900;letter-spacing:.1em;
+            background:linear-gradient(135deg,#FFF9DC,#F5C030,#C07808,#F5C030,#8C5602);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+        }
+        .brand-nav-mock .mock-badge{
+            background:rgba(232,66,10,.2);color:#E8420A;font-size:.6rem;font-weight:700;
+            padding:.15rem .5rem;border-radius:20px;letter-spacing:.08em;
+        }
+
+        /* OR divider */
+        .or-divider{display:flex;align-items:center;gap:1rem;margin:1rem 0;}
+        .or-divider hr{flex:1;border:none;border-top:1px solid var(--border);}
+        .or-divider span{font-size:.73rem;color:var(--muted);font-weight:700;flex-shrink:0;}
+
         /* ── RESPONSIVE ── */
         @media(max-width:900px){
             .admin-sidebar{width:190px;min-width:190px;}
@@ -428,6 +479,9 @@
                 </div>
                 <div class="sidebar-group">
                     <span class="sidebar-label">Design</span>
+                    <button class="nav-item" data-section="branding" onclick="showSection('branding')">
+                        <i class="fas fa-image"></i> Logo & Brand <span class="dirty-dot"></span>
+                    </button>
                     <button class="nav-item" data-section="theme" onclick="showSection('theme')">
                         <i class="fas fa-palette"></i> Theme Colors <span class="dirty-dot"></span>
                     </button>
@@ -600,6 +654,86 @@
                         <p>Banner shows at the top of every page sitewide when enabled.</p>
                         <div class="btn-group">
                             <button class="btn btn-primary" onclick="savePromo()"><i class="fas fa-save"></i> Save Banner</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ BRANDING ══════════════════════════════════════ -->
+            <div class="section-panel" id="sec-branding">
+                <div class="panel-header">
+                    <h2><i class="fas fa-image"></i> Logo &amp; Branding</h2>
+                    <p>Upload a high-resolution logo (PNG, JPG, SVG, WebP) and set the brand name shown in the navbar.</p>
+                </div>
+
+                <!-- Logo card -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fas fa-image"></i> Site Logo</div>
+
+                    <div class="logo-compare">
+                        <div class="logo-box">
+                            <div class="logo-box-label">Current</div>
+                            <div class="logo-box-img">
+                                <img id="current-logo-display" src="assets/images/logo.svg" alt="Current logo">
+                            </div>
+                        </div>
+                        <div class="logo-box" id="new-logo-box" style="display:none;">
+                            <div class="logo-box-label new">New (preview)</div>
+                            <div class="logo-box-img new">
+                                <img id="new-logo-preview" src="" alt="New logo preview">
+                            </div>
+                            <div class="logo-file-info" id="logo-file-info"></div>
+                        </div>
+                    </div>
+
+                    <!-- Drop zone -->
+                    <div class="logo-dropzone" id="logo-dropzone"
+                         onclick="document.getElementById('logo-file-input').click()"
+                         ondragover="event.preventDefault();this.classList.add('drag-over')"
+                         ondragleave="this.classList.remove('drag-over')"
+                         ondrop="handleLogoDrop(event)">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <div class="dz-main">Drop image here or <span class="dz-link">browse files</span></div>
+                        <div class="dz-sub">PNG · JPG · SVG · WebP · max 5 MB · recommended 256 × 256 px or larger</div>
+                        <input type="file" id="logo-file-input" accept="image/png,image/jpeg,image/svg+xml,image/webp,image/x-icon" style="display:none;" onchange="handleLogoFileInput(this)">
+                    </div>
+
+                    <div class="or-divider"><hr><span>OR paste a URL</span><hr></div>
+
+                    <div class="form-field">
+                        <label>Logo Image URL</label>
+                        <input type="text" id="logo-url-input" placeholder="https://example.com/my-logo.png" oninput="previewLogoUrl()">
+                        <div class="form-hint">Paste any direct-link image URL. This overrides an uploaded file if both are provided.</div>
+                    </div>
+
+                    <div class="save-bar">
+                        <p id="logo-save-status">Select a file above or paste a URL, then save.</p>
+                        <div class="btn-group">
+                            <button class="btn btn-ghost btn-sm" onclick="resetLogoSelection()"><i class="fas fa-times"></i> Clear</button>
+                            <button class="btn btn-primary" id="logo-save-btn" onclick="saveLogo()"><i class="fas fa-upload"></i> Upload &amp; Save</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand name card -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fas fa-font"></i> Brand Name</div>
+                    <div class="form-field">
+                        <label>Brand Name Text</label>
+                        <input type="text" id="brand-name-input" placeholder="NEGOSYO PLAN" maxlength="32" oninput="updateBrandPreview();markDirty('branding')">
+                        <div class="form-hint">Text shown next to the logo in the navigation bar. Keep it short — max 32 characters.</div>
+                    </div>
+
+                    <div class="brand-nav-mock" id="brand-nav-mock">
+                        <img id="brand-mock-logo" src="assets/images/logo.svg" alt="">
+                        <span class="mock-name" id="brand-mock-name">NEGOSYO PLAN</span>
+                        <span class="mock-badge">Admin</span>
+                    </div>
+
+                    <div class="save-bar">
+                        <p>Updates the brand name in the nav bar on every page.</p>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="saveBrandName()"><i class="fas fa-save"></i> Save Brand Name</button>
                         </div>
                     </div>
                 </div>

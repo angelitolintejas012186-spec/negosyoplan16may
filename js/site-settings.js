@@ -85,6 +85,22 @@
         if (cta2 && hero.cta_secondary) cta2.textContent = hero.cta_secondary;
     }
 
+    function applyBranding(branding) {
+        if (!branding) return;
+        if (branding.logo_url) {
+            document.querySelectorAll(
+                'nav .logo img, .site-logo, .login-logo img, .tb-brand img, header img[alt]'
+            ).forEach(function (img) {
+                img.src = branding.logo_url;
+            });
+        }
+        if (branding.brand_name) {
+            document.querySelectorAll('.brand-name').forEach(function (el) {
+                el.textContent = branding.brand_name;
+            });
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', async function () {
         var s = await fetchSettings();
         if (!s) return;
@@ -92,6 +108,7 @@
         applyPricing(s.pricing);
         applyPromoBanner(s.promo_banner);
         applyHero(s.hero);
+        applyBranding(s.branding);
     });
 
     window.NegosyoSettings = { fetch: fetchSettings };
