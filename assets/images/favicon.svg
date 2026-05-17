@@ -1,47 +1,108 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <defs>
+    <!-- 18-stop metallic gold matching logo -->
     <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#FFF0A0"/>
-      <stop offset="30%"  stop-color="#E0A010"/>
-      <stop offset="60%"  stop-color="#B87808"/>
-      <stop offset="85%"  stop-color="#F0C030"/>
-      <stop offset="100%" stop-color="#7A4800"/>
+      <stop offset="0%"   stop-color="#6B3A00"/>
+      <stop offset="8%"   stop-color="#B87010"/>
+      <stop offset="18%"  stop-color="#E8A820"/>
+      <stop offset="26%"  stop-color="#FFFBE8"/>
+      <stop offset="34%"  stop-color="#F0C030"/>
+      <stop offset="44%"  stop-color="#8C5200"/>
+      <stop offset="54%"  stop-color="#F0C030"/>
+      <stop offset="64%"  stop-color="#FFFBE8"/>
+      <stop offset="74%"  stop-color="#E8A820"/>
+      <stop offset="86%"  stop-color="#C07808"/>
+      <stop offset="100%" stop-color="#6B3A00"/>
     </linearGradient>
     <linearGradient id="ga" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%"   stop-color="#FFFFFF"/>
-      <stop offset="40%"  stop-color="#FFE878"/>
-      <stop offset="100%" stop-color="#C07808"/>
+      <stop offset="30%"  stop-color="#FFFBE8"/>
+      <stop offset="60%"  stop-color="#FFE060"/>
+      <stop offset="100%" stop-color="#8C5200"/>
     </linearGradient>
     <radialGradient id="gbg" cx="35%" cy="30%" r="70%">
       <stop offset="0%"   stop-color="#2A1400"/>
-      <stop offset="100%" stop-color="#080300"/>
+      <stop offset="100%" stop-color="#060200"/>
     </radialGradient>
+    <linearGradient id="gshimmer" gradientUnits="userSpaceOnUse" x1="-10" y1="16" x2="10" y2="16">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="40%"  stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="hc">
+      <polygon points="16,1 28.5,8 28.5,24 16,31 3.5,24 3.5,8"/>
+    </clipPath>
     <filter id="fs">
-      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.7"/>
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.75"/>
     </filter>
   </defs>
+
   <!-- Shadow -->
   <polygon points="16,1 28.5,8 28.5,24 16,31 3.5,24 3.5,8"
-           fill="#000" opacity="0.35" transform="translate(0.5,1)"/>
+           fill="#000" opacity="0.4" transform="translate(0.6,1.1)"/>
+
   <!-- Outer hex ring -->
   <polygon points="16,1 28.5,8 28.5,24 16,31 3.5,24 3.5,8"
            fill="url(#g)" filter="url(#fs)"/>
+
   <!-- Top bevel -->
   <polygon points="16,1 28.5,8 26,10 16,4 6,10 3.5,8"
-           fill="#FFF8A0" opacity="0.5"/>
+           fill="#FFF9B8" opacity="0.52"/>
+  <!-- Right shadow -->
+  <polygon points="28.5,8 28.5,24 26,22 26,10"
+           fill="#3C1E00" opacity="0.35"/>
+
   <!-- Inner dark bg -->
   <polygon points="16,4 26,10 26,22 16,28 6,22 6,10"
            fill="url(#gbg)"/>
+
+  <!-- Inner glow pulse -->
+  <radialGradient id="ig" cx="40%" cy="30%" r="65%">
+    <stop offset="0%"   stop-color="#FFE87A" stop-opacity="0.55"/>
+    <stop offset="100%" stop-color="#E09A18" stop-opacity="0"/>
+  </radialGradient>
+  <polygon points="16,4 26,10 26,22 16,28 6,22 6,10" fill="url(#ig)">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="5s" repeatCount="indefinite"/>
+  </polygon>
+
   <!-- Vertical arrow shaft -->
   <rect x="14.5" y="11" width="3" height="13" rx="0.8" fill="url(#g)"/>
   <!-- Vertical arrowhead -->
   <polygon points="16,5.5 20.5,11.5 11.5,11.5" fill="url(#ga)"/>
+
   <!-- Diagonal arrow shaft -->
   <polygon points="14.2,23 16.5,24.5 27,14.5 24.7,13" fill="url(#g)"/>
   <!-- Diagonal arrowhead -->
   <polygon points="24.5,13 29,11 27.5,15.5" fill="url(#ga)"/>
-  <!-- Gear circle hint -->
-  <circle cx="16" cy="23.5" r="3.5" fill="url(#g)"/>
-  <circle cx="16" cy="23.5" r="2" fill="#180C00"/>
-  <circle cx="16" cy="23.5" r="1" fill="url(#ga)"/>
+
+  <!-- Gear -->
+  <g transform="translate(16,23.5)">
+    <g>
+      <animateTransform attributeName="transform" type="rotate"
+                        from="0" to="360" dur="28s" repeatCount="indefinite"/>
+      <circle r="3.5" fill="url(#g)"/>
+      <circle r="2"   fill="#160A00"/>
+      <circle r="1"   fill="url(#ga)"/>
+      <circle r="0.4" cx="-0.3" cy="-0.3" fill="#FFFFFF" opacity="0.75"/>
+    </g>
+  </g>
+
+  <!-- Top sparkle flicker -->
+  <ellipse cx="11" cy="7" rx="4" ry="2" fill="#FFFFFF"
+           transform="rotate(-24 11 7)">
+    <animate attributeName="opacity" values="0.10;0.30;0.12;0.28;0.10"
+             dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Shimmer sweep -->
+  <rect x="-14" y="0" width="60" height="32"
+        fill="url(#gshimmer)" clip-path="url(#hc)">
+    <animateTransform attributeName="transform" type="translate"
+                      from="-36 0" to="68 0"
+                      dur="5s" repeatCount="indefinite"
+                      calcMode="spline" keyTimes="0;1"
+                      keySplines="0.4 0 0.6 1"/>
+  </rect>
 </svg>

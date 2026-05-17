@@ -1,62 +1,106 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="lt ld">
   <title id="lt">Negosyo Plan Logo</title>
-  <desc id="ld">3D gold hexagonal emblem with dual growth arrows and gear for Negosyo Plan.</desc>
+  <desc id="ld">3D gold hexagonal emblem with dual growth arrows, gear, and animated gold shimmer.</desc>
   <defs>
-    <!-- Primary multi-stop metallic gold -->
+
+    <!-- ── 18-stop hyper-realistic metallic gold (matches brand name) ── -->
     <linearGradient id="gm" x1="5%" y1="0%" x2="95%" y2="100%">
-      <stop offset="0%"   stop-color="#FFFBE0"/>
-      <stop offset="10%"  stop-color="#F9D468"/>
-      <stop offset="24%"  stop-color="#BF7B08"/>
-      <stop offset="42%"  stop-color="#E8A018"/>
-      <stop offset="60%"  stop-color="#F9D468"/>
-      <stop offset="78%"  stop-color="#8C5602"/>
-      <stop offset="100%" stop-color="#4C2E00"/>
+      <stop offset="0%"   stop-color="#6B3A00"/>
+      <stop offset="5%"   stop-color="#B87010"/>
+      <stop offset="11%"  stop-color="#E8A820"/>
+      <stop offset="17%"  stop-color="#FDE070"/>
+      <stop offset="22%"  stop-color="#FFFBE8"/>
+      <stop offset="27%"  stop-color="#FFE878"/>
+      <stop offset="34%"  stop-color="#F0C030"/>
+      <stop offset="42%"  stop-color="#C07808"/>
+      <stop offset="48%"  stop-color="#8C5200"/>
+      <stop offset="54%"  stop-color="#C87808"/>
+      <stop offset="60%"  stop-color="#F0C030"/>
+      <stop offset="66%"  stop-color="#FFE878"/>
+      <stop offset="72%"  stop-color="#FFFBE8"/>
+      <stop offset="78%"  stop-color="#E8A820"/>
+      <stop offset="86%"  stop-color="#C07808"/>
+      <stop offset="93%"  stop-color="#8C5200"/>
+      <stop offset="100%" stop-color="#E8B428"/>
     </linearGradient>
-    <!-- Bright highlight gold -->
+
+    <!-- Bright highlight gold for arrowheads -->
     <linearGradient id="gh" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%"   stop-color="#FFFFFF"/>
-      <stop offset="20%"  stop-color="#FFF3B0"/>
-      <stop offset="55%"  stop-color="#EDB820"/>
-      <stop offset="100%" stop-color="#A46A08"/>
+      <stop offset="15%"  stop-color="#FFFBE8"/>
+      <stop offset="40%"  stop-color="#FFE060"/>
+      <stop offset="70%"  stop-color="#E8A820"/>
+      <stop offset="100%" stop-color="#8C5200"/>
     </linearGradient>
-    <!-- Dark bronze for gear ring/teeth -->
+
+    <!-- Dark bronze for gear teeth -->
     <linearGradient id="gd" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#C87A08"/>
-      <stop offset="50%"  stop-color="#7C4A00"/>
+      <stop offset="0%"   stop-color="#E8A820"/>
+      <stop offset="30%"  stop-color="#C07808"/>
+      <stop offset="60%"  stop-color="#7C4A00"/>
       <stop offset="100%" stop-color="#3C2000"/>
     </linearGradient>
-    <!-- Hex ring multi-stop -->
+
+    <!-- Hex ring — 10-stop high-contrast metallic -->
     <linearGradient id="ghr" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#FFF3A8"/>
-      <stop offset="18%"  stop-color="#E2A210"/>
-      <stop offset="36%"  stop-color="#BA7C08"/>
-      <stop offset="54%"  stop-color="#F2C232"/>
-      <stop offset="72%"  stop-color="#9C6206"/>
-      <stop offset="88%"  stop-color="#E2A210"/>
-      <stop offset="100%" stop-color="#6C4000"/>
+      <stop offset="0%"   stop-color="#FFFBE8"/>
+      <stop offset="8%"   stop-color="#F5C030"/>
+      <stop offset="18%"  stop-color="#C07808"/>
+      <stop offset="28%"  stop-color="#F0C848"/>
+      <stop offset="38%"  stop-color="#FFFBE8"/>
+      <stop offset="48%"  stop-color="#E8A820"/>
+      <stop offset="58%"  stop-color="#9C6206"/>
+      <stop offset="70%"  stop-color="#F2C232"/>
+      <stop offset="84%"  stop-color="#BA7C08"/>
+      <stop offset="100%" stop-color="#6B3A00"/>
     </linearGradient>
-    <!-- Dark warm inner bg -->
+
+    <!-- Dark warm inner background -->
     <radialGradient id="gbg" cx="36%" cy="26%" r="72%">
-      <stop offset="0%"   stop-color="#321900"/>
-      <stop offset="100%" stop-color="#0A0500"/>
+      <stop offset="0%"   stop-color="#2A1400"/>
+      <stop offset="60%"  stop-color="#120800"/>
+      <stop offset="100%" stop-color="#060200"/>
     </radialGradient>
-    <!-- Ambient gold glow overlay on inner face -->
+
+    <!-- Pulsing ambient gold glow on inner face -->
     <radialGradient id="gg" cx="40%" cy="30%" r="64%">
-      <stop offset="0%"   stop-color="#FFE87A" stop-opacity="0.45"/>
-      <stop offset="70%"  stop-color="#E09A18" stop-opacity="0.12"/>
+      <stop offset="0%"   stop-color="#FFE87A" stop-opacity="0.55"/>
+      <stop offset="55%"  stop-color="#E09A18" stop-opacity="0.18"/>
       <stop offset="100%" stop-color="#E09A18" stop-opacity="0"/>
     </radialGradient>
-    <!-- Hub specular -->
-    <radialGradient id="ghub" cx="35%" cy="30%" r="65%">
+
+    <!-- Hub centre specular -->
+    <radialGradient id="ghub" cx="32%" cy="28%" r="68%">
       <stop offset="0%"   stop-color="#FFFFFF"/>
-      <stop offset="45%"  stop-color="#FFF0A8"/>
-      <stop offset="100%" stop-color="#C8880C"/>
+      <stop offset="35%"  stop-color="#FFF0A8"/>
+      <stop offset="75%"  stop-color="#E8A820"/>
+      <stop offset="100%" stop-color="#8C5200"/>
     </radialGradient>
+
+    <!-- ── SHIMMER SWEEP gradient (userSpaceOnUse so we can animate translate) ── -->
+    <linearGradient id="gshimmer" gradientUnits="userSpaceOnUse"
+                    x1="-60" y1="100" x2="60" y2="100">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="35%"  stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="47%"  stop-color="#FFF9D0" stop-opacity="0.22"/>
+      <stop offset="50%"  stop-color="#FFFFFF" stop-opacity="0.52"/>
+      <stop offset="53%"  stop-color="#FFF9D0" stop-opacity="0.22"/>
+      <stop offset="65%"  stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Clip to outer hex so shimmer stays inside -->
+    <clipPath id="hexClip">
+      <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"/>
+    </clipPath>
+
     <!-- Drop shadow -->
     <filter id="fsd" x="-28%" y="-28%" width="156%" height="156%">
-      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#000000" flood-opacity="0.72"/>
+      <feDropShadow dx="0" dy="5" stdDeviation="8"
+                    flood-color="#000000" flood-opacity="0.75"/>
     </filter>
-    <!-- Bevel highlight (top-left light edge) -->
+
+    <!-- Bevel highlight -->
     <filter id="fbv" x="-12%" y="-12%" width="124%" height="124%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="b"/>
       <feOffset dx="-1.5" dy="-1.5" in="b" result="ob"/>
@@ -67,139 +111,166 @@
         <feMergeNode in="h"/>
       </feMerge>
     </filter>
-    <!-- Soft ambient glow around each element -->
+
+    <!-- Warm ambient glow -->
     <filter id="fgl" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" result="blur"/>
       <feColorMatrix in="blur" type="matrix"
-        values="1.2 0.4 0 0 0  0.7 1.0 0 0 0  0 0.1 0 0 0  0 0 0 0.65 0" result="ab"/>
+        values="1.3 0.4 0 0 0  0.7 1.0 0 0 0  0 0.1 0 0 0  0 0 0 0.70 0" result="ab"/>
       <feMerge>
         <feMergeNode in="ab"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+
     <!-- Metallic scratch texture -->
     <filter id="ftex" x="0%" y="0%" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.08 0.9" numOctaves="3" seed="5" result="noise"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.08 0.9"
+                    numOctaves="3" seed="5" result="noise"/>
       <feColorMatrix type="saturate" values="0" in="noise" result="gn"/>
       <feBlend in="SourceGraphic" in2="gn" mode="soft-light" result="t"/>
       <feComposite in="t" in2="SourceGraphic" operator="in"/>
     </filter>
+
   </defs>
 
   <!-- ── CAST SHADOW ── -->
   <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"
-           fill="#1A0900" opacity="0.42" transform="translate(5,8)"/>
+           fill="#100600" opacity="0.45" transform="translate(5,9)"/>
 
-  <!-- ── OUTER HEX RING (metallic gold border with 3D illusion) ── -->
+  <!-- ── OUTER HEX RING ── -->
   <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"
            fill="url(#ghr)" filter="url(#fsd)"/>
 
-  <!-- Top-face bevel: bright face lit from above -->
+  <!-- 3D face bevels -->
   <polygon points="100,10 178,55 162,64 100,26 38,64 22,55"
-           fill="#FFF9B8" opacity="0.48"/>
-  <!-- Right-face shadow edge for 3D depth -->
+           fill="#FFF9B8" opacity="0.50"/>
   <polygon points="178,55 178,145 162,136 162,64"
-           fill="#3C1E00" opacity="0.35"/>
-  <!-- Bottom-face shadow -->
+           fill="#3C1E00" opacity="0.36"/>
   <polygon points="178,145 100,190 100,174 162,136"
-           fill="#2C1200" opacity="0.42"/>
+           fill="#2C1200" opacity="0.44"/>
 
   <!-- ── INNER DARK BACKGROUND ── -->
   <polygon points="100,26 162,64 162,136 100,174 38,136 38,64"
            fill="url(#gbg)"/>
-  <!-- Ambient warm glow on inner surface -->
+
+  <!-- Pulsing inner glow -->
   <polygon points="100,26 162,64 162,136 100,174 38,136 38,64"
-           fill="url(#gg)"/>
+           fill="url(#gg)">
+    <animate attributeName="opacity"
+             values="0.75;1;0.75;1;0.75"
+             dur="5s" repeatCount="indefinite"/>
+  </polygon>
+
   <!-- Inner top-left lit edge -->
   <polygon points="100,26 162,64 156,70 100,32 44,70 38,64"
            fill="#FFF8A0" opacity="0.14"/>
 
-  <!-- ── UPWARD ARROW (vertical) ── -->
-  <!-- Shaft -->
+  <!-- ── UPWARD ARROW ── -->
   <rect x="92" y="65" width="16" height="83" rx="3.5"
         fill="url(#gm)" filter="url(#fbv)"/>
-  <!-- Shaft left highlight ribbon -->
   <rect x="92" y="65" width="5" height="83" rx="2.5"
         fill="#FFFDE8" opacity="0.22"/>
-  <!-- Shaft right shadow ribbon -->
   <rect x="103" y="65" width="5" height="83" rx="2.5"
         fill="#3C1E00" opacity="0.18"/>
-  <!-- Arrowhead triangle -->
   <polygon points="100,30 128,68 72,68"
            fill="url(#gh)" filter="url(#fbv)"/>
-  <!-- Arrowhead left bright face (bevel illusion) -->
   <polygon points="100,30 72,68 80,68 100,38"
-           fill="#FFFCE8" opacity="0.32"/>
-  <!-- Arrowhead right shadow face -->
+           fill="#FFFCE8" opacity="0.34"/>
   <polygon points="100,30 128,68 120,68 100,38"
-           fill="#3C1E00" opacity="0.22"/>
+           fill="#3C1E00" opacity="0.24"/>
 
-  <!-- ── DIAGONAL ARROW (upper-right, ~40° from vertical) ── -->
-  <!-- Both arrows share base at gear center (100,148) and diverge upward -->
-  <!-- Shaft parallelogram from (100,148) toward (163,65) -->
+  <!-- ── DIAGONAL ARROW ── -->
   <polygon points="93,143 107,153 170,70 156,60"
            fill="url(#gm)" filter="url(#fbv)"/>
-  <!-- Shaft left highlight strip -->
   <polygon points="93,143 97,141 160,58 156,60"
            fill="#FFFDE8" opacity="0.22"/>
-  <!-- Shaft right shadow strip -->
   <polygon points="103,151 107,153 170,70 166,68"
            fill="#3C1E00" opacity="0.18"/>
-  <!-- Arrowhead -->
   <polygon points="156,60 180,46 170,72"
            fill="url(#gh)" filter="url(#fbv)"/>
-  <!-- Head left face bevel -->
   <polygon points="156,60 164,57 180,46"
-           fill="#FFFCE8" opacity="0.32"/>
-  <!-- Head right face shadow -->
+           fill="#FFFCE8" opacity="0.34"/>
   <polygon points="164,57 180,46 170,72 166,71"
-           fill="#3C1E00" opacity="0.22"/>
+           fill="#3C1E00" opacity="0.24"/>
 
-  <!-- ── GEAR WHEEL at (100,148) ── -->
+  <!-- ── GEAR WHEEL — slow clockwise rotation ── -->
   <g transform="translate(100,148)">
-    <!-- 8 gear teeth (4 cardinal + 4 at 45°) -->
-    <g fill="url(#gd)" filter="url(#fbv)">
-      <!-- Cardinal -->
-      <rect x="-5.5" y="-27" width="11" height="9.5" rx="2.5"/>
-      <rect x="-5.5" y="17.5" width="11" height="9.5" rx="2.5"/>
-      <rect x="-27"  y="-5.5" width="9.5" height="11" rx="2.5"/>
-      <rect x="17.5" y="-5.5" width="9.5" height="11" rx="2.5"/>
-      <!-- Diagonal (45°) -->
-      <rect x="-5.5" y="-27" width="11" height="9.5" rx="2.5" transform="rotate(45)"/>
-      <rect x="-5.5" y="17.5" width="11" height="9.5" rx="2.5" transform="rotate(45)"/>
-      <rect x="-27"  y="-5.5" width="9.5" height="11" rx="2.5" transform="rotate(45)"/>
-      <rect x="17.5" y="-5.5" width="9.5" height="11" rx="2.5" transform="rotate(45)"/>
+    <g>
+      <animateTransform attributeName="transform" attributeType="XML"
+                        type="rotate"
+                        from="0" to="360"
+                        dur="28s" repeatCount="indefinite"/>
+
+      <!-- 8 gear teeth -->
+      <g fill="url(#gd)" filter="url(#fbv)">
+        <rect x="-5.5" y="-27"  width="11"  height="9.5" rx="2.5"/>
+        <rect x="-5.5" y="17.5" width="11"  height="9.5" rx="2.5"/>
+        <rect x="-27"  y="-5.5" width="9.5" height="11"  rx="2.5"/>
+        <rect x="17.5" y="-5.5" width="9.5" height="11"  rx="2.5"/>
+        <rect x="-5.5" y="-27"  width="11"  height="9.5" rx="2.5" transform="rotate(45)"/>
+        <rect x="-5.5" y="17.5" width="11"  height="9.5" rx="2.5" transform="rotate(45)"/>
+        <rect x="-27"  y="-5.5" width="9.5" height="11"  rx="2.5" transform="rotate(45)"/>
+        <rect x="17.5" y="-5.5" width="9.5" height="11"  rx="2.5" transform="rotate(45)"/>
+      </g>
+
+      <!-- Gear body -->
+      <circle r="19.5" fill="url(#gm)" filter="url(#ftex)"/>
+      <path d="M -16,0 A 16,16 0 0,1 0,-16"
+            stroke="#FFF9D0" stroke-width="3" fill="none" opacity="0.40"/>
+      <circle r="13" fill="#160A00"/>
+      <circle r="13" fill="none" stroke="url(#gd)" stroke-width="2.2"/>
+
+      <!-- Spokes -->
+      <g stroke="url(#gm)" stroke-width="2.8" stroke-linecap="round">
+        <line x1="0"     y1="-12.5" x2="0"     y2="12.5"/>
+        <line x1="-12.5" y1="0"     x2="12.5"  y2="0"/>
+        <line x1="-8.8"  y1="-8.8"  x2="8.8"   y2="8.8"/>
+        <line x1="8.8"   y1="-8.8"  x2="-8.8"  y2="8.8"/>
+      </g>
+
+      <!-- Hub -->
+      <circle r="6.5" fill="url(#ghub)"/>
+      <circle r="2.8" cx="-1.8" cy="-2" fill="#FFFFFF" opacity="0.75"/>
     </g>
-    <!-- Gear body disk -->
-    <circle r="19.5" fill="url(#gm)" filter="url(#ftex)"/>
-    <!-- Gear body highlight arc (top-left lit) -->
-    <path d="M -16,0 A 16,16 0 0,1 0,-16"
-          stroke="#FFF9D0" stroke-width="3" fill="none" opacity="0.38"/>
-    <!-- Inner dark ring -->
-    <circle r="13" fill="#180C00"/>
-    <!-- Inner ring metallic edge -->
-    <circle r="13" fill="none" stroke="url(#gd)" stroke-width="2"/>
-    <!-- 4 hub spokes -->
-    <g stroke="url(#gm)" stroke-width="2.8" stroke-linecap="round">
-      <line x1="0" y1="-12.5" x2="0"    y2="12.5"/>
-      <line x1="-12.5" y1="0"  x2="12.5" y2="0"/>
-      <line x1="-8.8"  y1="-8.8" x2="8.8"  y2="8.8"/>
-      <line x1="8.8"   y1="-8.8" x2="-8.8" y2="8.8"/>
-    </g>
-    <!-- Hub center button -->
-    <circle r="6.5" fill="url(#ghub)"/>
-    <!-- Hub specular highlight -->
-    <circle r="2.8" cx="-1.8" cy="-2" fill="#FFFFFF" opacity="0.72"/>
   </g>
 
-  <!-- ── SURFACE REFLECTIONS / FINISHING ── -->
-  <!-- Top sparkle (light catching the top-left of the emblem) -->
-  <ellipse cx="86" cy="46" rx="15" ry="7" fill="#FFFFFF" opacity="0.15"
-           transform="rotate(-24 86 46)"/>
-  <!-- Bottom-right ambient shadow on inner face -->
+  <!-- ── SURFACE REFLECTIONS ── -->
+  <!-- Top sparkle — flickering -->
+  <ellipse cx="86" cy="46" rx="15" ry="7" fill="#FFFFFF"
+           transform="rotate(-24 86 46)">
+    <animate attributeName="opacity"
+             values="0.10;0.28;0.12;0.32;0.10"
+             dur="4s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Secondary sparkle bottom-right -->
+  <ellipse cx="150" cy="148" rx="9" ry="5" fill="#FFE878"
+           opacity="0.10" transform="rotate(32 150 148)">
+    <animate attributeName="opacity"
+             values="0.06;0.18;0.06"
+             dur="6s" begin="2s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Bottom-right ambient shadow -->
   <polygon points="162,136 100,174 106,174 162,140"
            fill="#000000" opacity="0.12"/>
-  <!-- Hex outer ring metallic texture overlay -->
+
+  <!-- Hex outer ring highlight stroke -->
   <polygon points="100,10 178,55 178,145 100,190 22,145 22,55"
-           fill="none" stroke="#FFF9B0" stroke-width="0.8" opacity="0.25"/>
+           fill="none" stroke="#FFF9B0" stroke-width="0.8" opacity="0.28"/>
+
+  <!-- ── SHIMMER SWEEP — bright specular band crosses the hex every 5 s ── -->
+  <rect x="-80" y="0" width="360" height="200"
+        fill="url(#gshimmer)"
+        clip-path="url(#hexClip)">
+    <animateTransform attributeName="transform" type="translate"
+                      from="-220 0" to="420 0"
+                      dur="5s"
+                      repeatCount="indefinite"
+                      calcMode="spline"
+                      keyTimes="0;1"
+                      keySplines="0.4 0 0.6 1"/>
+  </rect>
+
 </svg>
