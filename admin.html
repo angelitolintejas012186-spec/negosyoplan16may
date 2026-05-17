@@ -13,7 +13,7 @@
             --orange:#E8420A;--navy:#0F1F3D;--amber:#F5A500;
             --bg:#080F1E;--surface:#0F1B2E;--surface2:#152036;--surface3:#1A2840;
             --border:#1D2E48;--border2:#243655;--text:#DDE4F0;--muted:#6B80A0;
-            --gold:linear-gradient(135deg,#FFF9DC 0%,#F5C030 30%,#C07808 60%,#F5C030 80%,#8C5602 100%);
+            --gold:linear-gradient(112deg,#6B3A00 0%,#B87010 4%,#E8A820 9%,#FDE070 14%,#FFFBE8 19%,#FFE878 23%,#F0C030 29%,#C07808 36%,#8C5200 41%,#C87808 46%,#F0C030 52%,#FFE878 57%,#FFFBE8 62%,#FDE070 66%,#E8A820 72%,#C07808 80%,#8C5200 90%,#E8B428 100%);
             --green:#10B981;--red:#EF4444;
             --radius:14px;--radius-sm:9px;--t:.18s ease;
         }
@@ -91,8 +91,12 @@
         }
         .tb-brand{display:flex;align-items:center;gap:.7rem;flex-shrink:0;}
         .tb-brand img{width:32px;filter:drop-shadow(0 1px 6px rgba(232,66,10,.5));}
-        .tb-brand .bname{font-size:.95rem;font-weight:800;letter-spacing:.08em;
-            background:var(--gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .tb-brand .bname{font-size:.95rem;font-weight:800;letter-spacing:.1em;
+            background:var(--gold);background-size:280% 100%;
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            filter:drop-shadow(0 1px 0 rgba(80,38,0,.9)) drop-shadow(0 2px 5px rgba(0,0,0,.55)) drop-shadow(0 0 10px rgba(240,160,8,.45));
+            animation:brandGoldShimmer 5s ease-in-out infinite;will-change:background-position;}
+        @keyframes brandGoldShimmer{0%{background-position:100% 50%}45%{background-position:0% 50%}55%{background-position:0% 50%}100%{background-position:100% 50%}}
         .tb-brand .badge-admin{
             background:rgba(232,66,10,.18);color:var(--orange);font-size:.6rem;font-weight:700;
             padding:.18rem .55rem;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;}
@@ -382,8 +386,10 @@
         .brand-nav-mock img{width:34px;height:34px;object-fit:contain;flex-shrink:0;}
         .brand-nav-mock .mock-name{
             font-size:.95rem;font-weight:900;letter-spacing:.1em;
-            background:linear-gradient(135deg,#FFF9DC,#F5C030,#C07808,#F5C030,#8C5602);
+            background:var(--gold);background-size:280% 100%;
             -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            filter:drop-shadow(0 1px 0 rgba(80,38,0,.9)) drop-shadow(0 2px 5px rgba(0,0,0,.55)) drop-shadow(0 0 10px rgba(240,160,8,.45));
+            animation:brandGoldShimmer 5s ease-in-out infinite;
         }
         .brand-nav-mock .mock-badge{
             background:rgba(232,66,10,.2);color:#E8420A;font-size:.6rem;font-weight:700;

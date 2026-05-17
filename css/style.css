@@ -46,24 +46,52 @@ nav{
 .logo{display:flex;align-items:center;gap:0.9rem;flex-shrink:0;}
 .brand-name{
     font-size:1.48rem;font-weight:900;
-    letter-spacing:0.14em;text-transform:uppercase;line-height:1;
-    /* Multi-stop metallic gold gradient matching logo palette */
+    letter-spacing:0.16em;text-transform:uppercase;line-height:1;
+
+    /* 18-stop hyper-realistic metallic gold — bevel highlights + shadow valleys */
     background:linear-gradient(
-        145deg,
-        #FFFBE0 0%,
-        #F9D468 12%,
-        #C07A08 26%,
-        #E8A018 44%,
-        #F9D468 62%,
-        #8C5602 78%,
-        #F0C030 90%,
-        #C07A08 100%
+        112deg,
+        #6B3A00  0%,
+        #B87010  4%,
+        #E8A820  9%,
+        #FDE070  14%,
+        #FFFBE8  19%,   /* specular peak — near white */
+        #FFE878  23%,
+        #F0C030  29%,
+        #C07808  36%,
+        #8C5200  41%,   /* deep shadow valley */
+        #C87808  46%,
+        #F0C030  52%,
+        #FFE878  57%,
+        #FFFBE8  62%,   /* second specular pass */
+        #FDE070  66%,
+        #E8A820  72%,
+        #C07808  80%,
+        #8C5200  90%,
+        #E8B428  100%
     );
+    background-size:280% 100%;
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
-    filter:drop-shadow(0 1px 2px rgba(0,0,0,0.55))
-           drop-shadow(0 0 6px rgba(200,120,8,0.35));
+
+    /* Stacked shadows: bevel edge + depth + warm glow */
+    filter:
+        drop-shadow(0 1px 0px rgba(80,38,0,0.95))
+        drop-shadow(0 2px 1px rgba(60,25,0,0.75))
+        drop-shadow(0 3px 6px rgba(0,0,0,0.60))
+        drop-shadow(0 6px 14px rgba(0,0,0,0.35))
+        drop-shadow(0 0 12px rgba(240,160,8,0.55))
+        drop-shadow(0 0 30px rgba(200,110,0,0.28));
+
+    animation:brandGoldShimmer 5s ease-in-out infinite;
+    will-change:background-position;
+}
+@keyframes brandGoldShimmer{
+    0%   {background-position:100% 50%;}
+    45%  {background-position:0%   50%;}
+    55%  {background-position:0%   50%;}
+    100% {background-position:100% 50%;}
 }
 .site-logo{
     width:48px;height:auto;
