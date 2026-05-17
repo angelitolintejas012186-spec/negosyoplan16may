@@ -355,6 +355,8 @@
     var selectedBusinessType = null;
     var selectedSupplierIds = [];
 
+    var TIER_MAP = { 1: 'starter', 2: 'founder', 3: 'complete', 4: 'custom' };
+
     function createModalDOM() {
         var overlay = document.createElement('div');
         overlay.id = 'bf-overlay';
@@ -588,6 +590,7 @@
         var customization = {
             businessType: selectedBusinessType,
             businessTypeLabel: bt ? bt.label : selectedBusinessType,
+            bundleTier: TIER_MAP[currentProductId] || 'starter',
             description: (document.getElementById('bf-description') || {}).value || '',
             capital: parseFloat((document.getElementById('bf-capital') || {}).value) || 0,
             location: {
@@ -604,6 +607,11 @@
 
         if (window.Cart && window.Cart.addToCartDirect) {
             window.Cart.addToCartDirect(currentProductId, customization);
+        }
+
+        // Fire quick AI feasibility analysis in the background (non-blocking)
+        if (window.NegosyoAPI && window.NegosyoAPI.showQuickAnalysisToast) {
+            window.NegosyoAPI.showQuickAnalysisToast(customization, currentProductId);
         }
     }
 
