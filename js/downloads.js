@@ -1172,8 +1172,8 @@ function loadPurchasedProducts() {
                 <p style="font-size:0.78rem;color:var(--text-muted);">Qty: ${item.quantity} &nbsp;&bull;&nbsp; Order #${item.orderId}</p>
                 ${customBadge}
             </div>
-            <button type="button" class="button gs-launch-btn" onclick="downloadItemById('item_${idx}')">
-                <i class="fas fa-sparkles"></i> Open in Genspark
+            <button type="button" class="button" onclick="downloadItemById('item_${idx}')">
+                <i class="fas fa-download"></i> Download
             </button>
         </div>`;
     }).join('');
@@ -1189,8 +1189,8 @@ function loadFreeDownloads() {
                 <h4 style="font-size:0.9rem;font-weight:700;color:var(--navy);margin-bottom:0.2rem;">${resource.title}</h4>
                 <p style="font-size:0.8rem;color:var(--text-muted);">${resource.description}</p>
             </div>
-            <button type="button" class="button gs-launch-btn" style="flex-shrink:0;" onclick="downloadFreeResource('${escStr(resource.title)}')">
-                <i class="fas fa-sparkles"></i> Genspark
+            <button type="button" class="button secondary" style="flex-shrink:0;" onclick="downloadFreeResource('${escStr(resource.title)}')">
+                <i class="fas fa-download"></i> Free
             </button>
         </div>
     `).join('');
@@ -1207,17 +1207,24 @@ function downloadItemById(key) {
 }
 
 function downloadProduct(productName, customization) {
-    if (window.GensparkExport) {
-        window.GensparkExport.openInGenspark(productName, customization || null);
-    } else {
-        if (window.NegosyoPlan) window.NegosyoPlan.showToast('Loading Genspark…', 'success');
-    }
+    const safeName = productName.replace(/\s+/g, '_').toLowerCase();
+    const html = generateBlueprintHTML(productName, customization || null);
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = safeName + '_blueprint.html';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    if (window.NegosyoPlan) window.NegosyoPlan.showToast(productName + ' blueprint downloaded!', 'success');
 }
 
 function downloadFreeResource(title) {
-    if (window.GensparkExport) {
-        window.GensparkExport.openInGenspark(title, null);
-    }
+    downloadProduct(title, null);
 }
 
 function loadAccountDownloads() {
@@ -1247,8 +1254,8 @@ function loadAccountDownloads() {
                 <h4>${item.name}</h4>
                 <p>Purchased ${new Date(item.purchaseDate).toLocaleDateString()}${item.customization ? ' · ' + (item.customization.businessTypeLabel || item.customization.businessType) : ''}</p>
             </div>
-            <button type="button" class="button gs-launch-btn" style="flex-shrink:0;" onclick="downloadProduct('${escStr(item.name)}', window._acctDownloads && window._acctDownloads['acct_${idx}'] && window._acctDownloads['acct_${idx}'].customization || null)">
-                <i class="fas fa-sparkles"></i> Genspark
+            <button type="button" class="button" style="flex-shrink:0;" onclick="downloadProduct('${escStr(item.name)}', window._acctDownloads && window._acctDownloads['acct_${idx}'] && window._acctDownloads['acct_${idx}'].customization || null)">
+                <i class="fas fa-download"></i>
             </button>
         </div>
     `).join('');

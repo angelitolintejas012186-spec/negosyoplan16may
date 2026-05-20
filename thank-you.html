@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/main.js" defer></script>
     <script src="js/site-settings.js" defer></script>
-    <script src="js/genspark-export.js" defer></script>
     <script src="js/downloads.js" defer></script>
     <script src="js/generate-presentation.js" defer></script>
     <script>
@@ -49,10 +48,10 @@
                 <div class="download-btn-row">
                     <div class="file-info">
                         <h4>${item.name}</h4>
-                        <p>Designed by Genspark AI Workspace 4.0 — click to open</p>
+                        <p>PDF Blueprint — Ready to download</p>
                     </div>
-                    <button type="button" class="button gs-launch-btn" onclick="downloadProduct('${item.name.replace(/'/g, "\\'")}')">
-                        <i class="fas fa-sparkles"></i> Open in Genspark
+                    <button type="button" class="button" onclick="downloadProduct('${item.name.replace(/'/g, "\\'")}')">
+                        <i class="fas fa-download"></i>
                     </button>
                 </div>
             `).join('');
