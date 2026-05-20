@@ -35,8 +35,6 @@ function injectMobileNavExtras() {
         bizBtn.setAttribute('title', 'Choose Business Type');
         bizBtn.innerHTML = '<i class="fas fa-briefcase"></i>';
         bizBtn.addEventListener('click', function () {
-            /* If a cart/add-to-cart button is on this page, trigger it;
-               otherwise navigate to shop.html */
             var firstCartBtn = document.querySelector('.button[data-id]');
             if (firstCartBtn) {
                 firstCartBtn.click();
@@ -44,7 +42,6 @@ function injectMobileNavExtras() {
                 window.location.href = 'shop.html';
             }
         });
-        /* Insert between shop-btn and cart-btn */
         var cartBtn = navActions.querySelector('.nav-cart-btn');
         if (cartBtn) {
             navActions.insertBefore(bizBtn, cartBtn);
@@ -53,33 +50,74 @@ function injectMobileNavExtras() {
         }
     }
 
-    /* ── 2. Sidebar quick-row: Home + Shop side by side ── */
+    /* ── 2. Sidebar quick-row: Shop | Cart | Business Type (3 buttons) ── */
     var sidebarMenu = document.querySelector('.sidebar-menu');
     if (sidebarMenu && !document.querySelector('.sidebar-quick-row')) {
-        var homeItem = sidebarMenu.querySelector('li:first-child');
-        var shopItem = sidebarMenu.querySelector('li:nth-child(2)');
-        if (homeItem && shopItem) {
-            var homeLink = homeItem.querySelector('a');
-            var shopLink = shopItem.querySelector('a');
-            if (homeLink && shopLink) {
-                /* Build quick-row */
-                var quickRow = document.createElement('div');
-                quickRow.className = 'sidebar-quick-row';
-                var homeClone = document.createElement('a');
-                homeClone.href = homeLink.href;
-                homeClone.innerHTML = '<i class="fas fa-home"></i><span>Home</span>';
-                var shopClone = document.createElement('a');
-                shopClone.href = shopLink.href;
-                shopClone.innerHTML = '<i class="fas fa-store"></i><span>Shop</span>';
-                quickRow.appendChild(homeClone);
-                quickRow.appendChild(shopClone);
-                /* Insert above the regular menu items */
-                sidebarMenu.parentNode.insertBefore(quickRow, sidebarMenu);
-                /* Hide the original Home + Shop list items to avoid duplication */
-                homeItem.style.display = 'none';
-                shopItem.style.display = 'none';
+        var quickRow = document.createElement('div');
+        quickRow.className = 'sidebar-quick-row';
+
+        /* Shop button */
+        var shopBtn = document.createElement('a');
+        shopBtn.href = 'shop.html';
+        shopBtn.innerHTML = '<i class="fas fa-store"></i><span>Shop</span>';
+
+        /* Cart button */
+        var cartLink = document.createElement('a');
+        cartLink.href = 'cart.html';
+        cartLink.className = 'sidebar-cart-quick';
+        cartLink.setAttribute('aria-label', 'Shopping cart');
+        cartLink.innerHTML = '<i class="fas fa-shopping-cart"></i><span>Cart</span>';
+
+        /* Choose Business Type button */
+        var bizLink = document.createElement('button');
+        bizLink.setAttribute('type', 'button');
+        bizLink.className = 'sidebar-biz-quick';
+        bizLink.innerHTML = '<i class="fas fa-briefcase"></i><span>Choose Biz</span>';
+        bizLink.addEventListener('click', function () {
+            /* Close sidebar first */
+            var overlay = document.getElementById('overlay');
+            var sidebar = document.getElementById('sidebar');
+            var hamburger = document.getElementById('hamburger-menu');
+            if (sidebar) sidebar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            if (hamburger) hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+            setTimeout(function () {
+                var firstAddBtn = document.querySelector('.button[data-id]');
+                if (firstAddBtn) {
+                    firstAddBtn.click();
+                } else {
+                    window.location.href = 'shop.html';
+                }
+            }, 280);
+        });
+
+        quickRow.appendChild(shopBtn);
+        quickRow.appendChild(cartLink);
+        quickRow.appendChild(bizLink);
+
+        /* Insert above the sidebar-menu list */
+        sidebarMenu.parentNode.insertBefore(quickRow, sidebarMenu);
+
+        /* Hide Home, Shop, and Cart from the regular list — they're in the quick-row */
+        sidebarMenu.querySelectorAll('li').forEach(function (li) {
+            var a = li.querySelector('a');
+            if (!a) return;
+            var href = a.getAttribute('href') || '';
+            var text = (a.textContent || '').trim().toLowerCase();
+            if (href === 'index.html' || text.startsWith('home') ||
+                href === 'shop.html' || text.startsWith('shop') ||
+                href === 'cart.html' || text.startsWith('cart')) {
+                li.style.display = 'none';
             }
-        }
+        });
+    }
+
+    /* ── 3. Hide breadcrumbs on home page (redundant "Home" text) ── */
+    var page = window.location.pathname.split('/').pop() || 'index.html';
+    if (page === 'index.html' || page === '') {
+        var bc = document.querySelector('.breadcrumbs');
+        if (bc) bc.style.display = 'none';
     }
 }
 

@@ -833,22 +833,30 @@ footer .footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
     /* Ensure 3 buttons sit in a tight parallel row */
     .nav-actions{gap:0.35rem;}
     .nav-shop-btn{padding:0.42rem 0.75rem;font-size:0.78rem;}
-    /* Sidebar: Home + Shop as a 2-column quick row */
+    /* Sidebar: Shop | Cart | Business Type — 3-button quick row */
     .sidebar-quick-row{
-        display:grid;grid-template-columns:1fr 1fr;
-        gap:0.5rem;margin-bottom:0.75rem;
+        display:grid;grid-template-columns:repeat(3,1fr);
+        gap:0.45rem;margin-bottom:0.85rem;
     }
-    .sidebar-quick-row a{
+    .sidebar-quick-row a,
+    .sidebar-quick-row button{
         display:flex;flex-direction:column;align-items:center;justify-content:center;
-        gap:0.25rem;padding:0.75rem 0.5rem;
-        color:rgba(255,255,255,0.9);font-weight:600;font-size:0.78rem;
+        gap:0.22rem;padding:0.7rem 0.25rem;
+        color:rgba(255,255,255,0.9);font-weight:600;font-size:0.72rem;
         border-radius:var(--radius-sm);
         background:rgba(255,255,255,0.08);
         border:1px solid rgba(255,255,255,0.12);
-        transition:var(--transition);text-align:center;
+        transition:var(--transition);text-align:center;cursor:pointer;
+        width:100%;
     }
-    .sidebar-quick-row a:hover{background:rgba(232,66,10,0.35);border-color:var(--orange);color:#fff;}
-    .sidebar-quick-row a i{font-size:1.15rem;color:var(--amber);}
+    .sidebar-quick-row a:hover,
+    .sidebar-quick-row button:hover{background:rgba(232,66,10,0.35);border-color:var(--orange);color:#fff;}
+    .sidebar-quick-row a i,
+    .sidebar-quick-row button i{font-size:1.15rem;color:var(--amber);}
+    .sidebar-quick-row .sidebar-biz-quick{
+        background:rgba(245,165,0,0.12);border-color:rgba(245,165,0,0.3);
+    }
+    .sidebar-quick-row .sidebar-biz-quick:hover{background:rgba(245,165,0,0.35);border-color:var(--amber);}
     .hero{grid-template-columns:1fr;}
     .contact-grid{grid-template-columns:1fr;}
     .order-confirm-grid{grid-template-columns:1fr;}
