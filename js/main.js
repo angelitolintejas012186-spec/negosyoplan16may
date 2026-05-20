@@ -25,29 +25,42 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function injectMobileNavExtras() {
-    /* ── 1. Business-type quick button in .nav-actions (mobile only) ── */
-    var navActions = document.querySelector('.nav-actions');
-    if (navActions && !navActions.querySelector('.nav-biz-btn')) {
-        var bizBtn = document.createElement('button');
-        bizBtn.className = 'nav-biz-btn';
-        bizBtn.setAttribute('type', 'button');
-        bizBtn.setAttribute('aria-label', 'Choose business type');
-        bizBtn.setAttribute('title', 'Choose Business Type');
-        bizBtn.innerHTML = '<i class="fas fa-briefcase"></i>';
-        bizBtn.addEventListener('click', function () {
-            var firstCartBtn = document.querySelector('.button[data-id]');
-            if (firstCartBtn) {
-                firstCartBtn.click();
+    /* ── 1. Mobile action row: 3 buttons below brand name in header ── */
+    var header = document.querySelector('header');
+    if (header && !document.querySelector('.mobile-action-row')) {
+        var row = document.createElement('div');
+        row.className = 'mobile-action-row';
+
+        /* Shop */
+        var shopA = document.createElement('a');
+        shopA.href = 'shop.html';
+        shopA.className = 'mob-act-btn mob-shop';
+        shopA.innerHTML = '<i class="fas fa-store"></i><span>Shop</span>';
+
+        /* Cart */
+        var cartA = document.createElement('a');
+        cartA.href = 'cart.html';
+        cartA.className = 'mob-act-btn mob-cart';
+        cartA.innerHTML = '<i class="fas fa-shopping-cart"></i><span>Cart</span>';
+
+        /* Choose Business Type */
+        var bizB = document.createElement('button');
+        bizB.setAttribute('type', 'button');
+        bizB.className = 'mob-act-btn mob-biz';
+        bizB.innerHTML = '<i class="fas fa-briefcase"></i><span>Choose Business</span>';
+        bizB.addEventListener('click', function () {
+            var first = document.querySelector('.button[data-id]');
+            if (first) {
+                first.click();
             } else {
                 window.location.href = 'shop.html';
             }
         });
-        var cartBtn = navActions.querySelector('.nav-cart-btn');
-        if (cartBtn) {
-            navActions.insertBefore(bizBtn, cartBtn);
-        } else {
-            navActions.appendChild(bizBtn);
-        }
+
+        row.appendChild(shopA);
+        row.appendChild(cartA);
+        row.appendChild(bizB);
+        header.appendChild(row);
     }
 
     /* ── 2. Sidebar quick-row: Shop | Cart | Business Type (3 buttons) ── */

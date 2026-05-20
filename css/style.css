@@ -154,16 +154,35 @@ nav{
     border:1.5px solid var(--navy);
     line-height:1;padding:0 3px;
 }
-/* Business-type quick button — mobile only */
-.nav-biz-btn{
+/* Business-type quick button — kept for reference but not injected */
+.nav-biz-btn{display:none;}
+
+/* ── Mobile action row (below brand, inside header) ── */
+.mobile-action-row{
     display:none;
-    position:relative;align-items:center;justify-content:center;
-    width:38px;height:38px;border-radius:50%;
-    background:rgba(245,165,0,0.18);border:1.5px solid rgba(245,165,0,0.45);
-    color:var(--amber);font-size:1rem;
-    transition:var(--transition);cursor:pointer;flex-shrink:0;
+    gap:0.5rem;
+    padding:0 1rem 0.65rem;
+    background:var(--navy);
 }
-.nav-biz-btn:hover{background:rgba(245,165,0,0.35);border-color:var(--amber);color:#fff;}
+.mob-act-btn{
+    flex:1;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:0.18rem;padding:0.58rem 0.25rem;
+    border-radius:10px;
+    font-size:0.7rem;font-weight:700;letter-spacing:0.02em;
+    color:#fff;background:rgba(255,255,255,0.09);
+    border:1.5px solid rgba(255,255,255,0.15);
+    cursor:pointer;text-align:center;white-space:nowrap;
+    transition:var(--transition);text-decoration:none;
+    -webkit-tap-highlight-color:transparent;
+}
+.mob-act-btn i{font-size:1.05rem;}
+.mob-act-btn.mob-shop{background:var(--orange);border-color:var(--orange);}
+.mob-act-btn.mob-shop:hover,.mob-act-btn.mob-shop:active{background:var(--orange-light);}
+.mob-act-btn.mob-cart{position:relative;background:rgba(255,255,255,0.1);}
+.mob-act-btn.mob-cart:hover,.mob-act-btn.mob-cart:active{background:rgba(255,255,255,0.22);}
+.mob-act-btn.mob-biz{background:rgba(245,165,0,0.18);border-color:rgba(245,165,0,0.45);color:var(--amber);}
+.mob-act-btn.mob-biz:hover,.mob-act-btn.mob-biz:active{background:var(--amber);border-color:var(--amber);color:var(--navy);}
 
 /* Search bar */
 .search-bar{
@@ -828,11 +847,10 @@ footer .footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
     /* Logo sizing on mobile */
     .site-logo{width:38px;}
     .brand-name{font-size:1.15rem;letter-spacing:0.1em;}
-    /* Show the business-type quick button */
-    .nav-biz-btn{display:inline-flex;}
-    /* Ensure 3 buttons sit in a tight parallel row */
-    .nav-actions{gap:0.35rem;}
-    .nav-shop-btn{padding:0.42rem 0.75rem;font-size:0.78rem;}
+    /* Hide old nav action buttons — 3-button row is below the brand now */
+    .nav-actions{display:none;}
+    /* Show the action row below brand */
+    .mobile-action-row{display:flex;}
     /* Sidebar: Shop | Cart | Business Type — 3-button quick row */
     .sidebar-quick-row{
         display:grid;grid-template-columns:repeat(3,1fr);
@@ -862,11 +880,10 @@ footer .footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
     .order-confirm-grid{grid-template-columns:1fr;}
     .account-info-grid{grid-template-columns:1fr;}
 }
-/* Hide brand name text on very small screens to keep nav tidy */
+/* Hide brand name text on very small screens — more room for hamburger */
 @media (max-width:400px){
     .brand-name{display:none;}
     .site-logo{width:34px;}
-    .nav-shop-btn{padding:0.4rem 0.6rem;font-size:0.75rem;}
 }
 @media (max-width:600px){
     main{padding:1.5rem 1rem 4rem;}
