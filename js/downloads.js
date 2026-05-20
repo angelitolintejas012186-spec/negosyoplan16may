@@ -448,7 +448,17 @@ function getBTContent(bt) {
 
 // ─── Blueprint HTML Generator ────────────────────────────────────────────────
 
-function generateBlueprintHTML(productName, customization) {
+var LANG_LABELS = {
+    en:  { title:'Business Blueprint', by:'Prepared for', capital:'Starting Capital', location:'Location', date:'Date', bundle:'Bundle' },
+    fil: { title:'Plano sa Negosyo', by:'Inihanda para kay', capital:'Panimulang Kapital', location:'Lokasyon', date:'Petsa', bundle:'Pakete' },
+    ceb: { title:'Plano sa Negosyo', by:'Giandam alang sa', capital:'Sugod nga Kapital', location:'Lokasyon', date:'Petsa', bundle:'Pakete' },
+    ar:  { title:'خطة العمل', by:'أُعدَّ لـ', capital:'رأس المال الابتدائي', location:'الموقع', date:'التاريخ', bundle:'الحزمة' },
+    zh:  { title:'商业计划书', by:'为以下人员准备', capital:'启动资金', location:'地点', date:'日期', bundle:'套餐' },
+    es:  { title:'Plan de Negocios', by:'Preparado para', capital:'Capital Inicial', location:'Ubicación', date:'Fecha', bundle:'Paquete' },
+};
+
+function generateBlueprintHTML(productName, customization, langCode) {
+    const lang = LANG_LABELS[langCode] || LANG_LABELS['en'];
     const bt = customization && customization.businessType ? customization.businessType : 'other';
     const btLabel = customization && customization.businessTypeLabel ? customization.businessTypeLabel : 'Your Business';
     const capital = customization && customization.capital ? Number(customization.capital) : 0;
@@ -571,10 +581,11 @@ footer.doc-footer span{color:#F5A500;}
     <h1>${productName}<br><span>${btLabel}</span></h1>
     <p class="cover-sub">Your complete business management system — covering SWOT, FIFO, Risk Analysis, Financial Planning, Business Strategy, and Marketing Strategy (Traditional + Digital).</p>
     <div class="cover-meta">
+        <div class="cover-meta-item"><strong>${lang.bundle}</strong>${tierLabel}</div>
         <div class="cover-meta-item"><strong>Business Type</strong>${btLabel}</div>
-        <div class="cover-meta-item"><strong>Location</strong>${locationStr}</div>
-        ${capital > 0 ? `<div class="cover-meta-item"><strong>Available Capital</strong>PHP ${capital.toLocaleString()}</div>` : ''}
-        <div class="cover-meta-item"><strong>Generated</strong>${dateStr}</div>
+        <div class="cover-meta-item"><strong>${lang.location}</strong>${locationStr}</div>
+        ${capital > 0 ? `<div class="cover-meta-item"><strong>${lang.capital}</strong>PHP ${capital.toLocaleString()}</div>` : ''}
+        <div class="cover-meta-item"><strong>${lang.date}</strong>${dateStr}</div>
         <div class="cover-meta-item"><strong>Version</strong>2026 Edition</div>
     </div>
     <span class="cover-tier">${tierLabel} Tier</span>
@@ -1206,15 +1217,80 @@ function downloadItemById(key) {
     downloadProduct(item.name, item.customization || null);
 }
 
-function downloadProduct(productName, customization) {
-    const safeName = productName.replace(/\s+/g, '_').toLowerCase();
-    const html = generateBlueprintHTML(productName, customization || null);
+/* ── Language selector languages ── */
+var BLUEPRINT_LANGUAGES = [
+    { code: 'en',  label: 'English',           flag: '🇺🇸' },
+    { code: 'fil', label: 'Filipino (Tagalog)', flag: '🇵🇭' },
+    { code: 'ceb', label: 'Cebuano',            flag: '🇵🇭' },
+    { code: 'ar',  label: 'Arabic (العربية)',   flag: '🇦🇪' },
+    { code: 'zh',  label: 'Chinese (中文)',     flag: '🇨🇳' },
+    { code: 'es',  label: 'Spanish (Español)',  flag: '🇪🇸' },
+];
 
-    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+function showLangModal(productName, customization) {
+    var saved = localStorage.getItem('blueprintLang') || 'en';
+    var existing = document.getElementById('lang-select-modal');
+    if (existing) existing.remove();
+
+    var overlay = document.createElement('div');
+    overlay.id = 'lang-select-modal';
+    overlay.className = 'lang-modal-overlay';
+    overlay.innerHTML =
+        '<div class="lang-modal" role="dialog" aria-modal="true" aria-labelledby="lang-modal-title">' +
+          '<div class="lang-modal-head">' +
+            '<div>' +
+              '<h3 id="lang-modal-title"><i class="fas fa-language" style="color:var(--orange);margin-right:0.5rem;"></i>Select Blueprint Language</h3>' +
+              '<p class="lang-modal-sub">Choose the language for your business blueprint document.</p>' +
+            '</div>' +
+            '<button class="lang-close" id="lang-close-btn" aria-label="Close">&times;</button>' +
+          '</div>' +
+          '<div class="lang-grid" id="lang-grid">' +
+            BLUEPRINT_LANGUAGES.map(function (l) {
+                return '<button type="button" class="lang-chip' + (l.code === saved ? ' selected' : '') + '" data-code="' + l.code + '">' +
+                    '<span class="lang-flag">' + l.flag + '</span>' +
+                    '<span class="lang-label">' + l.label + '</span>' +
+                '</button>';
+            }).join('') +
+          '</div>' +
+          '<div class="lang-modal-footer">' +
+            '<button type="button" class="button" id="lang-confirm-btn"><i class="fas fa-download"></i> Download Blueprint</button>' +
+            '<button type="button" class="button secondary" id="lang-cancel-btn">Cancel</button>' +
+          '</div>' +
+        '</div>';
+
+    document.body.appendChild(overlay);
+
+    var selectedCode = saved;
+    overlay.querySelectorAll('.lang-chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            overlay.querySelectorAll('.lang-chip').forEach(function (c) { c.classList.remove('selected'); });
+            chip.classList.add('selected');
+            selectedCode = chip.getAttribute('data-code');
+        });
+    });
+
+    function close() { var m = document.getElementById('lang-select-modal'); if (m) m.remove(); }
+
+    document.getElementById('lang-close-btn').addEventListener('click', close);
+    document.getElementById('lang-cancel-btn').addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+
+    document.getElementById('lang-confirm-btn').addEventListener('click', function () {
+        localStorage.setItem('blueprintLang', selectedCode);
+        close();
+        _doDownload(productName, customization, selectedCode);
+    });
+}
+
+function _doDownload(productName, customization, langCode) {
+    var safeName = productName.replace(/\s+/g, '_').toLowerCase();
+    var html = generateBlueprintHTML(productName, customization || null, langCode);
+
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
     link.href = url;
-    link.download = safeName + '_blueprint.html';
+    link.download = safeName + '_blueprint_' + (langCode || 'en') + '.html';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1223,8 +1299,12 @@ function downloadProduct(productName, customization) {
     if (window.NegosyoPlan) window.NegosyoPlan.showToast(productName + ' blueprint downloaded!', 'success');
 }
 
+function downloadProduct(productName, customization) {
+    showLangModal(productName, customization || null);
+}
+
 function downloadFreeResource(title) {
-    downloadProduct(title, null);
+    showLangModal(title, null);
 }
 
 function loadAccountDownloads() {
