@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/main.js" defer></script>
     <script src="js/site-settings.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
     <script src="js/downloads.js" defer></script>
     <script src="js/generate-presentation.js" defer></script>
     <script>
@@ -52,7 +51,7 @@
                         <p>PDF Blueprint — Ready to download</p>
                     </div>
                     <button type="button" class="button" onclick="downloadProduct('${item.name.replace(/'/g, "\\'")}')">
-                        <i class="fas fa-file-pdf"></i> PDF
+                        <i class="fas fa-download"></i>
                     </button>
                 </div>
             `).join('');
