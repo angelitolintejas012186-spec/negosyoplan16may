@@ -349,6 +349,645 @@ const FRAMEWORK_DATA = {
 
 FRAMEWORK_DATA.custom = FRAMEWORK_DATA.complete;
 
+// ── Permits & Licenses Data ───────────────────────────────────────────────────
+const PERMIT_DATA = {
+    starter: {
+        intro: 'Step-by-step guide to legally registering a sole proprietorship in the Philippines.',
+        total_cost: '₱1,500 – ₱4,000',
+        total_time: '2 – 4 weeks',
+        steps: [
+            {
+                num: 1, accent: '#E8420A', icon: 'fas fa-id-card',
+                title: 'DTI Business Name Registration',
+                office: 'Department of Trade & Industry (DTI)',
+                cost: '₱200 – ₱2,000',
+                duration: '1–3 days (same-day online)',
+                requirements: [
+                    'Valid government-issued ID',
+                    'Preferred business names — prepare 3 alternatives',
+                    'Accomplished BN Registration Form (online or paper)'
+                ],
+                where: 'bizname.dti.gov.ph (online) or DTI Provincial/City Office',
+                tip: 'Apply online to skip queues. Fee depends on territorial scope: Barangay ₱200, City ₱500, Regional ₱1,000, National ₱2,000.'
+            },
+            {
+                num: 2, accent: '#6366F1', icon: 'fas fa-map-marker-alt',
+                title: 'Barangay Business Clearance',
+                office: 'Barangay Hall at your business address',
+                cost: '₱100 – ₱500',
+                duration: '1–2 days',
+                requirements: [
+                    'DTI Certificate of Registration',
+                    'Community Tax Certificate (Cedula / CTC)',
+                    'Proof of address — lease contract or property title',
+                    'Valid ID with photocopy'
+                ],
+                where: 'Your local Barangay Hall (no online option in most areas)',
+                tip: 'Call ahead — some barangays require a site inspection before issuing clearance, which adds 1–2 extra days.'
+            },
+            {
+                num: 3, accent: '#F5A500', icon: 'fas fa-landmark',
+                title: "Mayor's Permit / Business License",
+                office: 'City or Municipal Hall — Business Permits & Licensing Office (BPLO)',
+                cost: '₱500 – ₱5,000 (based on capitalization & LGU)',
+                duration: '3–7 business days',
+                requirements: [
+                    'DTI Certificate',
+                    'Barangay Business Clearance',
+                    'Lease contract or land title',
+                    'Community Tax Certificate',
+                    'Fire Safety Inspection Certificate (FSIC from BFP)',
+                    'Sanitary Permit (food or personal service businesses)'
+                ],
+                where: "City/Municipal Hall BPLO window",
+                tip: "Some LGUs (Makati, Pasig, Cebu City) now accept online applications. Check your city's official website before going in person."
+            },
+            {
+                num: 4, accent: '#10B981', icon: 'fas fa-receipt',
+                title: 'BIR Registration',
+                office: 'Bureau of Internal Revenue — Revenue District Office (RDO)',
+                cost: '₱530 (₱500 Annual Registration Fee + ₱30 DST)',
+                duration: '1–3 business days',
+                requirements: [
+                    'DTI Certificate',
+                    "Mayor's Permit",
+                    'Proof of business address — lease contract',
+                    'Valid government ID',
+                    'Accomplished BIR Form 1901 (Sole Proprietor)'
+                ],
+                where: 'BIR RDO with jurisdiction over your address | orus.bir.gov.ph',
+                tip: 'Request Authority to Print (ATP) for official receipts at the same visit. Also register your Books of Account (Journal & Ledger) to be BIR-stamped.'
+            }
+        ],
+        reminders: [
+            "Renew Mayor's Permit and Barangay Clearance every January",
+            'Pay Annual BIR Registration Fee (₱500) before January 31',
+            'File quarterly BIR returns — Form 2551Q (Percentage Tax) or 2550Q (VAT)',
+            "Display BIR Certificate of Registration and Mayor's Permit in your premises",
+            'Keep all original certificates in a waterproof document folder'
+        ]
+    },
+    founder: {
+        intro: 'Comprehensive registration guide for a growing business — includes employee benefit agencies and industry-specific permits.',
+        total_cost: '₱2,500 – ₱8,000',
+        total_time: '3 – 6 weeks',
+        steps: [
+            {
+                num: 1, accent: '#E8420A', icon: 'fas fa-building',
+                title: 'Choose Structure: DTI or SEC Registration',
+                office: 'DTI (sole proprietorship) or SEC (partnership / corporation)',
+                cost: '₱500 – ₱5,000',
+                duration: '1–5 business days',
+                requirements: [
+                    'Valid IDs of all owners / incorporators',
+                    'Articles of Partnership or Incorporation (SEC route)',
+                    "By-laws for corporations; Treasurer's Affidavit for stock corps",
+                    'Business name options — search SEC online first to avoid conflicts'
+                ],
+                where: 'bizname.dti.gov.ph | esec.gov.ph',
+                tip: 'Choose SEC for partnerships and corporations — gives better credibility with banks, investors, and large suppliers. DTI is simpler and faster for sole proprietors.'
+            },
+            {
+                num: 2, accent: '#6366F1', icon: 'fas fa-map-marker-alt',
+                title: 'Barangay Business Clearance',
+                office: 'Barangay Hall at your primary business address',
+                cost: '₱200 – ₱800',
+                duration: '1–2 days',
+                requirements: [
+                    'DTI or SEC Certificate',
+                    'Community Tax Certificate (Cedula)',
+                    'Lease contract or proof of ownership',
+                    'Valid IDs of all owners'
+                ],
+                where: 'Your local Barangay Hall',
+                tip: "Some LGUs have unified processing — barangay clearance is included in the Mayor's Permit application. Ask your BPLO first."
+            },
+            {
+                num: 3, accent: '#F5A500', icon: 'fas fa-landmark',
+                title: "Mayor's Permit / Business License",
+                office: 'City or Municipal Hall — BPLO',
+                cost: '₱1,000 – ₱8,000 (varies by LGU and capitalization)',
+                duration: '3–7 business days',
+                requirements: [
+                    'DTI or SEC Certificate',
+                    'Barangay Business Clearance',
+                    'Lease contract or land title',
+                    'Fire Safety Inspection Certificate (FSIC)',
+                    'Sanitary Permit',
+                    'Zoning Clearance (from City Planning Office)'
+                ],
+                where: 'BPLO, City/Municipal Hall',
+                tip: 'Cebu, Davao, and Makati have fully online BPLO systems — apply online to save time. Some LGUs issue 3-year permits for qualifying businesses.'
+            },
+            {
+                num: 4, accent: '#10B981', icon: 'fas fa-receipt',
+                title: 'BIR Registration + Books of Account',
+                office: 'Bureau of Internal Revenue — RDO',
+                cost: '₱530 registration + ₱200–500 for Books of Account',
+                duration: '1–3 business days',
+                requirements: [
+                    'DTI or SEC Certificate',
+                    "Mayor's Permit",
+                    'Lease contract / proof of address',
+                    'Valid IDs',
+                    'BIR Form 1901 (sole prop) or Form 1903 (corp/partnership)',
+                    'Books of Account: Journal, Ledger, Cash Receipts, Disbursements'
+                ],
+                where: 'BIR RDO with jurisdiction over your business address',
+                tip: 'Get ATP (Authority to Print) for official receipts at the same visit. RDO number matters — use the one that covers your principal business address.'
+            },
+            {
+                num: 5, accent: '#8B5CF6', icon: 'fas fa-users',
+                title: 'SSS, PhilHealth & Pag-IBIG Employer Registration',
+                office: 'SSS, PhilHealth, and HDMF (Pag-IBIG) offices',
+                cost: '₱0 registration (monthly contributions apply)',
+                duration: '3–5 business days per agency',
+                requirements: [
+                    'BIR Certificate of Registration',
+                    "Mayor's Permit",
+                    'List of employees with their existing SSS/PhilHealth/Pag-IBIG numbers',
+                    'Employment contracts or appointment letters',
+                    'Payroll records'
+                ],
+                where: 'my.sss.gov.ph | eregister.philhealth.gov.ph | pagibigfund.gov.ph',
+                tip: 'Required for any business with at least 1 regular employee. Employer share: SSS ~9.5%, PhilHealth 2.5%, Pag-IBIG ₱100/month per employee.'
+            },
+            {
+                num: 6, accent: '#EF4444', icon: 'fas fa-certificate',
+                title: 'Industry-Specific Permits',
+                office: 'Varies by industry (FDA, DOH, LTO, LTFRB, DTI-CPG, etc.)',
+                cost: '₱500 – ₱10,000+ per permit',
+                duration: '1 week – 3 months',
+                requirements: ['Varies by industry — see tip for details'],
+                where: 'Specific regulatory agency office or online portal',
+                tip: 'Food/Beverages: FDA License (fda.gov.ph) | Pharmacy: FDA Drug Outlet License | Construction: PCAB License | Transport: LTFRB Franchise | Healthcare: DOH / PRC License'
+            }
+        ],
+        reminders: [
+            "Renew Mayor's Permit, Barangay Clearance, and FSIC every January",
+            'Pay SSS, PhilHealth, and Pag-IBIG employer contributions monthly before deadline',
+            'File quarterly BIR returns (2551Q for % Tax or 2550Q for VAT)',
+            'File Annual ITR (BIR Form 1701) before April 15 each year',
+            'Keep official receipts and invoices for at least 3 years — BIR audit window',
+            'Post required government certifications in a visible area of your premises'
+        ]
+    },
+    complete: {
+        intro: 'Professional-grade registration covering all permits, employee agencies, IP protection, and a full annual compliance calendar.',
+        total_cost: '₱4,000 – ₱18,000',
+        total_time: '4 – 8 weeks (IP registration: up to 18 months)',
+        steps: [
+            {
+                num: 1, accent: '#E8420A', icon: 'fas fa-sitemap',
+                title: 'Choose Optimal Business Structure',
+                office: 'DTI (sole prop) | SEC (partnership, OPC, corporation)',
+                cost: '₱500 – ₱5,000',
+                duration: '1–5 business days',
+                requirements: [
+                    'Valid IDs of all incorporators/partners',
+                    'Articles of Incorporation and By-laws (for corporation)',
+                    "One Person Corporation (OPC) Application (single-owner, limited liability)",
+                    "Treasurer's Affidavit and bank certificate of deposit"
+                ],
+                where: 'esec.gov.ph (online) | SEC main office for manual filing',
+                tip: "An OPC offers limited liability without needing a partner — ideal for entrepreneurs who want sole ownership with corporate protection."
+            },
+            {
+                num: 2, accent: '#6366F1', icon: 'fas fa-map-marker-alt',
+                title: 'Barangay Business Clearance',
+                office: 'Barangay Hall at your primary business address',
+                cost: '₱200 – ₱1,000',
+                duration: '1–2 days',
+                requirements: [
+                    'DTI or SEC Certificate of Registration',
+                    'Community Tax Certificate',
+                    'Notarized Lease Contract or Land Title',
+                    'Valid ID of authorized representative'
+                ],
+                where: 'Barangay Hall',
+                tip: 'For businesses with multiple branches, get a barangay clearance for each location from their respective barangay halls.'
+            },
+            {
+                num: 3, accent: '#F5A500', icon: 'fas fa-landmark',
+                title: "Mayor's Permit / Business License",
+                office: 'City or Municipal Hall — BPLO',
+                cost: '₱1,500 – ₱10,000+ (per LGU and capitalization)',
+                duration: '3–7 business days',
+                requirements: [
+                    'DTI or SEC Certificate',
+                    'Barangay Business Clearance',
+                    'Notarized Lease Contract or Land Title',
+                    'Fire Safety Inspection Certificate (BFP)',
+                    'Sanitary Permit',
+                    'Zoning Clearance',
+                    'Environmental Compliance Certificate (if applicable)'
+                ],
+                where: "BPLO / City Hall — check your LGU's official website for online application",
+                tip: "Save a digital copy of the approved permit for insurance and supplier accreditation requirements. Some cities offer 3-year permits to qualifying businesses."
+            },
+            {
+                num: 4, accent: '#10B981', icon: 'fas fa-receipt',
+                title: 'BIR Registration + Books + Authority to Print',
+                office: 'Bureau of Internal Revenue — Revenue District Office',
+                cost: '₱530 + ₱500–1,000 for books + ₱300–800 ATP fee',
+                duration: '1–3 business days',
+                requirements: [
+                    'SEC or DTI Certificate',
+                    "Mayor's Permit",
+                    'Lease contract',
+                    'Valid ID',
+                    'BIR Form 1901 (sole prop) or 1903 (corp)',
+                    'Books of Account: Journal, Ledger, Cash Receipts, Cash Disbursements'
+                ],
+                where: 'BIR RDO or orus.bir.gov.ph',
+                tip: 'Enroll in BIR eFPS (Electronic Filing and Payment System) for convenient online tax filing. Large-volume businesses must use eFPS — register early to avoid compliance issues.'
+            },
+            {
+                num: 5, accent: '#8B5CF6', icon: 'fas fa-users',
+                title: 'SSS, PhilHealth & Pag-IBIG Employer Registration',
+                office: 'SSS, PhilHealth, HDMF (Pag-IBIG)',
+                cost: '₱0 registration (monthly contributions required)',
+                duration: '3–5 business days per agency',
+                requirements: [
+                    'BIR Certificate of Registration',
+                    "Mayor's Permit",
+                    'Employee data forms (SS-1, PMRF, MDF)',
+                    'Employment contracts',
+                    'Payroll records'
+                ],
+                where: 'my.sss.gov.ph | eregister.philhealth.gov.ph | pagibigfund.gov.ph',
+                tip: 'Set up payroll software early to automate deductions. Late remittance penalties: SSS 3%/month, PhilHealth 2%/month — these compound fast.'
+            },
+            {
+                num: 6, accent: '#EF4444', icon: 'fas fa-certificate',
+                title: 'Industry-Specific Permits & Accreditations',
+                office: 'FDA, DOH, LTO, LTFRB, PCAB, DTI-CPG, TESDA, etc.',
+                cost: '₱1,000 – ₱15,000+ per permit',
+                duration: '2 weeks – 3 months',
+                requirements: [
+                    'Industry-specific documentation (see tip)',
+                    'Proof of qualifications for licensed professions',
+                    "Mayor's Permit and BIR COR",
+                    'Facility inspection certificates'
+                ],
+                where: 'Specific regulatory agency (online or in-person)',
+                tip: 'Food: FDA Center for Food Regulation | Pharmacy: FDA Drug Outlet License | Transport: LTFRB Franchise | Medical: DOH/PRC | Construction: PCAB | Manpower: DOLE'
+            },
+            {
+                num: 7, accent: '#0F1F3D', icon: 'fas fa-trademark',
+                title: 'Trademark & Intellectual Property Registration',
+                office: 'Intellectual Property Office of the Philippines (IPOPHL)',
+                cost: '₱1,620 – ₱5,600 per class (depends on applicant type)',
+                duration: '12–18 months for full registration',
+                requirements: [
+                    'Completed trademark application form',
+                    'Brand name and/or logo specimen or drawing',
+                    'List of goods or services in Nice Classification',
+                    'Valid ID or corporate documents',
+                    'Proof of use (if claiming prior use)'
+                ],
+                where: 'iponline.ipophil.gov.ph or IPOPHL office, Taguig City',
+                tip: 'File early — your priority date is your filing date, not your approval date. A trademark lasts 10 years and is renewable. Protect your brand name, logo, and tagline separately.'
+            },
+            {
+                num: 8, accent: '#D97706', icon: 'fas fa-calendar-check',
+                title: 'Annual Compliance & Renewal Schedule',
+                office: 'Multiple agencies — ongoing annual obligation',
+                cost: '₱2,000 – ₱15,000/year (all agencies combined)',
+                duration: 'Ongoing — multiple deadlines per year',
+                requirements: [
+                    'Audited Financial Statements (AFS) — due March 31',
+                    'Annual Income Tax Return (ITR) — due April 15',
+                    'SEC Annual Report (within 120 days of fiscal year end)',
+                    "Mayor's Permit renewal (January)",
+                    'BIR Annual Registration renewal (January 31)'
+                ],
+                where: 'BIR, SEC, LGU, SSS, PhilHealth, Pag-IBIG',
+                tip: 'Use a compliance calendar or hire a CPA/bookkeeper to track all deadlines. Late BIR filing: 25% surcharge + 12% annual interest — these compound quickly.'
+            }
+        ],
+        reminders: [
+            "Set a December reminder to prepare documents for January permit renewals",
+            'File and pay BIR taxes on time — late filing incurs 25% surcharge + 12% annual interest',
+            'Submit SEC Annual Report within 120 days of fiscal year end',
+            'Conduct an internal annual compliance audit with your CPA or business lawyer',
+            'Update your business registration whenever you change address, add branches, or change business name',
+            'Back up all government-issued documents digitally (Google Drive or cloud storage)'
+        ]
+    }
+};
+PERMIT_DATA.custom = PERMIT_DATA.complete;
+
+// ── Materials & Equipment Data ────────────────────────────────────────────────
+const EQUIPMENT_DATA = {
+    starter: {
+        intro: 'Lean startup equipment list — focus on the essentials to minimize upfront costs while launching professionally.',
+        total_low: '₱35,000',
+        total_high: '₱130,000',
+        note: 'Consider second-hand equipment to reduce startup costs by 30–50%.',
+        categories: [
+            {
+                name: 'Computing & Communications',
+                icon: 'fas fa-laptop', color: '#E8420A',
+                items: [
+                    { name: 'Laptop or desktop computer', range: '₱18,000 – ₱45,000', note: 'Bookkeeping, social media, admin tasks' },
+                    { name: 'Mobile phone (business number)', range: '₱5,000 – ₱15,000', note: 'Customer communication and GCash' },
+                    { name: 'Internet connection (DSL/fiber)', range: '₱999 – ₱1,999/month', note: 'Required for online selling and social media' }
+                ]
+            },
+            {
+                name: 'Cash Handling & Payments',
+                icon: 'fas fa-cash-register', color: '#6366F1',
+                items: [
+                    { name: 'Cash register or lockbox with key', range: '₱1,500 – ₱5,000', note: 'Basic cash management and security' },
+                    { name: 'GCash / Maya QR display stand', range: '₱0 – ₱500', note: 'Free to register; essential for cashless payments' },
+                    { name: 'Thermal receipt printer', range: '₱2,500 – ₱8,000', note: 'For BIR official receipts and invoices' }
+                ]
+            },
+            {
+                name: 'Storage & Display',
+                icon: 'fas fa-boxes', color: '#F5A500',
+                items: [
+                    { name: 'Metal display shelves / racks', range: '₱2,000 – ₱12,000', note: 'Product display and organization' },
+                    { name: 'Storage bins and labeled containers', range: '₱500 – ₱3,000', note: 'Organized inventory storage' },
+                    { name: 'Weighing scale (if selling by weight)', range: '₱800 – ₱3,500', note: 'Required for grocery, dried goods, etc.' }
+                ]
+            },
+            {
+                name: 'Signage & Marketing Materials',
+                icon: 'fas fa-sign', color: '#10B981',
+                items: [
+                    { name: 'Tarpaulin signage (3×4 ft, outdoor)', range: '₱300 – ₱1,500', note: 'Primary storefront visual marketing' },
+                    { name: 'Business cards (500 pcs)', range: '₱300 – ₱800', note: 'Networking and referrals' },
+                    { name: 'Flyers / leaflets (1,000 pcs)', range: '₱800 – ₱2,500', note: 'Grand opening and local promotions' }
+                ]
+            }
+        ],
+        sourcing_tips: [
+            'Buy second-hand laptops and equipment from OLX, Shopee, or Facebook Marketplace to save 30–50%',
+            'Check Divisoria (Manila), Carbon Market (Cebu), or Bankerohan (Davao) for affordable supplies and fixtures',
+            'Borrow non-critical equipment from family or friends for the first 3 months before buying',
+            'Prioritize cash-generating equipment first: display fixtures, POS, and signage before office equipment'
+        ]
+    },
+    founder: {
+        intro: 'Professional equipment for a growing operation — includes full POS, security, and staff workstations.',
+        total_low: '₱120,000',
+        total_high: '₱400,000',
+        note: 'Phase your purchases: essentials at launch, support equipment in Months 2–3 from early revenue.',
+        categories: [
+            {
+                name: 'Computing & Workstations',
+                icon: 'fas fa-desktop', color: '#E8420A',
+                items: [
+                    { name: 'Business laptops / desktops (2 units)', range: '₱36,000 – ₱90,000', note: 'Owner + staff workstation' },
+                    { name: 'Business-grade router + UPS backup', range: '₱3,500 – ₱10,000', note: 'Stable internet for POS and admin operations' },
+                    { name: 'Network printer / scanner (shared)', range: '₱5,000 – ₱18,000', note: 'Documents, invoices, contracts' }
+                ]
+            },
+            {
+                name: 'POS & Payment System',
+                icon: 'fas fa-cash-register', color: '#6366F1',
+                items: [
+                    { name: 'Full POS system (hardware + software)', range: '₱15,000 – ₱50,000', note: 'Integrated sales and inventory tracking' },
+                    { name: 'Barcode scanner', range: '₱1,200 – ₱4,000', note: 'Fast and accurate product checkout' },
+                    { name: 'Digital payment terminal (GCash/Maya/card)', range: '₱0 – ₱5,000', note: 'Enables e-wallet and credit card payments' }
+                ]
+            },
+            {
+                name: 'Security & Safety',
+                icon: 'fas fa-shield-alt', color: '#EF4444',
+                items: [
+                    { name: 'CCTV security cameras (4-cam system)', range: '₱8,000 – ₱25,000', note: 'Theft deterrence and staff monitoring' },
+                    { name: 'Padlocks and door alarm', range: '₱1,500 – ₱5,000', note: 'Perimeter access control' },
+                    { name: 'Fire extinguisher (BFP-required)', range: '₱1,500 – ₱3,500', note: 'Mandatory for Fire Safety Inspection Certificate' }
+                ]
+            },
+            {
+                name: 'Furniture & Office Setup',
+                icon: 'fas fa-chair', color: '#F5A500',
+                items: [
+                    { name: 'Office desk and ergonomic chairs', range: '₱5,000 – ₱20,000', note: 'Owner and admin staff workspace' },
+                    { name: 'Filing cabinet or document safe', range: '₱3,000 – ₱12,000', note: 'Legal documents, permits, and petty cash' },
+                    { name: 'Customer waiting area chairs', range: '₱2,000 – ₱8,000', note: 'For service businesses with walk-in clients' }
+                ]
+            },
+            {
+                name: 'Display, Storage & Operations',
+                icon: 'fas fa-boxes', color: '#10B981',
+                items: [
+                    { name: 'Modular display shelving system', range: '₱15,000 – ₱60,000', note: 'Expandable, professional product display fixtures' },
+                    { name: 'Commercial refrigerator / freezer', range: '₱12,000 – ₱40,000', note: 'For perishables, beverages, or cold storage needs' },
+                    { name: 'Backroom storage shelving + labels', range: '₱3,000 – ₱10,000', note: 'Organized inventory management system' }
+                ]
+            },
+            {
+                name: 'Marketing & Branding',
+                icon: 'fas fa-bullhorn', color: '#D97706',
+                items: [
+                    { name: 'Professional store signage (illuminated)', range: '₱8,000 – ₱35,000', note: 'Night visibility and brand presence 24/7' },
+                    { name: 'Product photography setup (ring light + backdrop)', range: '₱2,500 – ₱8,000', note: 'For Shopee, Lazada, and social media listings' },
+                    { name: 'Branded packaging (boxes, bags, 1,000 pcs min)', range: '₱3,000 – ₱12,000', note: 'MOQ pricing — buy at launch volume' }
+                ]
+            }
+        ],
+        sourcing_tips: [
+            'Purchase POS systems from established PH vendors: StoreHub, CliQQ, or PayMongo for local support and warranty',
+            "Source display fixtures from SM Hypermarket's trade section, Ace Hardware, or fixture suppliers in Divisoria",
+            'Get CCTV systems installed by accredited security firms — they handle permits and warranty claims',
+            'Apply for MSME equipment loans from SB Finance, LANDBANK, or Pag-IBIG MSME fund to spread equipment costs'
+        ]
+    },
+    complete: {
+        intro: 'Full professional setup for a serious business — complete technology stack, enterprise security, and scalable infrastructure.',
+        total_low: '₱350,000',
+        total_high: '₱1,200,000',
+        note: 'Phase purchases over 3 months. Revenue-generating equipment in Month 1, support infrastructure in Months 2–3.',
+        categories: [
+            {
+                name: 'Full Technology Suite',
+                icon: 'fas fa-server', color: '#E8420A',
+                items: [
+                    { name: 'Business laptops / desktops (3–5 units)', range: '₱90,000 – ₱250,000', note: 'Full team workstations with business-grade specs' },
+                    { name: 'Enterprise network switch + router', range: '₱8,000 – ₱25,000', note: 'Stable LAN for all workstations and POS terminals' },
+                    { name: 'NAS / cloud backup server', range: '₱10,000 – ₱35,000', note: 'Business data protection and daily backup redundancy' }
+                ]
+            },
+            {
+                name: 'Advanced POS & Inventory System',
+                icon: 'fas fa-cash-register', color: '#6366F1',
+                items: [
+                    { name: 'Multi-terminal POS + inventory management module', range: '₱35,000 – ₱120,000', note: 'Real-time inventory sync + sales analytics dashboard' },
+                    { name: 'Barcode printer + scanner set', range: '₱8,000 – ₱25,000', note: 'In-house barcoding for custom SKUs' },
+                    { name: 'Full payment gateway integration', range: '₱5,000 – ₱20,000', note: 'GCash, Maya, credit card, BancNet, and bank transfer' }
+                ]
+            },
+            {
+                name: 'Enterprise Security System',
+                icon: 'fas fa-shield-alt', color: '#EF4444',
+                items: [
+                    { name: 'IP CCTV system (8–16 cameras + DVR/NVR)', range: '₱25,000 – ₱80,000', note: 'Full-store coverage with remote mobile monitoring' },
+                    { name: 'Biometric time & attendance system', range: '₱5,000 – ₱15,000', note: 'Employee attendance tracking with payroll integration' },
+                    { name: 'Alarm + electronic door access control', range: '₱15,000 – ₱45,000', note: 'Authorized access control and intrusion alert' }
+                ]
+            },
+            {
+                name: 'Professional Interior & Furniture',
+                icon: 'fas fa-store', color: '#F5A500',
+                items: [
+                    { name: 'Custom store interior design + fixtures', range: '₱80,000 – ₱350,000', note: 'Custom shelving, counters, finishings, and flooring' },
+                    { name: 'Ergonomic office furniture set', range: '₱20,000 – ₱60,000', note: 'Owner, manager, and admin area full setup' },
+                    { name: 'Staff break room / pantry equipment', range: '₱8,000 – ₱25,000', note: 'Microwave, mini-fridge, dining table, and chairs' }
+                ]
+            },
+            {
+                name: 'Operations & Logistics',
+                icon: 'fas fa-truck', color: '#10B981',
+                items: [
+                    { name: 'Delivery vehicle (motorcycle or multicab)', range: '₱80,000 – ₱350,000', note: 'For delivery operations; consider lease-to-own' },
+                    { name: 'Commercial warehouse shelving system', range: '₱20,000 – ₱80,000', note: 'Heavy-duty, height-adjustable industrial racks' },
+                    { name: 'Industrial packaging machine (if applicable)', range: '₱15,000 – ₱80,000', note: 'Heat sealer, shrink wrapper, or auto-fill machine' }
+                ]
+            },
+            {
+                name: 'Marketing & Digital Presence',
+                icon: 'fas fa-camera', color: '#3B82F6',
+                items: [
+                    { name: 'Professional product photography setup', range: '₱8,000 – ₱30,000', note: 'Lightbox, backdrop, ring lights, and tripod kit' },
+                    { name: 'LED illuminated exterior signage', range: '₱25,000 – ₱90,000', note: 'Lighted signboard for 24/7 brand visibility' },
+                    { name: 'Digital display screen / menu board', range: '₱8,000 – ₱35,000', note: 'For restaurants, clinics, and service counters' }
+                ]
+            }
+        ],
+        sourcing_tips: [
+            'Get 3 competitive quotations for all major purchases — especially custom interior fitout and CCTV systems',
+            'Lease delivery vehicles instead of buying outright — Orix Metro Leasing or rent-to-own schemes reduce upfront capital',
+            'Source technology from accredited resellers: Gilmore IT Hub, PC Express, or SM Cyberzone for warranty coverage',
+            'Apply for MSME capital equipment loans: LANDBANK iCall, DBP SME Loan, or SB Finance Equipment Loan',
+            'Consider rent-to-own arrangements for large equipment like commercial refrigerators and POS systems',
+            'Explore SMEDA (SB Corp) programs for subsidized business equipment grants and MSME development support'
+        ]
+    }
+};
+EQUIPMENT_DATA.custom = EQUIPMENT_DATA.complete;
+
+// ── Render: Permits & Licenses ────────────────────────────────────────────────
+function renderPermits(product) {
+    const container = document.getElementById('permits-list');
+    if (!container) return;
+    const data = PERMIT_DATA[product.tier] || PERMIT_DATA.starter;
+
+    container.innerHTML = `
+        <div class="permit-summary">
+            <div class="permit-summary-item">
+                <span><i class="fas fa-coins" style="color:var(--amber);margin-right:0.3rem;"></i>Estimated Total Cost</span>
+                <strong>${data.total_cost}</strong>
+            </div>
+            <div class="permit-summary-item">
+                <span><i class="fas fa-clock" style="color:var(--orange);margin-right:0.3rem;"></i>Processing Time</span>
+                <strong>${data.total_time}</strong>
+            </div>
+            <div class="permit-summary-item">
+                <span><i class="fas fa-list-ol" style="color:var(--navy);margin-right:0.3rem;"></i>Steps Included</span>
+                <strong>${data.steps.length} registration steps</strong>
+            </div>
+        </div>
+        <p class="permit-intro">${data.intro}</p>
+        <div class="permit-steps">
+            ${data.steps.map(s => `
+                <div class="permit-step">
+                    <div class="permit-step-left">
+                        <div class="permit-step-num" style="background:${s.accent};">
+                            <i class="${s.icon}"></i>
+                        </div>
+                        <div class="permit-step-line"></div>
+                    </div>
+                    <div class="permit-step-body">
+                        <div class="permit-step-head">
+                            <h4 class="permit-step-title">Step ${s.num}: ${s.title}</h4>
+                            <div class="permit-meta">
+                                <span class="permit-cost-badge"><i class="fas fa-coins"></i> ${s.cost}</span>
+                                <span class="permit-time-badge"><i class="fas fa-clock"></i> ${s.duration}</span>
+                            </div>
+                        </div>
+                        <p class="permit-office"><i class="fas fa-building" style="color:${s.accent};margin-right:0.3rem;flex-shrink:0;"></i>${s.office}</p>
+                        <div class="permit-docs">
+                            <strong>Documents Required:</strong>
+                            <ul>${s.requirements.map(r => `<li>${r}</li>`).join('')}</ul>
+                        </div>
+                        <p class="permit-where"><i class="fas fa-map-pin" style="color:${s.accent};margin-right:0.3rem;flex-shrink:0;margin-top:2px;"></i>${s.where}</p>
+                        <div class="permit-tip">
+                            <i class="fas fa-lightbulb" style="color:var(--amber);flex-shrink:0;margin-top:2px;"></i>
+                            <span><strong>Pro Tip:</strong> ${s.tip}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+        <div class="permit-reminders">
+            <h4><i class="fas fa-bell" style="color:var(--amber);margin-right:0.4rem;"></i>Annual Compliance Reminders</h4>
+            <ul>
+                ${data.reminders.map(r => `
+                    <li><i class="fas fa-check-circle" style="color:#10B981;flex-shrink:0;margin-top:2px;"></i>${r}</li>
+                `).join('')}
+            </ul>
+        </div>
+    `;
+}
+
+// ── Render: Materials & Equipment ─────────────────────────────────────────────
+function renderEquipment(product) {
+    const container = document.getElementById('equipment-list');
+    if (!container) return;
+    const data = EQUIPMENT_DATA[product.tier] || EQUIPMENT_DATA.starter;
+
+    container.innerHTML = `
+        <div class="equip-summary">
+            <div class="equip-summary-item">
+                <span><i class="fas fa-coins" style="color:var(--amber);margin-right:0.3rem;"></i>Estimated Equipment Budget</span>
+                <strong>${data.total_low} – ${data.total_high}</strong>
+            </div>
+            <div class="equip-summary-item">
+                <span><i class="fas fa-layer-group" style="color:var(--orange);margin-right:0.3rem;"></i>Equipment Categories</span>
+                <strong>${data.categories.length} categories</strong>
+            </div>
+        </div>
+        <p class="equip-intro">${data.intro}</p>
+        ${data.note ? `<p class="equip-note"><i class="fas fa-info-circle"></i> ${data.note}</p>` : ''}
+        <div class="equip-grid">
+            ${data.categories.map(cat => `
+                <div class="equip-category-card">
+                    <div class="equip-cat-header">
+                        <div class="equip-cat-icon" style="background:${cat.color}1A;color:${cat.color};">
+                            <i class="${cat.icon}"></i>
+                        </div>
+                        <h4 class="equip-cat-name">${cat.name}</h4>
+                    </div>
+                    <div class="equip-items">
+                        ${cat.items.map(item => `
+                            <div class="equip-item">
+                                <div class="equip-item-info">
+                                    <span class="equip-item-name">${item.name}</span>
+                                    <span class="equip-item-note">${item.note}</span>
+                                </div>
+                                <span class="equip-item-cost">${item.range}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+        <div class="equip-sourcing">
+            <h4><i class="fas fa-map-marked-alt" style="color:var(--orange);margin-right:0.4rem;"></i>Sourcing & Procurement Tips</h4>
+            <ul>
+                ${data.sourcing_tips.map(t => `
+                    <li><i class="fas fa-arrow-right" style="color:var(--orange);flex-shrink:0;margin-top:2px;"></i>${t}</li>
+                `).join('')}
+            </ul>
+        </div>
+    `;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get('id'), 10);
@@ -420,6 +1059,8 @@ function loadProductDetails(productId) {
     }
 
     renderFrameworks(product);
+    renderPermits(product);
+    renderEquipment(product);
 
     const relatedList = document.getElementById('related-products');
     if (relatedList) {

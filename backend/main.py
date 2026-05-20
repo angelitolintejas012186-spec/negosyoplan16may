@@ -400,6 +400,53 @@ actionable, location-aware content. Fill every number with a realistic PHP figur
     "registrations": ["string","string","string","string"],
     "permits":        ["string","string","string"],
     "compliance":     ["string","string"]
+  }},
+  "permit_acquisition_guide": {{
+    "steps": [
+      {{
+        "step": 1,
+        "requirement": "string",
+        "office": "string",
+        "documents_needed": ["string","string","string"],
+        "cost_php_low": 0,
+        "cost_php_high": 0,
+        "processing_days": "string",
+        "where_to_file": "string",
+        "tips": "string"
+      }}
+    ],
+    "total_estimated_cost_php_low": 0,
+    "total_estimated_cost_php_high": 0,
+    "total_processing_weeks": "string",
+    "important_reminders": ["string","string","string"],
+    "online_portals": ["string","string"]
+  }},
+  "materials_and_equipment": {{
+    "equipment": [
+      {{
+        "name": "string",
+        "description": "string",
+        "cost_php_low": 0,
+        "cost_php_high": 0,
+        "priority": "Essential|Important|Nice-to-have",
+        "where_to_buy": "string",
+        "specs": "string"
+      }}
+    ],
+    "raw_materials": [
+      {{
+        "name": "string",
+        "unit": "string",
+        "unit_cost_php": 0,
+        "monthly_quantity": 0,
+        "monthly_cost_php": 0
+      }}
+    ],
+    "consumables_monthly_php": 0,
+    "total_equipment_cost_php_low": 0,
+    "total_equipment_cost_php_high": 0,
+    "total_monthly_materials_php": 0,
+    "sourcing_tips": ["string","string","string"]
   }}
 }}"""
 
@@ -517,9 +564,9 @@ async def generate_blueprint(req: BlueprintRequest):
     data = await call_deepseek(
         system=SYSTEM_PROMPT,
         user=build_blueprint_prompt(req),
-        max_tokens=6000,
+        max_tokens=8000,
         temperature=0.65,
-        timeout=90.0,
+        timeout=120.0,
     )
     return {
         "success": True,

@@ -49,5 +49,9 @@
   "contact": {
     "whatsapp": "1234567890",
     "email": "support@negosyoplan.com"
+  },
+  "branding": {
+    "brand_name": "",
+    "logo_url": "https://www.image2url.com/r2/default/images/1779008818404-581b6931-630f-4801-a493-c782764fbe67.png"
   }
 }
