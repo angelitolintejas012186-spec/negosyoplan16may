@@ -1222,3 +1222,13 @@ footer .footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
     .pres-actions{flex-direction:column;}
     .pres-detail-row{flex-wrap:wrap;}
 }
+
+/* ── Business Type Chip Selector ── */
+.biz-type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.65rem;margin-top:0.5rem;}
+.biz-type-chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.4rem;padding:0.9rem 0.5rem;border:2px solid var(--border-soft);border-radius:var(--radius-sm);background:var(--surface);cursor:pointer;transition:var(--transition);color:var(--text-muted);font-size:0.78rem;font-weight:600;line-height:1.3;text-align:center;width:100%;}
+.biz-type-chip i{font-size:1.35rem;color:var(--orange);}
+.biz-type-chip:hover{border-color:var(--orange);background:var(--surface-soft);color:var(--navy);}
+.biz-type-chip.selected{border-color:var(--orange);background:var(--orange);color:#fff;}
+.biz-type-chip.selected i{color:#fff;}
+.biz-type-error{color:#DC2626;font-size:0.8rem;margin-top:0.35rem;display:none;}
+@media(max-width:480px){.biz-type-grid{grid-template-columns:repeat(3,1fr);}}

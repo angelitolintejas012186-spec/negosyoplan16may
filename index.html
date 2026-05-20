@@ -24,6 +24,7 @@
     <script src="js/api-client.js" defer></script>
     <script src="js/site-settings.js" defer></script>
     <script src="js/business-form.js" defer></script>
+    <script src="js/custom-blueprint.js" defer></script>
 </head>
 <body>
 
@@ -346,6 +347,63 @@
             </div>
             <div class="custom-blueprint-grid">
                 <form id="custom-blueprint-form" class="form-grid">
+                    <!-- Business Type Selector -->
+                    <div class="form-group" style="grid-column:1/-1;">
+                        <label>Choose Your Business Type <span style="color:var(--orange);">*</span></label>
+                        <div class="biz-type-grid" id="biz-type-grid">
+                            <button type="button" class="biz-type-chip" data-value="Food Cart">
+                                <i class="fas fa-utensils"></i><span>Food Cart</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Online Store">
+                                <i class="fas fa-bag-shopping"></i><span>Online Store</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Consulting Agency">
+                                <i class="fas fa-briefcase"></i><span>Consulting</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Wellness & Beauty">
+                                <i class="fas fa-spa"></i><span>Wellness</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Bakery / Pastry">
+                                <i class="fas fa-birthday-cake"></i><span>Bakery</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Fitness / Gym">
+                                <i class="fas fa-dumbbell"></i><span>Fitness</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Cafe / Restaurant">
+                                <i class="fas fa-mug-hot"></i><span>Cafe / Resto</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Digital Marketing">
+                                <i class="fas fa-bullhorn"></i><span>Digital Mktg</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Tourism / Travel">
+                                <i class="fas fa-plane"></i><span>Tourism</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Retail / Kiosk">
+                                <i class="fas fa-store"></i><span>Retail</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Event Planning">
+                                <i class="fas fa-calendar-check"></i><span>Events</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Solar / Renewable Energy">
+                                <i class="fas fa-solar-panel"></i><span>Solar Energy</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Sari-sari Store">
+                                <i class="fas fa-shop"></i><span>Sari-sari</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Laundry Service">
+                                <i class="fas fa-shirt"></i><span>Laundry</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Transportation / Logistics">
+                                <i class="fas fa-truck"></i><span>Transport</span>
+                            </button>
+                            <button type="button" class="biz-type-chip" data-value="Education / Tutorial">
+                                <i class="fas fa-graduation-cap"></i><span>Education</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="client-business-type" name="client-business-type">
+                        <p class="biz-type-error" id="biz-type-error">Please select a business type above.</p>
+                    </div>
+                    <!-- Personal Details -->
                     <div class="form-group">
                         <label for="client-name">Full Name</label>
                         <input type="text" id="client-name" placeholder="Your name" required>
@@ -357,10 +415,6 @@
                     <div class="form-group">
                         <label for="client-city">City</label>
                         <input type="text" id="client-city" placeholder="City" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="client-business-type">Type of Business</label>
-                        <input type="text" id="client-business-type" placeholder="e.g. Coffee shop, retail, online store" required>
                     </div>
                     <div class="form-group">
                         <label for="client-capital">Starting Capital</label>

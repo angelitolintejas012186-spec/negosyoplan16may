@@ -6,8 +6,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('custom-blueprint-form');
     if (!form) return;
 
+    /* Chip selector */
+    const bizGrid = document.getElementById('biz-type-grid');
+    const bizInput = document.getElementById('client-business-type');
+    const bizError = document.getElementById('biz-type-error');
+    if (bizGrid) {
+        bizGrid.querySelectorAll('.biz-type-chip').forEach(function(chip) {
+            chip.addEventListener('click', function() {
+                bizGrid.querySelectorAll('.biz-type-chip').forEach(function(c) { c.classList.remove('selected'); });
+                chip.classList.add('selected');
+                if (bizInput) bizInput.value = chip.getAttribute('data-value') || '';
+                if (bizError) bizError.style.display = 'none';
+            });
+        });
+    }
+
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
+        /* Validate chip selection */
+        if (bizInput && !bizInput.value.trim()) {
+            if (bizError) bizError.style.display = 'block';
+            if (bizGrid) bizGrid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
         await submitCustomBlueprint();
     });
 
