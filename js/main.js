@@ -15,6 +15,7 @@ let currentCurrency = 'PHP';
 document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initHamburgerMenu();
+    injectMobileNavExtras();
     initSearch();
     initCurrencySelector();
     initSubscribeForm();
@@ -22,6 +23,65 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePriceTags();
     updateCartBadge();
 });
+
+function injectMobileNavExtras() {
+    /* ── 1. Business-type quick button in .nav-actions (mobile only) ── */
+    var navActions = document.querySelector('.nav-actions');
+    if (navActions && !navActions.querySelector('.nav-biz-btn')) {
+        var bizBtn = document.createElement('button');
+        bizBtn.className = 'nav-biz-btn';
+        bizBtn.setAttribute('type', 'button');
+        bizBtn.setAttribute('aria-label', 'Choose business type');
+        bizBtn.setAttribute('title', 'Choose Business Type');
+        bizBtn.innerHTML = '<i class="fas fa-briefcase"></i>';
+        bizBtn.addEventListener('click', function () {
+            /* If a cart/add-to-cart button is on this page, trigger it;
+               otherwise navigate to shop.html */
+            var firstCartBtn = document.querySelector('.button[data-id]');
+            if (firstCartBtn) {
+                firstCartBtn.click();
+            } else {
+                window.location.href = 'shop.html';
+            }
+        });
+        /* Insert between shop-btn and cart-btn */
+        var cartBtn = navActions.querySelector('.nav-cart-btn');
+        if (cartBtn) {
+            navActions.insertBefore(bizBtn, cartBtn);
+        } else {
+            navActions.appendChild(bizBtn);
+        }
+    }
+
+    /* ── 2. Sidebar quick-row: Home + Shop side by side ── */
+    var sidebarMenu = document.querySelector('.sidebar-menu');
+    if (sidebarMenu && !document.querySelector('.sidebar-quick-row')) {
+        var homeItem = sidebarMenu.querySelector('li:first-child');
+        var shopItem = sidebarMenu.querySelector('li:nth-child(2)');
+        if (homeItem && shopItem) {
+            var homeLink = homeItem.querySelector('a');
+            var shopLink = shopItem.querySelector('a');
+            if (homeLink && shopLink) {
+                /* Build quick-row */
+                var quickRow = document.createElement('div');
+                quickRow.className = 'sidebar-quick-row';
+                var homeClone = document.createElement('a');
+                homeClone.href = homeLink.href;
+                homeClone.innerHTML = '<i class="fas fa-home"></i><span>Home</span>';
+                var shopClone = document.createElement('a');
+                shopClone.href = shopLink.href;
+                shopClone.innerHTML = '<i class="fas fa-store"></i><span>Shop</span>';
+                quickRow.appendChild(homeClone);
+                quickRow.appendChild(shopClone);
+                /* Insert above the regular menu items */
+                sidebarMenu.parentNode.insertBefore(quickRow, sidebarMenu);
+                /* Hide the original Home + Shop list items to avoid duplication */
+                homeItem.style.display = 'none';
+                shopItem.style.display = 'none';
+            }
+        }
+    }
+}
 
 function initNavigation() {
     const page = window.location.pathname.split('/').pop() || 'index.html';

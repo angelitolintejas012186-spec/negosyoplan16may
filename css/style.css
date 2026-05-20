@@ -127,7 +127,7 @@ nav{
     background:rgba(232,66,10,0.25);color:#fff;padding-left:1.3rem;
 }
 
-/* Nav action buttons (Shop + Cart) */
+/* Nav action buttons (Shop + Cart + Business Type) */
 .nav-actions{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
 .nav-shop-btn{
     display:inline-flex;align-items:center;gap:0.4rem;
@@ -154,6 +154,16 @@ nav{
     border:1.5px solid var(--navy);
     line-height:1;padding:0 3px;
 }
+/* Business-type quick button — mobile only */
+.nav-biz-btn{
+    display:none;
+    position:relative;align-items:center;justify-content:center;
+    width:38px;height:38px;border-radius:50%;
+    background:rgba(245,165,0,0.18);border:1.5px solid rgba(245,165,0,0.45);
+    color:var(--amber);font-size:1rem;
+    transition:var(--transition);cursor:pointer;flex-shrink:0;
+}
+.nav-biz-btn:hover{background:rgba(245,165,0,0.35);border-color:var(--amber);color:#fff;}
 
 /* Search bar */
 .search-bar{
@@ -814,11 +824,41 @@ footer .footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
 @media (max-width:768px){
     .hamburger{display:flex;}
     .nav-menu,.search-bar{display:none;}
-    nav{padding:0.85rem 1rem;}
+    nav{padding:0.75rem 1rem;gap:0.5rem;}
+    /* Logo sizing on mobile */
+    .site-logo{width:38px;}
+    .brand-name{font-size:1.15rem;letter-spacing:0.1em;}
+    /* Show the business-type quick button */
+    .nav-biz-btn{display:inline-flex;}
+    /* Ensure 3 buttons sit in a tight parallel row */
+    .nav-actions{gap:0.35rem;}
+    .nav-shop-btn{padding:0.42rem 0.75rem;font-size:0.78rem;}
+    /* Sidebar: Home + Shop as a 2-column quick row */
+    .sidebar-quick-row{
+        display:grid;grid-template-columns:1fr 1fr;
+        gap:0.5rem;margin-bottom:0.75rem;
+    }
+    .sidebar-quick-row a{
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        gap:0.25rem;padding:0.75rem 0.5rem;
+        color:rgba(255,255,255,0.9);font-weight:600;font-size:0.78rem;
+        border-radius:var(--radius-sm);
+        background:rgba(255,255,255,0.08);
+        border:1px solid rgba(255,255,255,0.12);
+        transition:var(--transition);text-align:center;
+    }
+    .sidebar-quick-row a:hover{background:rgba(232,66,10,0.35);border-color:var(--orange);color:#fff;}
+    .sidebar-quick-row a i{font-size:1.15rem;color:var(--amber);}
     .hero{grid-template-columns:1fr;}
     .contact-grid{grid-template-columns:1fr;}
     .order-confirm-grid{grid-template-columns:1fr;}
     .account-info-grid{grid-template-columns:1fr;}
+}
+/* Hide brand name text on very small screens to keep nav tidy */
+@media (max-width:400px){
+    .brand-name{display:none;}
+    .site-logo{width:34px;}
+    .nav-shop-btn{padding:0.4rem 0.6rem;font-size:0.75rem;}
 }
 @media (max-width:600px){
     main{padding:1.5rem 1rem 4rem;}
