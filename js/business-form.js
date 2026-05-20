@@ -373,15 +373,9 @@
 
               '<div class="bf-body">' +
 
-                // Step 1: Business Type
+                // Step 1: Capital & Description
                 '<div class="bf-section">' +
-                  '<div class="bf-section-label"><span class="step-num">1</span> Choose Your Business Type <span style="color:var(--orange);margin-left:0.3rem;">*</span></div>' +
-                  '<div class="bf-type-grid" id="bf-type-grid"></div>' +
-                '</div>' +
-
-                // Step 2: Capital & Description
-                '<div class="bf-section">' +
-                  '<div class="bf-section-label"><span class="step-num">2</span> Capital & Business Goal</div>' +
+                  '<div class="bf-section-label"><span class="step-num">1</span> Capital & Business Goal</div>' +
                   '<div class="form-group">' +
                     '<label for="bf-capital">Available Capital / Budget (PHP)</label>' +
                     '<input type="number" id="bf-capital" placeholder="e.g. 50000" min="0" step="1000" style="font-size:0.95rem;">' +
@@ -393,9 +387,9 @@
                   '</div>' +
                 '</div>' +
 
-                // Step 3: Location
+                // Step 2: Location
                 '<div class="bf-section">' +
-                  '<div class="bf-section-label"><span class="step-num">3</span> Business Location</div>' +
+                  '<div class="bf-section-label"><span class="step-num">2</span> Business Location</div>' +
                   '<div class="form-grid" style="gap:0.75rem;">' +
                     '<div class="form-group">' +
                       '<label for="bf-country">Country</label>' +
@@ -416,11 +410,11 @@
                   '</div>' +
                 '</div>' +
 
-                // Step 4: Suppliers
+                // Step 3: Suppliers
                 '<div class="bf-section">' +
-                  '<div class="bf-section-label"><span class="step-num">4</span> Recommended Suppliers</div>' +
+                  '<div class="bf-section-label"><span class="step-num">3</span> Recommended Suppliers</div>' +
                   '<p id="bf-supplier-hint" style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">' +
-                    'Select your business type and region above to see recommended national and local suppliers.' +
+                    'Select your region above to see recommended national and local suppliers.' +
                   '</p>' +
                   '<div class="bf-supplier-grid" id="bf-supplier-grid"></div>' +
                 '</div>' +
@@ -443,19 +437,6 @@
             opt.value = r;
             opt.textContent = r;
             regionSel.appendChild(opt);
-        });
-
-        // Populate business type chips
-        var typeGrid = overlay.querySelector('#bf-type-grid');
-        BUSINESS_TYPES.forEach(function (bt) {
-            var chip = document.createElement('div');
-            chip.className = 'bf-type-chip';
-            chip.setAttribute('data-type', bt.id);
-            chip.innerHTML = '<i class="' + bt.icon + '"></i><span>' + bt.label + '</span>';
-            chip.addEventListener('click', function () {
-                selectBusinessType(bt.id);
-            });
-            typeGrid.appendChild(chip);
         });
 
         // Events
@@ -509,7 +490,7 @@
         var hint = document.getElementById('bf-supplier-hint');
         if (!grid) return;
 
-        if (!selectedBusinessType && !region) {
+        if (!region) {
             grid.innerHTML = '';
             if (hint) hint.style.display = 'block';
             return;
@@ -562,24 +543,12 @@
     function updateSummary() {
         var text = document.getElementById('bf-summary-text');
         if (!text) return;
-        var parts = [];
-        if (selectedBusinessType) {
-            var bt = BUSINESS_TYPES.find(function (t) { return t.id === selectedBusinessType; });
-            if (bt) parts.push(bt.label);
-        }
-        if (selectedSupplierIds.length > 0) {
-            parts.push(selectedSupplierIds.length + ' supplier' + (selectedSupplierIds.length > 1 ? 's' : '') + ' selected');
-        }
-        text.textContent = parts.length ? parts.join(' · ') : 'Fill in your details to customize the blueprint.';
+        text.textContent = selectedSupplierIds.length > 0
+            ? selectedSupplierIds.length + ' supplier' + (selectedSupplierIds.length > 1 ? 's' : '') + ' selected'
+            : 'Fill in your details to customize the blueprint.';
     }
 
     function handleSubmit() {
-        if (!selectedBusinessType) {
-            window.NegosyoPlan.showToast('Please select your business type to continue.', 'error');
-            document.getElementById('bf-type-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
-        }
-
         var bt = BUSINESS_TYPES.find(function (t) { return t.id === selectedBusinessType; });
         var selectedSupplierData = SUPPLIERS.filter(function (s) {
             return selectedSupplierIds.indexOf(s.id) !== -1;
@@ -624,7 +593,6 @@
         if (!overlay) overlay = createModalDOM();
 
         // Reset form state
-        document.querySelectorAll('.bf-type-chip').forEach(function (c) { c.classList.remove('selected'); });
         var capitalEl = document.getElementById('bf-capital');
         if (capitalEl) capitalEl.value = '';
         var descEl = document.getElementById('bf-description');
