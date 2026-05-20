@@ -559,7 +559,7 @@ tr:nth-child(even) td{background:#faf8f5;}
 .highlight{color:#E8420A;font-weight:700;}
 footer.doc-footer{text-align:center;padding:2rem;background:#0F1F3D;color:rgba(255,255,255,0.6);font-size:0.78rem;margin-top:3rem;}
 footer.doc-footer span{color:#F5A500;}
-@media print{.cover{page-break-after:always;}.section{page-break-inside:avoid;}}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.cover{page-break-after:always;}.section{page-break-inside:avoid;}}
 @media(max-width:600px){.swot-grid,.strategy-grid{grid-template-columns:1fr;}.cover{padding:2rem 1.5rem;}.doc{padding:1.5rem 1rem;}}
 </style>
 </head>
@@ -1173,7 +1173,7 @@ function loadPurchasedProducts() {
                 ${customBadge}
             </div>
             <button type="button" class="button" onclick="downloadItemById('item_${idx}')">
-                <i class="fas fa-download"></i> Download
+                <i class="fas fa-file-pdf"></i> PDF
             </button>
         </div>`;
     }).join('');
@@ -1207,20 +1207,63 @@ function downloadItemById(key) {
 }
 
 function downloadProduct(productName, customization) {
-    const safeName = productName.replace(/\s+/g, '_').toLowerCase();
-    const html = generateBlueprintHTML(productName, customization || null);
+    var safeName = productName.replace(/\s+/g, '_').toLowerCase();
+    var html = generateBlueprintHTML(productName, customization || null);
 
-    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = safeName + '_blueprint.html';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    if (typeof html2pdf === 'undefined') {
+        _downloadPrintPDF(safeName, html, productName);
+        return;
+    }
 
-    if (window.NegosyoPlan) window.NegosyoPlan.showToast(productName + ' blueprint downloaded!', 'success');
+    if (window.NegosyoPlan) window.NegosyoPlan.showToast('Generating PDF — please wait…', 'success');
+
+    var iframe = document.createElement('iframe');
+    iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:794px;height:1123px;border:none;visibility:hidden;';
+    document.body.appendChild(iframe);
+
+    var idoc = iframe.contentDocument || iframe.contentWindow.document;
+    idoc.open(); idoc.write(html); idoc.close();
+
+    setTimeout(function () {
+        html2pdf()
+            .set({
+                margin: 0,
+                filename: safeName + '_blueprint.pdf',
+                image: { type: 'jpeg', quality: 0.97 },
+                html2canvas: { scale: 1.5, useCORS: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            })
+            .from(idoc.body)
+            .save()
+            .then(function () {
+                document.body.removeChild(iframe);
+                if (window.NegosyoPlan) window.NegosyoPlan.showToast(productName + ' PDF downloaded!', 'success');
+            })
+            .catch(function () {
+                document.body.removeChild(iframe);
+                _downloadPrintPDF(safeName, html, productName);
+            });
+    }, 700);
+}
+
+function _downloadPrintPDF(safeName, html, productName) {
+    var printHtml = html.replace('</head>', '<style>@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style></head>');
+    var blob = new Blob([printHtml], { type: 'text/html;charset=utf-8' });
+    var blobUrl = URL.createObjectURL(blob);
+    var win = window.open(blobUrl, '_blank');
+    if (win) {
+        win.addEventListener('load', function () {
+            setTimeout(function () { win.print(); URL.revokeObjectURL(blobUrl); }, 400);
+        });
+        if (window.NegosyoPlan) window.NegosyoPlan.showToast('Choose "Save as PDF" in the print dialog.', 'success');
+    } else {
+        var a = document.createElement('a');
+        a.href = blobUrl; a.download = safeName + '_blueprint.pdf';
+        document.body.appendChild(a); a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(blobUrl); }, 1000);
+        if (window.NegosyoPlan) window.NegosyoPlan.showToast(productName + ' downloaded!', 'success');
+    }
 }
 
 function downloadFreeResource(title) {
@@ -1255,7 +1298,7 @@ function loadAccountDownloads() {
                 <p>Purchased ${new Date(item.purchaseDate).toLocaleDateString()}${item.customization ? ' · ' + (item.customization.businessTypeLabel || item.customization.businessType) : ''}</p>
             </div>
             <button type="button" class="button" style="flex-shrink:0;" onclick="downloadProduct('${escStr(item.name)}', window._acctDownloads && window._acctDownloads['acct_${idx}'] && window._acctDownloads['acct_${idx}'].customization || null)">
-                <i class="fas fa-download"></i>
+                <i class="fas fa-file-pdf"></i>
             </button>
         </div>
     `).join('');
