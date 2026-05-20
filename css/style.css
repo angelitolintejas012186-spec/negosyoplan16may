@@ -1113,3 +1113,36 @@ footer .footer-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
     .equip-grid{grid-template-columns:1fr;}
     .equip-summary{flex-direction:column;}
 }
+
+/* ── Presentation generation UI ── */
+.pres-intro{display:flex;flex-direction:column;gap:1rem;}
+.pres-intro-details{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0.5rem;}
+.pres-detail-row{display:flex;gap:1rem;align-items:center;font-size:0.88rem;}
+.pres-detail-row span{color:var(--text-muted);min-width:90px;flex-shrink:0;}
+.pres-detail-row strong{color:var(--navy);}
+.pres-note{font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;display:flex;align-items:flex-start;gap:0.35rem;line-height:1.5;}
+.pres-note i{color:var(--orange);flex-shrink:0;margin-top:0.15rem;}
+
+.pres-loading{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:2rem 1rem;text-align:center;}
+.pres-spinner{font-size:2.2rem;color:var(--orange);}
+.pres-loading h4{font-size:1rem;color:var(--navy);margin:0;}
+.pres-loading p{font-size:0.86rem;color:var(--text-muted);margin:0;max-width:440px;line-height:1.55;}
+.pres-progress-bar{width:100%;max-width:360px;height:6px;background:var(--border-soft);border-radius:99px;overflow:hidden;margin-top:0.25rem;}
+.pres-progress-fill{height:100%;width:60%;background:var(--orange);border-radius:99px;animation:presSlide 2s ease-in-out infinite alternate;}
+@keyframes presSlide{from{transform:translateX(-40%);}to{transform:translateX(120%);}}
+
+.pres-ready{display:flex;flex-direction:column;align-items:flex-start;gap:0.85rem;}
+.pres-ready-icon{font-size:2rem;color:#16A34A;}
+.pres-ready h4{font-size:1rem;color:var(--navy);margin:0;}
+.pres-ready>p{font-size:0.86rem;color:var(--text-muted);margin:0;}
+.pres-actions{display:flex;flex-wrap:wrap;gap:0.75rem;}
+
+.pres-error{display:flex;flex-direction:column;gap:0.6rem;padding:1rem 0;}
+.pres-error>i{font-size:1.6rem;color:#DC2626;}
+.pres-error h4{font-size:1rem;color:var(--navy);margin:0;}
+.pres-error>p{font-size:0.86rem;color:var(--text-muted);margin:0;}
+
+@media(max-width:600px){
+    .pres-actions{flex-direction:column;}
+    .pres-detail-row{flex-wrap:wrap;}
+}
