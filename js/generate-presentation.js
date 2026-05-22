@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const API_BASE = 'http://localhost:8000';
+    const API_BASE = window.NEGOSYO_API_BASE || 'http://localhost:8000';
 
     function mapCustomization(c) {
         return {

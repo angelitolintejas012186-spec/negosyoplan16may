@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var BASE = 'http://localhost:8000';
+    var BASE = window.NEGOSYO_API_BASE || 'http://localhost:8000';
     var TOKEN_KEY = 'np_admin_token';
     var currentSettings = {};
     var dirtyMap = {};
