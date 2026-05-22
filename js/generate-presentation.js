@@ -24,14 +24,18 @@
         };
     }
 
-    function buildGensparkOutline(purchase) {
-        var item = purchase.items[0];
-        var c = item.customization || {};
-        var loc = [
+    function locationStr(c) {
+        return [
             c.location && c.location.city,
             c.location && c.location.region,
             'Philippines',
         ].filter(Boolean).join(', ');
+    }
+
+    function buildGensparkOutline(purchase) {
+        var item = purchase.items[0];
+        var c = item.customization || {};
+        var loc = locationStr(c);
         var sups = (c.suppliers || []).map(function (s) { return s.name || s; }).join(', ') || 'Not specified';
 
         return [
@@ -65,46 +69,78 @@
         ].join('\n');
     }
 
-    function showLoading(section) {
+    // ── Loading / Ready / Error states ────────────────────────────────────────
+
+    function showLoading(section, message) {
         section.innerHTML =
             '<div class="pres-loading">' +
             '  <div class="pres-spinner"><i class="fas fa-cog fa-spin"></i></div>' +
-            '  <h4>Generating Your Presentation</h4>' +
-            '  <p>AI is extracting blueprint details and building 11 professional slides.<br>This takes about 60–90 seconds — please wait.</p>' +
+            '  <h4>' + (message || 'Generating Your Presentation') + '</h4>' +
+            '  <p>AI is building your professional slides.<br>This takes about 60–90 seconds — please wait.</p>' +
             '  <div class="pres-progress-bar"><div class="pres-progress-fill"></div></div>' +
             '</div>';
     }
 
-    function showReady(section, downloadUrl, gensparkOutline) {
+    function showGensparkLoading(section) {
+        section.innerHTML =
+            '<div class="pres-loading">' +
+            '  <div class="pres-spinner" style="color:#6366F1;"><i class="fas fa-magic fa-spin"></i></div>' +
+            '  <h4 style="color:#6366F1;">Designing in Genspark AI…</h4>' +
+            '  <p>Genspark is generating your professional slide design.<br>This may take up to 90 seconds.</p>' +
+            '  <div class="pres-progress-bar"><div class="pres-progress-fill" style="background:#6366F1;"></div></div>' +
+            '</div>';
+    }
+
+    function showPptxReady(section, downloadUrl, gensparkOutline, cust, purchase) {
         section.innerHTML =
             '<div class="pres-ready">' +
             '  <div class="pres-ready-icon"><i class="fas fa-check-circle"></i></div>' +
             '  <h4>Your Presentation is Ready!</h4>' +
-            '  <p>11-slide professional business blueprint created from your AI-generated blueprint data.</p>' +
+            '  <p>11-slide professional business blueprint presentation created.</p>' +
             '  <div class="pres-actions">' +
             '    <a href="' + API_BASE + downloadUrl + '" class="button" download>' +
             '      <i class="fas fa-file-powerpoint"></i> Download PPTX' +
             '    </a>' +
-            '    <button class="button secondary" id="genspark-btn">' +
-            '      <i class="fas fa-magic"></i> Export to Genspark' +
+            '    <button class="button" id="genspark-design-btn" style="background:linear-gradient(135deg,#6366F1,#4F46E5);border-color:#6366F1;">' +
+            '      <i class="fas fa-magic"></i> Design in Genspark AI' +
             '    </button>' +
             '  </div>' +
-            '  <p class="pres-note"><i class="fas fa-info-circle"></i> Compatible with PowerPoint, Google Slides, and Keynote. File saved for 24 hours.</p>' +
+            '  <p class="pres-note"><i class="fas fa-info-circle"></i> PPTX works with PowerPoint, Google Slides, and Keynote. File saved for 24 hours.</p>' +
             '</div>';
 
-        var gsBtn = document.getElementById('genspark-btn');
-        if (gsBtn) {
-            gsBtn.addEventListener('click', function () {
-                navigator.clipboard.writeText(gensparkOutline).then(function () {
-                    gsBtn.innerHTML = '<i class="fas fa-check"></i> Copied! Opening Genspark...';
-                    gsBtn.disabled = true;
-                    setTimeout(function () {
-                        window.open('https://www.genspark.ai', '_blank', 'noopener');
-                    }, 700);
-                }).catch(function () {
-                    window.open('https://www.genspark.ai', '_blank', 'noopener');
+        document.getElementById('genspark-design-btn').addEventListener('click', function () {
+            doGenspark(cust, purchase, section);
+        });
+    }
+
+    function showGensparkReady(section, sparkUrl, cust, purchase, pptxDownloadUrl) {
+        section.innerHTML =
+            '<div class="pres-ready">' +
+            '  <div class="pres-ready-icon" style="color:#6366F1;"><i class="fas fa-magic"></i></div>' +
+            '  <h4 style="color:#6366F1;">Genspark Presentation Ready!</h4>' +
+            '  <p>Your AI-designed business presentation has been created by Genspark.</p>' +
+            '  <div class="pres-actions">' +
+            '    <a href="' + sparkUrl + '" target="_blank" rel="noopener" class="button" style="background:linear-gradient(135deg,#6366F1,#4F46E5);border-color:#6366F1;">' +
+            '      <i class="fas fa-external-link-alt"></i> Open Genspark Presentation' +
+            '    </a>' +
+            (pptxDownloadUrl
+                ? '    <a href="' + API_BASE + pptxDownloadUrl + '" class="button secondary" download><i class="fas fa-file-powerpoint"></i> Download PPTX</a>'
+                : '    <button class="button secondary" id="gen-pptx-again-btn"><i class="fas fa-file-powerpoint"></i> Also Download PPTX</button>'
+            ) +
+            '  </div>' +
+            '  <div class="pres-spark-embed-wrap" style="margin-top:1.25rem;">' +
+            '    <iframe src="' + sparkUrl + '" style="width:100%;height:420px;border:none;border-radius:10px;box-shadow:0 4px 24px rgba(99,102,241,0.15);" loading="lazy" title="Genspark Presentation"></iframe>' +
+            '  </div>' +
+            '  <p class="pres-note" style="margin-top:0.75rem;"><i class="fas fa-info-circle"></i> Presentation powered by Genspark AI. Click "Open" to view fullscreen.</p>' +
+            '</div>';
+
+        if (!pptxDownloadUrl) {
+            var btn = document.getElementById('gen-pptx-again-btn');
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    doPptx(cust, purchase, section);
                 });
-            });
+            }
         }
     }
 
@@ -120,10 +156,13 @@
         if (btn) btn.addEventListener('click', retryFn);
     }
 
-    function doGenerate(customization, purchase, section) {
-        showLoading(section);
+    // ── PPTX generation via backend ───────────────────────────────────────────
+
+    var _lastPptxUrl = null;
+
+    function doPptx(customization, purchase, section) {
+        showLoading(section, 'Generating PPTX Presentation');
         var reqBody = mapCustomization(customization);
-        var outline = buildGensparkOutline(purchase);
 
         var controller = new AbortController();
         var timeout = setTimeout(function () { controller.abort(); }, 150000);
@@ -139,24 +178,73 @@
                 if (!res.ok) {
                     return res.json().then(function (e) {
                         throw new Error(e.detail || 'Server error ' + res.status);
-                    }).catch(function () {
-                        throw new Error('Server error ' + res.status);
-                    });
+                    }).catch(function () { throw new Error('Server error ' + res.status); });
                 }
                 return res.json();
             })
             .then(function (data) {
                 if (!data.success) throw new Error('Generation failed');
-                showReady(section, data.download_url, outline);
+                _lastPptxUrl = data.download_url;
+                showPptxReady(section, data.download_url, buildGensparkOutline(purchase), customization, purchase);
             })
             .catch(function (err) {
                 clearTimeout(timeout);
                 var msg = err.name === 'AbortError'
                     ? 'Request timed out (150 s). The backend may be busy — please retry.'
                     : (err.message || 'Unexpected error.');
-                showError(section, msg, function () { doGenerate(customization, purchase, section); });
+                showError(section, msg, function () { doPptx(customization, purchase, section); });
             });
     }
+
+    // ── Genspark design via backend ───────────────────────────────────────────
+
+    function doGenspark(customization, purchase, section) {
+        showGensparkLoading(section);
+        var item = purchase.items[0];
+        var loc = locationStr(customization);
+
+        var payload = {
+            title: (item.name || 'Business Blueprint') + ' — ' + (customization.businessTypeLabel || 'Business'),
+            business_type_label: customization.businessTypeLabel || 'General Business',
+            bundle_tier: customization.bundleTier || 'starter',
+            capital: parseFloat(customization.capital) || 50000,
+            location: loc,
+            description: customization.description || '',
+            outline: buildGensparkOutline(purchase),
+        };
+
+        var controller = new AbortController();
+        var timeout = setTimeout(function () { controller.abort(); }, 150000);
+
+        fetch(API_BASE + '/api/genspark-spark', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
+        })
+            .then(function (res) {
+                clearTimeout(timeout);
+                if (!res.ok) {
+                    return res.json().then(function (e) {
+                        throw new Error(e.detail || 'Genspark error ' + res.status);
+                    }).catch(function () { throw new Error('Genspark error ' + res.status); });
+                }
+                return res.json();
+            })
+            .then(function (data) {
+                if (!data.success || !data.spark_url) throw new Error('No presentation URL returned by Genspark');
+                showGensparkReady(section, data.spark_url, customization, purchase, _lastPptxUrl);
+            })
+            .catch(function (err) {
+                clearTimeout(timeout);
+                var msg = err.name === 'AbortError'
+                    ? 'Genspark request timed out. Please retry.'
+                    : (err.message || 'Unexpected error.');
+                showError(section, msg, function () { doGenspark(customization, purchase, section); });
+            });
+    }
+
+    // ── Entry point ───────────────────────────────────────────────────────────
 
     function initPresentation() {
         var section = document.getElementById('presentation-body');
@@ -178,10 +266,7 @@
             return;
         }
 
-        var loc = [
-            cust.location && cust.location.city,
-            cust.location && cust.location.region,
-        ].filter(Boolean).join(', ') || 'Philippines';
+        var loc = locationStr(cust) || 'Philippines';
 
         section.innerHTML =
             '<div class="pres-intro">' +
@@ -191,12 +276,21 @@
             '    <div class="pres-detail-row"><span>Location</span><strong>' + loc + '</strong></div>' +
             '    <div class="pres-detail-row"><span>Slides</span><strong>11 professional slides</strong></div>' +
             '  </div>' +
-            '  <button class="button" id="gen-pres-btn"><i class="fas fa-file-powerpoint"></i> Generate Presentation</button>' +
-            '  <p class="pres-note"><i class="fas fa-clock"></i> AI will analyze your business and build a full slide deck — takes about 60–90 seconds.</p>' +
+            '  <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1rem;">' +
+            '    <button class="button" id="gen-pptx-btn"><i class="fas fa-file-powerpoint"></i> Generate PPTX</button>' +
+            '    <button class="button" id="gen-genspark-btn" style="background:linear-gradient(135deg,#6366F1,#4F46E5);border-color:#6366F1;">' +
+            '      <i class="fas fa-magic"></i> Design in Genspark AI' +
+            '    </button>' +
+            '  </div>' +
+            '  <p class="pres-note"><i class="fas fa-clock"></i> PPTX: ~60–90 s via AI. Genspark: AI-designed slides — opens as a live web presentation.</p>' +
             '</div>';
 
-        document.getElementById('gen-pres-btn').addEventListener('click', function () {
-            doGenerate(cust, purchase, section);
+        document.getElementById('gen-pptx-btn').addEventListener('click', function () {
+            doPptx(cust, purchase, section);
+        });
+
+        document.getElementById('gen-genspark-btn').addEventListener('click', function () {
+            doGenspark(cust, purchase, section);
         });
     }
 

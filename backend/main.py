@@ -42,6 +42,9 @@ DEEPSEEK_API_KEY: str = os.getenv("DEEPSEEK_API_KEY", "")
 DEEPSEEK_URL = "https://api.deepseek.com/chat/completions"
 DEEPSEEK_MODEL = "deepseek-chat"
 
+GENSPARK_API_KEY: str = os.getenv("GENSPARK_API_KEY", "")
+GENSPARK_URL = "https://api.genspark.ai/v1/agents/sparks"
+
 # Admin auth
 ADMIN_USERNAME: str = os.getenv("ADMIN_USERNAME", "admin")
 ADMIN_PASSWORD: str = os.getenv("ADMIN_PASSWORD", "NegosyoPlan@2026!")
@@ -1146,3 +1149,89 @@ async def download_presentation(filename: str):
         media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation",
         filename=filename,
     )
+
+
+# ── Genspark integration ──────────────────────────────────────────────────────
+
+class GensparkSparkRequest(BaseModel):
+    title: str
+    business_type_label: str
+    bundle_tier: str = "starter"
+    capital: float = 50000
+    location: str = "Philippines"
+    description: str = ""
+    outline: str
+
+
+@app.post("/api/genspark-spark")
+async def create_genspark_spark(req: GensparkSparkRequest):
+    """
+    Submit a blueprint outline to Genspark AI and return the generated
+    sparkpage URL for use as the final presentation design.
+    """
+    if not GENSPARK_API_KEY:
+        raise HTTPException(503, "Genspark API key not configured. Add GENSPARK_API_KEY to backend/.env")
+
+    query = (
+        f"Create a professional 11-slide business presentation for a {req.business_type_label} "
+        f"business in {req.location} with starting capital of PHP {req.capital:,.0f}. "
+        f"Bundle tier: {req.bundle_tier.upper()}. "
+        f"{('Additional details: ' + req.description) if req.description else ''}\n\n"
+        f"{req.outline}"
+    )
+
+    try:
+        async with httpx.AsyncClient(timeout=120.0) as client:
+            resp = await client.post(
+                GENSPARK_URL,
+                headers={
+                    "Authorization": f"Bearer {GENSPARK_API_KEY}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "query": query,
+                    "type": "presentation",
+                },
+            )
+
+            if resp.status_code == 404:
+                # Fallback: try alternate Genspark endpoint
+                resp = await client.post(
+                    "https://api.genspark.ai/v1/search",
+                    headers={
+                        "Authorization": f"Bearer {GENSPARK_API_KEY}",
+                        "Content-Type": "application/json",
+                    },
+                    json={"query": query, "search_type": "presentation"},
+                )
+
+            if not resp.is_success:
+                raise HTTPException(
+                    resp.status_code,
+                    f"Genspark API error ({resp.status_code}): {resp.text[:300]}"
+                )
+
+            data = resp.json()
+            spark_url = (
+                data.get("url")
+                or data.get("page_url")
+                or data.get("spark_url")
+                or data.get("data", {}).get("url")
+                or data.get("result", {}).get("url")
+            )
+
+            if not spark_url:
+                raise HTTPException(500, f"Genspark returned no URL. Response: {str(data)[:300]}")
+
+            return {
+                "success": True,
+                "spark_url": spark_url,
+                "title": req.title,
+            }
+
+    except httpx.TimeoutException:
+        raise HTTPException(504, "Genspark request timed out (120 s). Please retry.")
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(500, f"Genspark integration error: {str(exc)[:300]}")

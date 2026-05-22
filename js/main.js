@@ -63,7 +63,32 @@ function injectMobileNavExtras() {
         header.appendChild(row);
     }
 
-    /* ── 2. Sidebar quick-row: Shop | Cart | Business Type (3 buttons) ── */
+    /* ── 2. Inject logo into sidebar header so applyBranding can update it ── */
+    var sidebarHeader = document.querySelector('.sidebar-header');
+    if (sidebarHeader && !sidebarHeader.querySelector('.sidebar-logo-img')) {
+        var navLogoSrc = (document.querySelector('nav .logo img') || {}).src || 'assets/images/logo.svg';
+        var sidebarLogoWrap = document.createElement('div');
+        sidebarLogoWrap.style.cssText = 'display:flex;align-items:center;gap:0.55rem;';
+
+        var sidebarLogoImg = document.createElement('img');
+        sidebarLogoImg.src = navLogoSrc;
+        sidebarLogoImg.alt = 'Negosyo Plan logo';
+        sidebarLogoImg.className = 'site-logo sidebar-logo-img';
+        sidebarLogoImg.style.cssText = 'width:34px;height:auto;flex-shrink:0;';
+
+        var sidebarBrandSpan = document.createElement('span');
+        sidebarBrandSpan.className = 'brand-name';
+        sidebarBrandSpan.style.cssText = 'font-size:0.95rem;letter-spacing:0.1em;';
+
+        sidebarLogoWrap.appendChild(sidebarLogoImg);
+        sidebarLogoWrap.appendChild(sidebarBrandSpan);
+
+        var existingH3 = sidebarHeader.querySelector('h3');
+        if (existingH3) existingH3.replaceWith(sidebarLogoWrap);
+        else sidebarHeader.insertBefore(sidebarLogoWrap, sidebarHeader.firstChild);
+    }
+
+    /* ── 3. Sidebar quick-row: Shop | Cart | Business Type (3 buttons) ── */
     var sidebarMenu = document.querySelector('.sidebar-menu');
     if (sidebarMenu && !document.querySelector('.sidebar-quick-row')) {
         var quickRow = document.createElement('div');
@@ -126,7 +151,7 @@ function injectMobileNavExtras() {
         });
     }
 
-    /* ── 3. Hide breadcrumbs on home page (redundant "Home" text) ── */
+    /* ── 4. Hide breadcrumbs on home page (redundant "Home" text) ── */
     var page = window.location.pathname.split('/').pop() || 'index.html';
     if (page === 'index.html' || page === '') {
         var bc = document.querySelector('.breadcrumbs');
